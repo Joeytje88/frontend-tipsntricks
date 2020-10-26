@@ -1,0 +1,84 @@
+h2 {
+    text-align: center;
+    margin-left: 130px;
+}
+.registreer-pagina {
+    width: 100%;
+    height: auto;
+}
+
+.input {
+    height: 30px;
+    border: 1px solid;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.password {
+    height: 30px;
+    width: 200px;
+    border: 1px solid;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.registreer-container {
+    display: grid;
+    background-color: lightseagreen;
+    width: 40%;
+    justify-content: center;
+    text-align: center;
+    margin-top: 100px;
+    margin-left: 500px;
+    margin-bottom: 50px;
+    border: 1px solid;
+    border-radius: 25px;
+    padding: 25px;
+}
+
+@media screen and (max-width: 769px){
+    h2 {
+        text-align: center;
+    }
+
+
+    .registreer-pagina {
+        width: 80%;
+        height: auto;
+    }
+
+    .input {
+        height: 30px;
+        border: 1px solid;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .password {
+        height: 30px;
+        width: 200px;
+        border: 1px solid;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .registreer-container {
+        display: grid;
+        width: 80%;
+        justify-content: center;
+        text-align: center;
+        margin-top: 100px;
+        margin-left: 70px;
+        border: 1px solid;
+        border-radius: 25px;
+        padding: 25px;
+    }
+    .registreer-label {
+        margin-bottom: 10px;
+    }
+}

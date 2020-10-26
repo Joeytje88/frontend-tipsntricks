@@ -1,0 +1,39 @@
+.about-container {
+    width: 100%;
+    height: auto;
+    margin-bottom: 100px;
+}
+.about {
+    width: 80%;
+    text-align: center;
+    margin: 1% 8%;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 240px;
+}
+
+.social-logo {
+    color: #fff;
+    justify-self: start;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.about-img {
+    width: 50%;
+}
+
+@media screen and (max-width:769px) {
+    .about-img {
+        width: 80%;
+    }
+}

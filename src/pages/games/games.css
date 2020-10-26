@@ -1,0 +1,111 @@
+*  {
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 769px) {
+
+    .games-img {
+        width:95%;
+        margin: 10px;
+        margin-right: 20px;
+    }
+
+    .game-description {
+        background-color: #1c2237;
+        color: lightseagreen;
+        display: grid;
+        width: 100%;
+        height: auto;
+        align-items: center;
+        margin-top: 0;
+    }
+    .paragraaf {
+        margin: 0;
+        text-align: center;
+    }
+
+    .tipsntrick {
+        width: 90%;
+        display: block;
+    }
+    .link-item {
+        text-decoration: none;
+        color: lightseagreen;
+    }
+
+}
+
+@media screen and (min-width: 770px) {
+
+    .games-img {
+        width: 80%;
+        margin: 1% 10% 1% 10%;
+    }
+
+    .game-description {
+        background-color: #1c2237;
+        color: lightseagreen;
+        width: 100%;
+        height: 800px;
+        align-items: center;
+    }
+    .paragraaf {
+        margin: 0;
+        height: auto;
+        text-align: center;
+    }
+
+    .tipsntrick {
+        display: block;
+        margin: 1% 20% 1% 20%
+    }
+    .link-item {
+        text-decoration: none;
+        color: lightseagreen;
+    }
+}
+
+
+@media screen and (min-width: 1200px) {
+
+    .games-img {
+        width:70%;
+        margin-top: 1%;
+        margin-left: 25%;
+    }
+    .optional-img{
+        margin: 10px 375px 10px 375px;
+    }
+
+    .game-description {
+        display: grid;
+        width: 100%;
+        height: auto;
+        align-items: center;
+        margin-top: 0;
+    }
+    .paragraaf {
+        margin: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .tipsntrick {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        width: 90%;
+        margin: 1% 10%;
+    }
+
+    .link-item {
+        text-decoration: none;
+        color: lightseagreen;
+    }
+
+    .comment-section {
+        width: 90%;
+        margin: 0 5% 1% 5%;
+    }
+}
+
+

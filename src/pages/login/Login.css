@@ -1,0 +1,64 @@
+.login-page {
+    height: auto;
+    display: block;
+    margin-left: 600px;
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
+
+.login-container {
+    margin-right: 300px;
+}
+
+.zoekbalk{
+    margin-top: 100px;
+}
+
+.input {
+    width: 200px;
+    margin-top: 10px;
+}
+
+label {
+    width: 200px;
+    margin-top: 10px;
+}
+
+
+.comment-button {
+    margin-top: 10px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 200px;
+}
+
+@media screen and (max-width: 769px) {
+    .login-page {
+        height: auto;
+        display: block;
+        margin-left: 100px;
+        margin-top: 150px;
+    }
+
+    .input {
+        width: 200px;
+        margin-top: 10px;
+    }
+
+    label {
+        width: 200px;
+        margin-top: 10px;
+    }
+
+
+    .comment-button {
+        margin-top: 10px;
+        height: 40px;
+        border: 1px solid black;
+        border-radius: 10px;
+        width: 200px;
+    }
+
+
+}

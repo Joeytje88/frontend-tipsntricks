@@ -1,0 +1,48 @@
+@media screen and (max-width: 769px) {
+   li {
+       justify-content: space-between;
+   }
+    p {
+        text-align: center;
+    }
+    .contact {
+        width: 94%;
+        margin: 3%;
+    }
+    a {
+        text-decoration: none;
+        display: flex;
+        justify-content: space-between;
+    }
+    li {
+        text-decoration: none;
+    }
+}
+
+@media screen and (min-width: 770px) {
+
+    .contact {
+        width: 70%;
+        margin: 10% 15%;
+    }
+
+}
+
+
+@media screen and (min-width: 1200px){
+
+    a {
+        text-decoration: none;
+        color: lightseagreen;
+    }
+
+    .contact {
+        margin: 2% 10% 2% 10%;
+    }
+
+    li {
+        list-style: none;
+
+    }
+
+}
