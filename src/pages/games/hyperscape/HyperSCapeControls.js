@@ -14,7 +14,7 @@ const HyperScapeControls = () => {
                      className="game-topic-img"/>
             </div>
             <div className="topic-text">
-                <h3>Ben jij op zoek naar teamgenoten?</h3>
+                <h3>Heb je tips voor de controls?</h3>
                 <p>Controls worden vaak voor lief genomen, maar bepalen eigenlijk de manier waarop je speelt. Je kunt namelijk
                     diverse functies veranderen waardoor het bijvoorbeeld nog soepeler wordt om te mikken of juist minder soepel als
                     bij bijvoorbeeld een sniper rifle, waardoor je nog preciezer kunt schieten. Denk jij de ideale controls-instellingen

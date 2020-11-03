@@ -10,11 +10,10 @@ const Comment = () => {
     const [loading, toggleLoading] = useState(false);
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState("");
-    const [commentImage, setCommentImage] = useState(null);
     const [image, setImage] = useState(null);
 
-    const userid = localStorage.getItem("user_id");
     const username = localStorage.getItem("username");
+    const userid =localStorage.getItem("user_id")
 
 
    const handleChange = (e) =>{
@@ -42,32 +41,32 @@ const Comment = () => {
     const deleteComment = async (commentid) => {
         toggleLoading(true)
         try {
-            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/12`);
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
             toggleLoading(false);
+            window.location.reload()
         } catch (error) {
             console.log(error)
             toggleLoading(false);
         }
     }
 
-    // const changeComment =  async () => {
-    //     toggleLoading(true)
-    //     try {
-    //         const changeComments = axios.put (`http://localhost:8080/api/comment/${commentid}`)
-    //         setComment(changeComments)
-    //     } catch (error) {
-    //         toggleLoading(false)
-    //         toggleError(error)
-    //     }
-    // }
-    //
-    const handleClick = async (e, userid) => {
+    const changeComment =  async (commentid) => {
+        toggleLoading(true)
+        try {
+            const changeComments = axios.put (`http://localhost:8080/api/comment/${commentid}`)
+            setComment(handleChange);
+        } catch (error) {
+            toggleLoading(false)
+            toggleError(error)
+        }
+    }
+
+    const handleClick = async (e) => {
         e.preventDefault();
         try {
-            const result = await axios.put(`http://localhost:8080/api/comment/post/2`, {
+            const result = await axios.post(`http://localhost:8080/api/user/comment/${userid}`, {
                 text: comment,
                 commentImage: image,
-                userid,
             }).then(function (response) {
                 fetchComments();
                 setComment("")
@@ -78,12 +77,11 @@ const Comment = () => {
         }
     }
 
-    const fetchComments = async () => {
+    const fetchComments = async (commentid) => {
         toggleLoading(true);
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/2`);
-            setComments(result.data.text)
-            console.log(result.data)
+            const result = await axios.get(`http://localhost:8080/api/comments`);
+            setComments(result.data)
             toggleLoading(false);
         } catch (error) {
             console.log(error)
@@ -92,10 +90,9 @@ const Comment = () => {
     }
 
     useEffect(() => {
-
         fetchComments();
-    },[]);
 
+    },[]);
 
     return (
         <>
@@ -134,7 +131,6 @@ const Comment = () => {
                                  onClick={()=> deleteComment(comment.commentid)}>
                                 verwijder</h6>
                             <h6 className="adjust-comment">
-                                {/*onClick={changeComment}*/}
                                 pas aan</h6>
                         </div>
                         <div className="comment">

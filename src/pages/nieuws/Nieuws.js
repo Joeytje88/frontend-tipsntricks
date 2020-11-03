@@ -1,0 +1,16 @@
+import React from "react";
+
+import NewPost from "../newPost/NewPost";
+import Navigation from "../../components/navbar/Navigation";
+
+
+const Bericht = () => {
+    return (
+        <>
+            <Navigation/>
+            <NewPost/>
+            <NewPost/>
+            </>
+    )
+}
+export default Bericht;

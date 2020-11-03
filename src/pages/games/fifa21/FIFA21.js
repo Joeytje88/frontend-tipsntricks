@@ -5,7 +5,6 @@ import FIFA_21 from '../../../assets/afbeeldingen/FIFA_21.png';
 import FIFA_21_play from '../../../assets/afbeeldingen/FIFA_21_Play.png';
 import FIFA_21_Volta from '../../../assets/afbeeldingen/FIFA_21_Volta.png';
 import FIFA_21_FUT from '../../../assets/afbeeldingen/FIFA_21_FUT.png';
-import FIFA_21_Controls from '../../../assets/afbeeldingen/FIFA_21_Controls.jpg';
 import Navigation from "../../../components/navbar/Navigation";
 
 const FIFA21 = () => {
@@ -37,14 +36,7 @@ const FIFA21 = () => {
                         className="optional-img"
                         name="Op zoek naar teammaatjes/ een geduchte tegenstander?"/>
                 </Link>
-                <Link to="/f1-2020/controls"
-                      className="link-item">
-                    <Image
-                        alt="FIFA 21 controls"
-                        link={FIFA_21_Controls}
-                        className="optional-img"
-                        name="De beste tips voor besturing/controls"/>
-                </Link>
+
                 <Link to="/fifa-21/volta"
                       className="link-item">
                     <Image

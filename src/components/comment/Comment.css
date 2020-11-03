@@ -1,0 +1,94 @@
+@media screen and (min-width: 1200px){
+.comment-section {
+    width: 90%;
+    border: 1px solid black;
+}
+.comment-heading {
+    background-color: lightseagreen;
+    display: flex;
+    justify-content: flex-start;
+    border: 1px solid black;
+    height: 40px;
+}
+.comment-text {
+    margin-top: 20px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+    width: 800px;
+}
+
+.error-message{
+    border: 1px solid red;
+    color: red;
+    text-decoration: underline;
+    height: 30px;
+    width: 600px;
+    margin-left: 200px;
+}
+.delete-comment {
+    cursor: pointer;
+}
+
+.adjust-comment {
+    margin-left: 700px;
+    cursor: pointer;
+}
+.comment {
+    text-align: start;
+    margin-left: 10px;
+}
+p {
+    height: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+}
+@media screen and (max-width: 1200px){
+    .comment-section {
+        margin-left: 5%;
+        width: 90%;
+        border: 1px solid black;
+        margin-bottom: 1%;
+    }
+    .comment-heading {
+        background-color: lightseagreen;
+        display: flex;
+        border: 1px solid black;
+        height: 50px;
+    }
+
+    .comment-text {
+        margin-top: 20px;
+        margin-left: 4px;
+        width: 80%;
+        margin-bottom: 5%;
+    }
+    .username-comment{
+        margin-right: 10px;
+    }
+
+    .error-message{
+        border: 1px solid red;
+        margin-left: 50px;
+        color: red;
+        text-decoration: underline;
+        height: 20px;
+        width: 200px;
+    }
+    .delete-comment {
+        cursor: pointer;
+        margin-left: 20px;
+    }
+
+    .adjust-comment {
+        cursor: pointer;
+        margin-left: 30px;
+
+    }
+    p {
+        height: 16px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+}

@@ -40,26 +40,9 @@ const EscapeFromTarkov= () => {
                       className="link-item">
                     <Image
                         alt="Controls Escape from Tarkov"
-                        link={Escape_from_Tarkov_controlls}
-                        className="optional-img"
-                        name="De beste tips voor besturing/controls"/>
-                </Link>
-                <Link to="/escape-from-tarkov/top"
-                      className="link-item">
-                    <Image
-                        alt="Controls CoDWarzone"
                         link={Escape_from_Tarkov_top}
                         className="optional-img"
-                        name="Deel hier jouw beste ervaringen"/>
-                </Link>
-
-                <Link exact to="/escape-from-tarkov/verkooptips"
-                      className="link-item">
-                    <Image
-                        alt="Escape from Tarkov verkooptips"
-                        link={Escape_from_Tarkov_verkooptips}
-                        className="optional-img"
-                        name="Tips voor het verkopen/ verhandelen van je gevonden loot"/>
+                        name="De beste tips voor besturing/tips"/>
                 </Link>
             </div>
         </>

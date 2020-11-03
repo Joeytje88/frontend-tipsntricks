@@ -25,16 +25,16 @@ const CallofDutyWarzone =() => {
                     link={Call_of_Duty_Warzone_Modern_Warfare}/>
                     </div>
 
-                    <p className="paragraaf">Call of Duty Warzone / Modern Warfare
+                    <div className="paragraaf">Call of Duty Warzone / Modern Warfare
                         <p>ontwikkelaar: Infinity Ward</p>
                         <p>uitgever: Activision</p>
                         <p> release: 25 oktober 2019</p>
-                        <p>platforms: pc, PlayStation 4, Xbox One</p></p>
+                        <p>platforms: pc, PlayStation 4, Xbox One</p></div>
                 </div>
 
 
             <div className="tipsntrick">
-                <Link to="/call-of-duty-warzone-modern-warfare/samenspelen"
+                <Link to="/call-of-duty-warzone/samenspelen"
                       className="link-item">
                     <Image
                         alt="Controls CoDWarzone"
@@ -59,7 +59,7 @@ const CallofDutyWarzone =() => {
                         name="Deel hier jouw beste ervaringen"/>
                 </Link>
 
-                <Link exact to="/call-of-duty-modern-warfare-warzone/loadouts"
+                <Link to="/call-of-duty-modern-warfare-warzone/loadouts"
                       className="link-item">
                     <Image
                         alt="Controls CoDWarzone"

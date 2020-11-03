@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import '../games.css';
 import Image from '../../../components/image/Image';
 import {Link} from "react-router-dom";
@@ -8,23 +8,10 @@ import Ghost_of_Tsushima_legends from '../../../assets/afbeeldingen/Ghost_of_Tsu
 import Ghost_of_tsushima_singleplayer from '../../../assets/afbeeldingen/Ghost_of_Tsushima_singleplayer.png';
 import Ghost_of_Tsushima_Top from '../../../assets/afbeeldingen/Ghost_of_Tsushima_Top.png';
 import Navigation from "../../../components/navbar/Navigation";
-import axios from "axios";
 
 
 
 const GhostofTsushima = () => {
- const [url, setUrl] = useState("");
-    const getUrl = async () =>{
-        try {const result = await axios.get(`http://localhost:8080/api/post/4`)
-           console.log(result.data.postURL)
-        } catch (error){
-            alert (error)}
-    }
-
-    useEffect(()=>{
-       getUrl()
-    })
-
 
     return (
             <>

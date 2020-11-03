@@ -1,31 +1,99 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Apex_Legends_controls from "../../../assets/afbeeldingen/Apex_Legends_controls.png";
 import Navigation from "../../../components/navbar/Navigation";
 import Comment from "../../../components/comment/Comment";
+import axios from "axios";
+import {Button} from "../../../components/button/Button";
 
 const ApexLegendsControls = () => {
+    const [post, setPost] = useState (null);
+    const [inputComment, setInputComment] = useState ("")
+
+    const userid = localStorage.getItem("user_id");
+
+    const changeComment = (e)=>{
+        setInputComment(e.target.value)
+    }
+
+    const handleClick = async () =>{
+        try {
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/11`,{
+                text: inputComment,
+            }).then(function (response) {
+                setInputComment("")
+            })
+        } catch (error){
+            console.log(error)
+        }
+    }
+
+    const getpost = async ()=> {
+        try {
+            const result = await axios.get(`http://localhost:8080/api/post/11`)
+            setPost(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getpost();
+    }, [])
+
+
     return (
         <>
             <Navigation/>
-        <div className="topic-page">
-            <div className="topic-image">
-                <img src={Apex_Legends_controls}
-                     alt="Apex Legens Controls"
-                     className="game-topic-img"/>
-            </div>
-            <div className="topic-text">
-                <h3>Heb je nog handige tips voor de controls van Apex Legends?</h3>
-                <p>Controls worden vaak voor lief genomen, maar bepalen eigenlijk de manier waarop je speelt. Je kunt namelijk
-                    diverse functies veranderen waardoor het bijvoorbeeld nog soepeler wordt om te mikken of juist minder soepel als
-                    bij bijvoorbeeld een sniper rifle, waardoor je nog preciezer kunt schieten. Denk jij de ideale controls-instellingen
-                    te hebben? Laat het dan vooral weten!
-                </p>
-            </div>
-              <Comment />
-        </div>
-            </>
-    )
 
+            <div className="topic-page">
+                {post !== null && <div className="new-post">
+                    <h2 className="post-title"> {post.postTitle} </h2>
+                    {post.categories !== null &&<h5>{post.categories}</h5>}
+                    <div className="post-picture">
+                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                    <p className="topic-text">{post.postText}</p>
+
+                    <p>{post.tags}</p></div>}
+                <textarea
+                    className="comment-input"
+                    value={inputComment}
+                    onChange={changeComment}
+                    placeholder="schrijf hier je reactie"/> <br/>
+                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+
+                <Button
+                    onClick={handleClick}
+                    disabled={inputComment === " "}>
+                    Plaats je reactie</Button> <br/> <br/>
+
+
+                {/*{post !== null &&*/}
+                {/*<div*/}
+                {/*    className="comment-section">*/}
+                {/*    <div className="comment-heading">*/}
+                {/*        <p*/}
+                {/*            className="username-comment">{post.postComments[0].commentid}</p>*/}
+                {/*        <h6*/}
+                {/*            className="delete-comment">*/}
+                {/*            /!*onClick={()=> deleteComment(comment.commentid)}>*!/*/}
+                {/*            verwijder</h6>*/}
+                {/*        <h6 className="adjust-comment">*/}
+                {/*            pas aan</h6>*/}
+                {/*    </div>*/}
+                {/*    <div className="comment">*/}
+                {/*        {post.postComments[0].text}*/}
+                {/*    </div>*/}
+                {/*    /!*<div className="comment-img">*!/*/}
+                {/*    /!*    {image !== null && <img src={image} alt="plaatje comment"/>}*!/*/}
+                {/*    /!*</div>*!/*/}
+
+                {/*</div>}*/}
+
+            </div>
+
+        </>
+    )
 }
 
 export default ApexLegendsControls;

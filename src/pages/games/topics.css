@@ -48,6 +48,7 @@
 .topic-page {
     display: grid;
     margin: 1% 10% 1% 10%;
+    border: 1px solid lightseagreen;
     width: 80%;
     justify-content: center;
     text-align: center;
@@ -59,14 +60,14 @@
     justify-content: center;
 }
 .topic-text {
-    margin-left: 100px;
+    margin-left: 50px;
     width: 80%;
     text-align: center;
-    margin-bottom: 20px;
     padding-left: 100px;
 }
-.comments {
-    margin-top: 40px;
+.comment-input {
+    width: 80%;
+    margin-left: 100px;
 }
 }
 
