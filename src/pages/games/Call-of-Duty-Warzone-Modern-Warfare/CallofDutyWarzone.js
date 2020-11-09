@@ -19,17 +19,17 @@ const CallofDutyWarzone =() => {
             <Navigation/>
             <div className="game-page">
                 <div className="game-description">
-                    <div className="games-img">
-                <Image
+                <img
                     alt="Call of Duty Warzone/ Modern Warfare Season 5"
-                    link={Call_of_Duty_Warzone_Modern_Warfare}/>
-                    </div>
+                    src={Call_of_Duty_Warzone_Modern_Warfare}
+                    className="games-img"/>
 
-                    <div className="paragraaf">Call of Duty Warzone / Modern Warfare
-                        <p>ontwikkelaar: Infinity Ward</p>
-                        <p>uitgever: Activision</p>
-                        <p> release: 25 oktober 2019</p>
-                        <p>platforms: pc, PlayStation 4, Xbox One</p></div>
+
+                    <div className="paragraaf"><strong>Call of Duty Warzone / Modern Warfare</strong>
+                        <p><strong>ontwikkelaar:</strong> Infinity Ward</p>
+                        <p><strong>uitgever:</strong> Activision</p>
+                        <p><strong>release:</strong> 25 oktober 2019</p>
+                        <p><strong>platforms:</strong> pc, PlayStation 4, Xbox One</p></div>
                 </div>
 
 

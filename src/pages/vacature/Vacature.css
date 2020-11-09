@@ -1,9 +1,42 @@
-.vacature-pagina {
-    width: 94%;
-    margin: 3%;
+@media screen and (min-width: 770px) {
+    .vacature-pagina {
+        width: 94%;
+        margin: 3%;
+        height: auto;
+        border: 1px solid lightseagreen;
+        align-items: center;
+    }
+    .header {
+        margin-right: 5%;
+    }
+    .sub-headers {
+        margin-top: 4%;
+        text-align: center;
+    }
+
+    .vacature-img {
+        margin: 1% 33%;
+
+    }
 }
 
-.vacature-img {
-    margin-top: 1%;
-    margin-left: 35%;
+
+@media screen and (max-width: 769px) {
+    .vacature-pagina {
+        width: 94%;
+        margin: 3%;
+        text-align: center;
+    }
+    .header {
+        margin-right: 20%;
+    }
+    .vacature-img {
+        width: 90%;
+        margin-top: 1%;
+        margin-left: 3%;
+    }
+    .mail {
+        margin-left: 20%;
+    }
+
 }

@@ -15,11 +15,11 @@ const Dreams =() => {
             <Navigation/>
             <div className="game-page">
                 <div className="game-description">
-                    <div className="games-img">
-                        <Image
+                        <img
                             alt="Dreams"
-                            link={Dreams_}/>
-                    </div>
+                            src={Dreams_}
+                            className="games-img"/>
+
                     <p className="paragraaf">Dreams
                         <p>ontwikkelaar: Media Molecule</p>
                         <p>uitgever: Sony</p>
@@ -35,9 +35,9 @@ const Dreams =() => {
                         alt="Dreams tips"
                         link={Dreams_tips}
                         className="optional-img"
-                        name="Heb je nog handige tips voor Days Gone?"/>
+                        name="Heb je nog handige tips voor Dreams?"/>
                 </Link>
-                <Link to="/dreams/screenshots"
+                <Link to="/dreams/creaties"
                       className="link-item">
                     <Image
                         alt="Dreams creaties"

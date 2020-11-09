@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react"
 import axios from "axios";
 import "../games/topics.css"
 import Navigation from "../../components/navbar/Navigation";
-import Comment from "../../components/comment/Comment";
+import Comment from "../../components/comments/Comment";
 
 const Topic = () =>{
 

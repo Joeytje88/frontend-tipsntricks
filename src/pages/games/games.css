@@ -5,9 +5,8 @@
 @media screen and (max-width: 769px) {
 
     .games-img {
-        width:95%;
-        margin: 10px;
-        margin-right: 20px;
+        width:94%;
+        margin: 3%;
     }
 
     .game-description {
@@ -15,49 +14,62 @@
         color: lightseagreen;
         display: grid;
         width: 100%;
-        height: auto;
+        height: 475px;
         align-items: center;
-        margin-top: 0;
     }
     .paragraaf {
-        margin: 0;
         text-align: center;
+        padding-bottom: 50px;
     }
 
     .tipsntrick {
-        width: 90%;
+        margin: 3% 3% 2% 2%;
+        width: 94%;
+        display: block;
+
+    }
+    .extra-img{
+        margin: 3% 3% 2% 2%;
+        width: 94%;
         display: block;
     }
     .link-item {
         text-decoration: none;
         color: lightseagreen;
+        height: auto;
+        padding-bottom: 4%;
     }
 
 }
 
-@media screen and (min-width: 770px) {
-
-    .games-img {
+@media screen and (min-width: 769px) {
+    .games-img{
         width: 80%;
         margin: 1% 10% 1% 10%;
     }
 
     .game-description {
+        display: block;
         background-color: #1c2237;
         color: lightseagreen;
         width: 100%;
-        height: 800px;
+        height: auto;
         align-items: center;
+        padding-bottom: 3%;
     }
+
     .paragraaf {
-        margin: 0;
         height: auto;
         text-align: center;
     }
 
     .tipsntrick {
         display: block;
-        margin: 1% 20% 1% 20%
+        margin: 3% 10% 1% 22%;
+    }
+
+    .extra-img{
+        margin: 3% 10% 1% 22%;
     }
     .link-item {
         text-decoration: none;
@@ -67,14 +79,17 @@
 
 
 @media screen and (min-width: 1200px) {
-
-    .games-img {
-        width:70%;
-        margin-top: 1%;
-        margin-left: 25%;
+    .game-page{
+        padding-bottom: 50px;
     }
-    .optional-img{
-        margin: 10px 375px 10px 375px;
+    .games-img{
+        width: 60%;
+        margin-left: 20%;
+        padding-bottom: 20px;
+    }
+
+    .game-img{
+        margin: 1% 18% 1% 26%;
     }
 
     .game-description {
@@ -83,6 +98,7 @@
         height: auto;
         align-items: center;
         margin-top: 0;
+        padding-bottom: 20px;
     }
     .paragraaf {
         margin: 0;
@@ -93,8 +109,13 @@
     .tipsntrick {
         display: grid;
         grid-template-columns: 50% 50%;
-        width: 90%;
-        margin: 1% 10%;
+        width: 100%;
+        padding-top: 20px;
+        margin: 1% 0 1% 10%;
+    }
+    .extra-img{
+        display: block;
+        margin-left: 33%;
     }
 
     .link-item {

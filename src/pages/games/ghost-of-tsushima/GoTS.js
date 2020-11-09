@@ -1,30 +1,99 @@
-import React from "react";
-import Ghost_of_tsushima_singleplayer from '../../../assets/afbeeldingen/Ghost_of_Tsushima_singleplayer.png';
+import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comment/Comment";
+import axios from "axios";
+import {Button} from "../../../components/button/Button";
+import CommentButton from "../../../components/button/CommentButton";
 
 const GoTS = () => {
+    const [post, setPost] = useState (null);
+    const [inputComment, setInputComment] = useState ("")
+
+    const userid = localStorage.getItem("user_id");
+
+    const changeComment = (e)=>{
+        setInputComment(e.target.value)
+    }
+
+    const handleClick = async () =>{
+        try {
+            const placecomment = await axios.post(`http://localhost:8080/api/post/44/comment/${userid}`,{
+                text: inputComment,
+            }).then(function (response) {
+                setInputComment("")
+                getpost();
+            })
+        } catch (error){
+            console.log(error)
+        }
+    }
+
+    const getpost = async ()=> {
+        try {
+            const result = await axios.get(`http://localhost:8080/api/post/44`)
+            setPost(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getpost();
+    }, [])
+
+
     return (
         <>
             <Navigation/>
-        <div className="topic-page">
-            <div className="topic-image">
-                <img src={Ghost_of_tsushima_singleplayer}
-                     alt="Ghost of Tsushima singleplayer"
-                     className="game-topic-img"/>
-            </div>
-            <div className="topic-text">
-                <h3>Loop je ergens vast in de singleplayer?</h3>
-                <p>De combat in Ghost of Tsushima moet je eerst even onder de knie krijgen om het je eigen te maken. Is het echter niet de combat
-                    maar iets anders waar je op vastloopt? Laat het hier dan vooral weten!
-                </p>
+
+            <div className="topic-page">
+                {post !== null && <div className="new-post">
+                    <h2 className="post-title"> {post.postTitle} </h2>
+                    {post.categories !== null &&<h5>{post.categories}</h5>}
+                    <div className="post-picture">
+                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                    <p className="topic-text">{post.postText}</p></div>}
+
+                <textarea
+                    className="comment-input"
+                    value={inputComment}
+                    onChange={changeComment}
+                    placeholder="schrijf hier je reactie"/> <br/>
+                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+                <CommentButton
+                    click={handleClick}
+                    disabled ={inputComment <1} />
+
+                {post !== null &&
+                post.postComments.map((entry) => {
+                    return (
+                        <div
+                            className="comment-section"
+                            key={entry.commentid}>
+                            <div className="comment-heading">
+                                <p>{entry.username}</p>
+                                <h6
+                                    className="delete-comment">
+                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    verwijder</h6>
+                                <h6 className="adjust-comment">
+                                    pas aan</h6>
+                            </div>
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
+                            </div>
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
+
+                        </div>)
+                })}
+
+
             </div>
 
-            <div className="comment-container">
-              <Comment />
-            </div>
-        </div>
-            </>
+        </>
     )
 }
 

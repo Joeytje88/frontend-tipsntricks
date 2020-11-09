@@ -1,4 +1,4 @@
-import pc from './pc';
+import CustomPC from './pc';
 import Headset from './Headset';
 import Racewheel from "./Racewheel";
 import MuisTB from "./MuisTB";
@@ -6,7 +6,7 @@ import MuisTB from "./MuisTB";
 export {
     Headset,
     Racewheel,
-    pc,
+    CustomPC,
     MuisTB
 }
 

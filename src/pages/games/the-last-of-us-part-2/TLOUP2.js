@@ -13,20 +13,19 @@ const TLOUP2 =() => {
     return (
         <>
             <Navigation/>
-            <div className="game-page">
+        <div className="game-page">
                 <div className="game-description">
-                    <div className="games-img">
-                        <Image
+                        <img
                             alt="The Last of Us Part 2"
-                            link={Last_of_Us_Part_2}/>
-                    </div>
+                            src={Last_of_Us_Part_2}
+                            className="games-img"/>
                     <p className="paragraaf">The Last of Us Part 2
                         <p>ontwikkelaar: Naughty Dog</p>
                         <p>uitgever: Sony</p>
                         <p> release: 19 juni 2020</p>
                         <p>platforms: pc, PlayStation 4, Xbox One</p></p>
                 </div>
-            </div>
+
 
             <div className="tipsntrick">
                 <Link to="/the-last-of-us-part-2/tips"
@@ -47,6 +46,7 @@ const TLOUP2 =() => {
                 </Link>
 
             </div>
+        </div>
         </>
     )
 }

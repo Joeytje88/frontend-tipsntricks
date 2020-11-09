@@ -13,21 +13,20 @@ const SeaOfThieves = () => {
     return (
         <>
             <Navigation/>
-            <div className="game-page">
+        <div className="game-page">
                 <div className="game-description">
-                    <div className="games-img">
-                        <Image
+                        <img
                             alt="Sea Of Thieves"
-                            link={Sea_of_Thieves}/>
-                    </div>
+                            src={Sea_of_Thieves}
+                            className="games-img"/>
 
-                    <p className="paragraaf">Sea of Thieves
-                        <p>ontwikkelaar: Rare</p>
-                        <p>uitgever: Xbox Game Studios</p>
-                        <p> release: 20 april 2017</p>
-                        <p>platforms: pc, Xbox One</p> </p>
+                    <p className="paragraaf"><strong>Sea of Thieves</strong>
+                        <p><strong>ontwikkelaar:</strong> Rare</p>
+                        <p><strong>uitgever:</strong> Xbox Game Studios</p>
+                        <p><strong>release:</strong> 20 april 2017</p>
+                        <p><strong>platforms:</strong> pc, Xbox One</p> </p>
                 </div>
-            </div>
+
 
             <div className="tipsntrick">
                 <Link to="/sea-of-thieves/samenspelen"
@@ -64,6 +63,7 @@ const SeaOfThieves = () => {
                         name="Deel hier jouw mooiste screenshots van Sea of Thieves!"/>
                 </Link>
             </div>
+        </div>
         </>
     )
 }

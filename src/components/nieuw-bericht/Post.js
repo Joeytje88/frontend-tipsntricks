@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import axios from 'axios';
 import "./Post.css";
 import {Button} from "../button/Button";
+import Navigation from "../navbar/Navigation";
 
 const Post = () => {
     const [posttitle, setPosttitle] = useState("");
@@ -76,7 +77,7 @@ const Post = () => {
 
     const changePost = async () => {
         try {
-            const editPost = await axios.put(`http://localhost:8080/api/post/29`,{
+            const editPost = await axios.put(`http://localhost:8080/api/post/13`,{
                 postURL: inputUrl,
                 postTitle: posttitle,
                 postText: text,
@@ -91,6 +92,8 @@ const Post = () => {
         }
     }
     return (
+        <>
+            <Navigation/>
        <div
             className="new-post">
             <h2 className="post-url">De url van de post</h2>
@@ -167,7 +170,7 @@ const Post = () => {
 
        </div>
 
-
+</>
     )
 }
 export default Post;

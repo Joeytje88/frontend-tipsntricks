@@ -5,8 +5,7 @@ import {Link} from "react-router-dom";
 import Ghost_of_Tsushima from '../../../assets/afbeeldingen/Ghost_of_Tsushima .png';
 import Ghost_of_Tsushima_screenshots from '../../../assets/afbeeldingen/Ghost_of_Tsushima_screenshots.png';
 import Ghost_of_Tsushima_legends from '../../../assets/afbeeldingen/Ghost_of_Tsushima_legends.png';
-import Ghost_of_tsushima_singleplayer from '../../../assets/afbeeldingen/Ghost_of_Tsushima_singleplayer.png';
-import Ghost_of_Tsushima_Top from '../../../assets/afbeeldingen/Ghost_of_Tsushima_Top.png';
+import Ghost_of_tsushima_Top from '../../../assets/afbeeldingen/Ghost_of_Tsushima_Top.png';
 import Navigation from "../../../components/navbar/Navigation";
 
 
@@ -17,17 +16,16 @@ const GhostofTsushima = () => {
             <>
                 <Navigation/>
                 <div className="game-description">
-                <div className="games-img">
-                    <Image
+                    <img
                         alt="Ghost of Tsushima"
-                        link={Ghost_of_Tsushima}/>
+                        src={Ghost_of_Tsushima}
+                        className="games-img"/>
 
                         <div className="paragraaf">Ghost of Tsushima
                             <p>ontwikkelaar: Sucker Punch</p>
                             <p>uitgever: Sony</p>
                             <p> release: 19 juli 2020 </p>
                             <p>platforms: PlayStation 4</p></div>
-                    </div>
                 </div>
 
                 <div className="tipsntrick">
@@ -43,19 +41,12 @@ const GhostofTsushima = () => {
                           className="link-item">
                         <Image
                             alt="Ghost of Tsushima Top"
-                            link={Ghost_of_tsushima_singleplayer}
+                            link={Ghost_of_tsushima_Top}
                             className="optional-img"
                             name="Zit je ergens vast in de singleplayer?"/>
                     </Link>
-                    <Link to="/ghost-of-tsushima/top"
-                          className="link-item">
-                        <Image
-                            alt="Ghost of Tsushima top"
-                            link={Ghost_of_Tsushima_Top}
-                            className="optional-img"
-                            name="Deel hier jouw beste ervaringen"/>
-                    </Link>
-
+                </div>
+                <div className="extra-img">
                     <Link exact to="/ghost-of-tsushima/legends"
                           className="link-item">
                         <Image

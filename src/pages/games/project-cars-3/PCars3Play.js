@@ -1,28 +1,99 @@
-import React from "react";
-import Project_Cars_3_play from '../../../assets/afbeeldingen/Project_Cars_3_play.png';
+import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comment/Comment";
+import axios from "axios";
+import CommentButton from "../../../components/button/CommentButton";
+import InputComment from "../../../components/comments/InputComment";
 
 const PCars3Play = () => {
+    const [post, setPost] = useState (null);
+    const [inputComment, setInputComment] = useState ("")
+
+    const userid = localStorage.getItem("user_id");
+
+    const changeComment = (e)=>{
+        setInputComment(e.target.value)
+    }
+
+    const handleClick = async () =>{
+        try {
+            const placecomment = await axios.post(`http://localhost:8080/api/post/51/comment/${userid}`,{
+                text: inputComment,
+            }).then(function (response) {
+                setInputComment("")
+                getpost();
+            })
+        } catch (error){
+            console.log(error)
+        }
+    }
+
+    const getpost = async ()=> {
+        try {
+            const result = await axios.get(`http://localhost:8080/api/post/51`)
+            setPost(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getpost();
+    }, [])
+
+
     return (
         <>
             <Navigation/>
-        <div className="topic-page">
-            <div className="topic-image">
-                <img src={Project_Cars_3_play}
-                     alt="Project Cars 3 samenspelen"
-                     className="game-topic-img"/>
+
+            <div className="topic-page">
+                {post !== null && <div className="new-post">
+                    <h2 className="post-title"> {post.postTitle} </h2>
+                    {post.categories !== null &&<h5>{post.categories}</h5>}
+                    <div className="post-picture">
+                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                    <p className="topic-text">{post.postText}</p></div>}
+                    <InputComment/>
+                <textarea
+                    className="comment-input"
+                    value={inputComment}
+                    onChange={changeComment}
+                    placeholder="schrijf hier je reactie"/> <br/>
+                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+                <CommentButton
+                    click={handleClick}
+                    disabled ={inputComment <1} />
+
+                {post !== null &&
+                post.postComments.map((entry) => {
+                    return (
+                        <div
+                            className="comment-section"
+                            key={entry.commentid}>
+                            <div className="comment-heading">
+                                <p>{entry.username}</p>
+                                <h6
+                                    className="delete-comment">
+                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    verwijder</h6>
+                                <h6 className="adjust-comment">
+                                    pas aan</h6>
+                            </div>
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
+                            </div>
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
+
+                        </div>)
+                })}
+
+
             </div>
-            <div className="topic-text">
-                <h3>Ben jij op zoek naar een geduchte tegenstander?</h3>
-                <p>Het is altijd leuk om een potje Project Cars 3 online te spelen, maar vind je normaliter in de online omgeving weinig
-                    geduchte tegenstanders? Of juist alleen maar tegenstanders van een hoger niveau? Dan kun je hier eventueel
-                    op zoek gaan naar iemand die ditzelfde ervaart. Laat dus vooral je PSN/ gamertag / Steam account achter!
-                </p>
-            </div>
-                <Comment />
-        </div>
-            </>
+
+        </>
     )
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 
 const Image = (props) => {
     return (
-        <div className="game-img">
+        <div className={props.class}>
             <img
                 src={props.link}
                 alt={props.alt}/>

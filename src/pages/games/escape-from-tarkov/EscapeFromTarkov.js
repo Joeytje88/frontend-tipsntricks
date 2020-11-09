@@ -13,17 +13,17 @@ const EscapeFromTarkov= () => {
         <>
             <Navigation/>
             <div className="game-page">
-
-                <Image
-                    alt="Escape from Tarkov"
-                    link={Escape_from_Tarkov}
-                    className="games-img"/>
                 <div className="game-description">
-                    <p className="paragraaf">Escape from Tarkov
+                <img
+                    alt="Escape from Tarkov"
+                    src={Escape_from_Tarkov}
+                    className="games-img"/>
+
+                    <div className="paragraaf">Escape from Tarkov
                         <p>ontwikkelaar: Battlestate Games</p>
                         <p>uitgever: Battlestate Games</p>
                         <p> release: 27 juli 2017</p>
-                        <p>platforms: pc</p> </p>
+                        <p>platforms: pc</p> </div>
                 </div>
             </div>
 
@@ -36,13 +36,13 @@ const EscapeFromTarkov= () => {
                         className="optional-img"
                         name="Op zoek naar teammaatjes?"/>
                 </Link>
-                <Link to="/escape-from-tarkov/controls"
+                <Link to="/escape-from-tarkov/tips"
                       className="link-item">
                     <Image
                         alt="Controls Escape from Tarkov"
                         link={Escape_from_Tarkov_top}
                         className="optional-img"
-                        name="De beste tips voor besturing/tips"/>
+                        name="Heb je nog tips voor Escape from Tarkov?"/>
                 </Link>
             </div>
         </>

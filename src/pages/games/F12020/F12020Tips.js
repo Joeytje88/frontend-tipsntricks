@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import F1_2020_tips from '../../../assets/afbeeldingen/F1_2020_tips.png';
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comment/Comment";
+import Comment from "../../../components/comments/Comment";
 import axios from "axios";
 import {Button} from "../../../components/button/Button";
 
@@ -21,6 +21,7 @@ const F12020Tips = () => {
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
+                getpost();
             })
         } catch (error){
             console.log(error)

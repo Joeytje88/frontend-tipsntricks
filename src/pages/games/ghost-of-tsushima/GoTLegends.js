@@ -1,29 +1,100 @@
-import Ghost_of_Tsushima_legends from '../../../assets/afbeeldingen/Ghost_of_Tsushima_legends.png';
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comment/Comment";
+import axios from "axios";
+import {Button} from "../../../components/button/Button";
+import CommentButton from "../../../components/button/CommentButton";
+import InputComment from "../../../components/comments/InputComment";
 
 const GotLegends = () => {
+    const [post, setPost] = useState (null);
+    const [inputComment, setInputComment] = useState ("")
+
+    const userid = localStorage.getItem("user_id");
+
+    const changeComment = (e)=>{
+        setInputComment(e.target.value)
+    }
+
+    const handleClick = async () =>{
+        try {
+            const placecomment = await axios.post(`http://localhost:8080/api/post/45/comment/${userid}`,{
+                text: inputComment,
+            }).then(function (response) {
+                setInputComment("")
+                getpost();
+            })
+        } catch (error){
+            console.log(error)
+        }
+    }
+
+    const getpost = async ()=> {
+        try {
+            const result = await axios.get(`http://localhost:8080/api/post/45`)
+            setPost(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getpost();
+    }, [])
+
+
     return (
         <>
             <Navigation/>
-        <div className="topic-page">
-            <div className="topic-image">
-                <img src={Ghost_of_Tsushima_legends}
-                     alt="Ghost of Tsushima Legends"
-                     className="game-topic-img"/>
-            </div>
-            <div className="topic-text">
-                <h3>Ghost of Tsushima legends samenspelen?</h3>
-                <p>Later dit najaar zal Ghost of Tsushima worden voorzien van een co-op modus door middel van de Legends uitbreiding.
-                    Ben je op zoek naar mensen om deze co-op missies mee te spelen? Deel hier dan alvast je PSN, zodat je straks meteen
-                    aan de slag kunt!
-                </p>
-            </div>
-               <Comment />
 
-        </div>
-            </>
+            <div className="topic-page">
+                {post !== null && <div className="new-post">
+                    <h2 className="post-title"> {post.postTitle} </h2>
+                    {post.categories !== null &&<h5>{post.categories}</h5>}
+                    <div className="post-picture">
+                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                    <p className="topic-text">{post.postText}</p></div>}
+                <InputComment/>
+                <textarea
+                    className="comment-input"
+                    value={inputComment}
+                    onChange={changeComment}
+                    placeholder="schrijf hier je reactie"/> <br/>
+                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+                <CommentButton
+                    click={handleClick}
+                    disabled ={inputComment <1} />
+
+                {post !== null &&
+                post.postComments.map((entry) => {
+                    return (
+                        <div
+                            className="comment-section"
+                            key={entry.commentid}>
+                            <div className="comment-heading">
+                                <p>{entry.username}</p>
+                                <h6
+                                    className="delete-comment">
+                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    verwijder</h6>
+                                <h6 className="adjust-comment">
+                                    pas aan</h6>
+                            </div>
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
+                            </div>
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
+
+                        </div>)
+                })}
+
+
+            </div>
+
+        </>
     )
 }
 export default GotLegends;

@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {useHistory} from "react-router-dom"
 import './Login.css'
 import Navigation from "../../components/navbar/Navigation";
-import {Button} from "../../components/button/Button";
 import axios from "axios";
 
 const Login = () => {
@@ -27,7 +26,7 @@ const Login = () => {
                 localStorage.setItem("token", response.data.accessToken)
                 localStorage.setItem("user_id", response.data.id)
                 alert ("Je bent ingelogd");
-                history.push("/profiel");
+                history.push("/");
             })
         } catch (error) {
             alert(error);
@@ -65,11 +64,11 @@ return (
                 onChange={(e) => setPassword(e.target.value)}/>
                 <br/>
 
-            <Button
-                className="button"
+            <button
+                className="login-button"
                 type="submit"
                 disabled={username === undefined}
-                onClick={handleSubmit}>login</Button>
+                onClick={handleSubmit}>login</button>
         </form>
 
             {username === undefined && <p>Je hebt geen gebruikersnaam ingevoerd!</p>}

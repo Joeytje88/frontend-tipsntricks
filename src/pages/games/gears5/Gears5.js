@@ -12,18 +12,17 @@ const Gears5 = () =>{
         <Navigation/>
     <div className="game-page">
         <div className="game-description">
-        <div className="games-img">
-            <Image
+            <img
                 alt="Gears 5"
-                link={Gears_5}/>
+                src={Gears_5}
+                className="games-img"/>
+
+            <p className="paragraaf"><strong>Gears 5</strong>
+                <p><strong>ontwikkelaar:</strong> The Iniative</p>
+                <p><strong>uitgever:</strong> Xbox Game Studios</p>
+                <p><strong>release: </strong>6 september 2019 </p>
+                <p><strong>platforms:</strong> pc, Xbox One</p></p>
         </div>
-            <p className="paragraaf">Gears 5
-                <p>ontwikkelaar: The Iniative</p>
-                <p>uitgever: Xbox Game Studios</p>
-                <p> release: 6 september 2019 </p>
-                <p>platforms: pc, Xbox One</p></p>
-        </div>
-    </div>
 
     <div className="tipsntrick">
         <Link to="/gears-5/samenspelen"
@@ -34,16 +33,19 @@ const Gears5 = () =>{
                 className="optional-img"
                 name="Op zoek naar teamgenoten?"/>
         </Link>
-        <Link to="/marvels-avengers/singleplayer"
+        <Link to="/gears-5/tips"
               className="link-item">
             <Image
-                alt="Marvel's Avengers singleplayer"
+                alt="Gears 5 tips"
                 link={Gears_5_tips}
                 className="optional-img"
-                name="Zit je ergens vast in de singleplayer?Of heb je nog goede tips?"/>
+                name="Zit je ergens vast in de singleplayer? Of heb je nog goede tips?"/>
         </Link>
     </div>
-            </>
+
+    </div>
+
+        </>
     )
 }
 

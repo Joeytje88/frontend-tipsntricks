@@ -11,6 +11,13 @@ import Post from "../nieuw-bericht/Post";
 import Account from "../../pages/account/Account";
 import Vacature from "../../pages/vacature/Vacature"
 
+import {
+    Headset,
+    Racewheel,
+    CustomPC,
+    MuisTB
+} from '../../pages/hardware';
+
 
 import {
     AnimalCrossing,
@@ -87,12 +94,82 @@ import {
 
 import {
     F12020Play,
-    F12020Controls,
-    F12020Time,
     F12020Tips
 } from '../../pages/games/F12020';
 
+import {
+    FortnitePlay,
+    FortniteLoadout,
 
+} from '../../pages/games/fortnite';
+
+import {
+    FH4Play,
+    FH4Tips,
+} from '../../pages/games/forza_horizon_4';
+
+import {
+    Gears5Play,
+    Gears5Tips,
+} from '../../pages/games/gears5';
+
+import {
+    GoTS,
+    GoTScreenshot,
+    GoTLegends
+}  from '../../pages/games/ghost-of-tsushima';
+
+
+import {
+    GroundedPlay,
+    GroundedCreaties,
+    GroundedSurvival,
+    GroundedTips
+} from '../../pages/games/grounded'
+
+
+import {
+    HyperScapePlay,
+    HyperScapeLoadout,
+} from '../../pages/games/hyperscape';
+
+
+import {
+    AvengersTip,
+    AvengersScreenshot,
+    AvengersPlay,
+    AvengersSingleplayer
+} from '../../pages/games/marvels-avengers';
+
+import {
+    PCars3Play,
+    PCars3Tips,
+} from '../../pages/games/project-cars-3';
+
+import {
+    SOTPlay,
+    SOTArena,
+    SOTTips,
+    SOTScreenshots
+} from '../../pages/games/sea-of-thieves'
+
+
+import {
+    SMG,
+    SM64,
+    SMS
+} from '../../pages/games/super-mario-3d-allstars'
+
+import {
+    TLOUP2Tips,
+    TLOUP2Collect
+} from '../../pages/games/the-last-of-us-part-2'
+
+
+import {
+    ZBotWTips,
+    ZBotWScreenshots
+} from '../../pages/games/zelda-botw';
 
 import XboxOne from "../../pages/xboxone/XboxOne";
 import PlayStation4 from "../../pages/playstation4/PlayStation4";
@@ -102,6 +179,9 @@ import NintendoSwitch from "../../pages/switch/NintendoSwitch";
 import PC from "../../pages/pc/PC";
 import XboxSeriesXS from "../../pages/xboxseriesx/XboxSeriesXS";
 import NewPost from "../../pages/newPost/NewPost";
+import Comment from "../comments/Comment";
+import PostOverview from "../../components/Post/PostOverview"
+import Privacybeleid from "../../pages/privacy/Privacybeleid";
 
 
 
@@ -115,6 +195,14 @@ const Routers = () => {
 
             <Route exact path="/nieuw-bericht">
                 <Post/>
+            </Route>
+
+            <Route exact path="/comments">
+                <Comment />
+            </Route>
+
+            <Route exact path="/posts">
+                <PostOverview />
             </Route>
 
 
@@ -149,6 +237,19 @@ const Routers = () => {
             <Route exact path="/hardware">
                 <Hardware />
             </Route>
+            <Route exact path="/hardware/pc">
+                <CustomPC />
+            </Route>
+            <Route exact path="/hardware/racewheels">
+                <Racewheel />
+            </Route>
+            <Route exact path="/hardware/muis-toetsenbord">
+                <MuisTB />
+            </Route>
+            <Route exact path="/hardware/headsets">
+                <Headset />
+            </Route>
+
 
             <Route exact path="/contact">
                 <Contact/>
@@ -175,8 +276,6 @@ const Routers = () => {
                 <Registreer />
             </Route>
 
-
-
             <Route exact path="/among-us/">
                 <AmongUs />
             </Route>
@@ -201,7 +300,6 @@ const Routers = () => {
             <Route exact path="/apex-legends/">
                 <ApexLegends />
             </Route>
-
             <Route exact path="/apex-legends/samenspelen">
                 <ApexLegendsPlay />
             </Route>
@@ -232,7 +330,6 @@ const Routers = () => {
                 <Loadouts/>
             </Route>
 
-
             <Route exact path="/days-gone">
                 <DaysGone />
             </Route>
@@ -243,11 +340,9 @@ const Routers = () => {
                 <DGscreenshots />
             </Route>
 
-
             <Route exact path="/dreams">
                 <Dreams />
             </Route>
-
             <Route exact path="/dreams/tips">
                 <DreamsTips />
             </Route>
@@ -262,7 +357,6 @@ const Routers = () => {
             <Route exact path="/escape-from-tarkov/samenspelen">
                 <EFTPlay/>
             </Route>
-
             <Route exact path="/escape-from-tarkov/tips">
                 <EFTTips/>
             </Route>
@@ -295,32 +389,74 @@ const Routers = () => {
             <Route exact path="/fortnite">
                 <Fortnite />
             </Route>
+            <Route exact path="/fortnite/samenspelen">
+                <FortnitePlay />
+            </Route>
+            <Route exact path="/fortnite/loadout">
+            <FortniteLoadout />
+        </Route>
 
+            <Route exact path="/forza-horizon-4">
+                <FH4 />
+            </Route>
+            <Route exact path="/forza-horizon-4/samenspelen">
+                <FH4Play />
+            </Route>
+            <Route exact path="/forza-horizon-4/tips">
+                <FH4Tips />
+            </Route>
 
 
             <Route exact path="/flight-simulator">
                 <FlightSimulator />
             </Route>
-
-            <Route exact path="/forza-horizon-4">
-                <FH4 />
-            </Route>
-
-
             <Route exact path="/gears-5">
                 <Gears5 />
+            </Route>
+            <Route exact path="/gears-5/samenspelen">
+                <Gears5Play />
+            </Route>
+            <Route exact path="/gears-5/tips">
+                <Gears5Tips />
             </Route>
 
             <Route exact path="/ghost-of-tsushima">
                 <GhostofTsushima/>
             </Route>
+            <Route exact path="/ghost-of-tsushima/screenshots">
+                <GoTScreenshot/>
+            </Route>
+            <Route exact path="/ghost-of-tsushima/singleplayer">
+                <GoTS/>
+            </Route>
+            <Route exact path="/ghost-of-tsushima/legends">
+                <GoTLegends/>
+            </Route>
 
             <Route exact path="/grounded">
                 <Grounded />
             </Route>
+            <Route exact path="/grounded/samenspelen">
+                <GroundedPlay />
+            </Route>
+            <Route exact path="/grounded/creaties">
+                <GroundedCreaties />
+            </Route>
+            <Route exact path="/grounded/survival">
+                <GroundedSurvival />
+            </Route>
+            <Route exact path="/grounded/tips">
+                <GroundedTips />
+            </Route>
 
-            <Route exact path="/hyperscape">
+            <Route exact path="/hyperscape/">
                 <HyperScape />
+            </Route>
+            <Route exact path="/hyperscape/samenspelen">
+                <HyperScapePlay />
+            </Route>
+            <Route exact path="/hyperscape/loadout">
+                <HyperScapeLoadout />
             </Route>
 
             <Route exact path="/insurgency-sandstorm">
@@ -331,28 +467,88 @@ const Routers = () => {
                 <MarvelsAvengers />
             </Route>
 
+            <Route exact path="/marvels-avengers/co-op">
+                <AvengersPlay />
+            </Route>
+            <Route exact path="/marvels-avengers/screenshots">
+                <AvengersScreenshot />
+            </Route>
+            <Route exact path="/marvels-avengers/singleplayer">
+                <AvengersSingleplayer />
+            </Route>
+            <Route exact path="/marvels-avengers/tips">
+                <AvengersTip />
+            </Route>
+
             <Route exact path="/paper-mario-the-origami-king">
                 <PaperMario/>
             </Route>
+
             <Route exact path="/project-cars-3">
                 <ProjectCars3 />
+            </Route>
+            <Route exact path="/project-cars-3/samenspelen">
+                <PCars3Play />
+            </Route>
+            <Route exact path="/project-cars-3/tips">
+                <PCars3Tips />
             </Route>
 
 
             <Route exact path="/sea-of-thieves">
                 <SeaOfThieves />
             </Route>
+            <Route exact path="/sea-of-thieves/samenspelen">
+                <SOTPlay/>
+            </Route>
+            <Route exact path="/sea-of-thieves/tips">
+                <SOTTips/>
+            </Route>
+            <Route exact path="/sea-of-thieves/screenshots">
+                <SOTScreenshots/>
+            </Route>
+            <Route exact path="/sea-of-thieves/arena">
+                <SOTArena/>
+            </Route>
+
 
             <Route exact path="/super-mario-3d-allstars">
                 <SM3DA />
             </Route>
+            <Route exact path="/super-mario-3d-allstars/64">
+                <SM64 />
+            </Route>
+            <Route exact path="/super-mario-3d-allstars/sunshine">
+                <SMS />
+            </Route>
+            <Route exact path="/super-mario-3d-allstars/galaxy">
+                <SMG />
+            </Route>
+
 
             <Route exact path="/the-last-of-us-part-2">
                 <TLOUP2/>
             </Route>
 
+            <Route exact path="/the-last-of-us-part-2/collectibles">
+                <TLOUP2Collect/>
+            </Route>
+            <Route exact path="/the-last-of-us-part-2/tips">
+                <TLOUP2Tips/>
+            </Route>
+
             <Route exact path="/breath-of-the-wild">
                 <ZBotW/>
+            </Route>
+            <Route exact path="/breath-of-the-wild/tips">
+                <ZBotWTips/>
+            </Route>
+            <Route exact path="/breath-of-the-wild/screenshots">
+                <ZBotWScreenshots />
+            </Route>
+
+            <Route exact path="/privacybeleid">
+                <Privacybeleid />
             </Route>
 
         </Switch>

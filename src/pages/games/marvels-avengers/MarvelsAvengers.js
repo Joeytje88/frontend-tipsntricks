@@ -15,19 +15,17 @@ const MarvelsAvengers = () => {
             <Navigation/>
             <div className="game-page">
                 <div className="game-description">
-                    <div className="games-img">
-                <Image
+                <img
                     alt="Marvel's Avengers"
-                    link={Marvels_Avengers}/>
-                    </div>
+                    src={Marvels_Avengers}
+                    className="games-img"/>
 
-                    <p className="paragraaf">Marvel's Avengers
+                    <div className="paragraaf">Marvel's Avengers
                         <p>ontwikkelaar: Crystal Dynamics</p>
                         <p>uitgever: Square Enix</p>
                         <p> release: 4 september 2020 </p>
-                        <p>platforms: pc. PlayStation 4, Xbox One</p></p>
+                        <p>platforms: pc. PlayStation 4, Xbox One</p></div>
                 </div>
-            </div>
 
             <div className="tipsntrick">
                 <Link to="/marvels-avengers/screenshots"
@@ -64,6 +62,8 @@ const MarvelsAvengers = () => {
                         name="Deel hier je gamertag/ PSN om samen co-op missies te doen"/>
                 </Link>
             </div>
+            </div>
+
         </>
     )
 }

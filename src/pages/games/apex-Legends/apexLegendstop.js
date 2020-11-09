@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from "react";
-import Apex_Legends_top from "../../../assets/afbeeldingen/Apex_Legends_top.png";
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comment/Comment";
 import axios from "axios";
-import {Button} from "../../../components/button/Button";
+import InputComment from "../../../components/comments/InputComment";
 
 const ApexLegendsTop = () => {
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
 
     const userid = localStorage.getItem("user_id");
-
+    const username = localStorage.getItem("username")
     const changeComment = (e)=>{
         setInputComment(e.target.value)
     }
@@ -54,6 +52,7 @@ const ApexLegendsTop = () => {
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
+              <InputComment />
                 <textarea
                     className="comment-input"
                     value={inputComment}
@@ -61,34 +60,37 @@ const ApexLegendsTop = () => {
                     placeholder="schrijf hier je reactie"/> <br/>
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
 
-
-                <Button
+                <button
                     onClick={handleClick}
-                    disabled={inputComment === " "}>
-                    Plaats je reactie</Button> <br/> <br/>
+                    disabled={inputComment <1}
+                    className="comment-button">
+                    Plaats je reactie</button> <br/> <br/>
 
+                {post !== null &&
+                post.postComments.map((entry) => {
+                    return (
+                        <div
+                            className="comment-section"
+                            key={entry.commentid}>
+                            <div className="comment-heading">
+                                <p>{entry.username}</p>
+                                <h6
+                                    className="delete-comment">
+                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    verwijder</h6>
+                                <h6 className="adjust-comment">
+                                    pas aan</h6>
+                            </div>
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
+                            </div>
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
 
-                {/*{post !== null &&*/}
-                {/*<div*/}
-                {/*    className="comment-section">*/}
-                {/*    <div className="comment-heading">*/}
-                {/*        <p*/}
-                {/*            className="username-comment">{post.postComments[0].commentid}</p>*/}
-                {/*        <h6*/}
-                {/*            className="delete-comment">*/}
-                {/*            /!*onClick={()=> deleteComment(comment.commentid)}>*!/*/}
-                {/*            verwijder</h6>*/}
-                {/*        <h6 className="adjust-comment">*/}
-                {/*            pas aan</h6>*/}
-                {/*    </div>*/}
-                {/*    <div className="comment">*/}
-                {/*        {post.postComments[0].text}*/}
-                {/*    </div>*/}
-                {/*    /!*<div className="comment-img">*!/*/}
-                {/*    /!*    {image !== null && <img src={image} alt="plaatje comment"/>}*!/*/}
-                {/*    /!*</div>*!/*/}
-
-                {/*</div>}*/}
+                        </div>)
+                })}
 
             </div>
 

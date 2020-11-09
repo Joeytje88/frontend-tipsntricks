@@ -12,16 +12,16 @@ const FH4 = () =>{
             <Navigation/>
             <div className="game-page">
                 <div className="game-description">
-                    <div className="games-img">
-                        <Image
+                        <img
                             alt="Forza Horizon 4"
-                            link={Forza_Horizon_4}/>
-                    </div>
-                    <p className="paragraaf">Forza Horizon 4
-                        <p>ontwikkelaar: Playground Games</p>
-                        <p>uitgever: Xbox Game Studios</p>
-                        <p> release: 28 september 2018 </p>
-                        <p>platforms: pc, Xbox One</p></p>
+                            src={Forza_Horizon_4}
+                            className="games-img"/>
+
+                    <div className="paragraaf"><strong>Forza Horizon 4</strong>
+                        <p><strong>ontwikkelaar:</strong> Playground Games</p>
+                        <p><strong>uitgever:</strong> Xbox Game Studios</p>
+                        <p><strong>release:</strong> 28 september 2018 </p>
+                        <p><strong>platforms:</strong> pc, Xbox One</p></div>
                 </div>
             </div>
 

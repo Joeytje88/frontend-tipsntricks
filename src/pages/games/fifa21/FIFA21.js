@@ -6,6 +6,7 @@ import FIFA_21_play from '../../../assets/afbeeldingen/FIFA_21_Play.png';
 import FIFA_21_Volta from '../../../assets/afbeeldingen/FIFA_21_Volta.png';
 import FIFA_21_FUT from '../../../assets/afbeeldingen/FIFA_21_FUT.png';
 import Navigation from "../../../components/navbar/Navigation";
+import "../games.css"
 
 const FIFA21 = () => {
     return (
@@ -13,11 +14,10 @@ const FIFA21 = () => {
             <Navigation/>
             <div className="game-page">
                 <div className="game-description">
-                <div className="games-img">
-                    <Image
+                    <img
                         alt="FIFA 21"
-                        link={FIFA_21}/>
-                </div>
+                        src={FIFA_21}
+                        className="games-img"/>
 
                     <p className="paragraaf">FIFA 21
                         <p>ontwikkelaar: EA Sports</p>
@@ -25,7 +25,7 @@ const FIFA21 = () => {
                         <p> release: 9 oktober 2020</p>
                         <p>platforms: pc, PlayStation 4, Xbox One</p> </p>
                 </div>
-            </div>
+
 
             <div className="tipsntrick">
                 <Link to="/fifa-21/samenspelen"
@@ -45,7 +45,8 @@ const FIFA21 = () => {
                         className="optional-img"
                         name="Heb jij nog tips voor Volta? Of wil je graag wat meer weten erover?"/>
                 </Link>
-
+            </div>
+                <div className="extra-img">
                 <Link exact to="/fifa-21/fut"
                       className="link-item">
                     <Image
@@ -54,6 +55,7 @@ const FIFA21 = () => {
                         className="optional-img"
                         name="Heb jij vragen over FUT? Of juist goede tips?"/>
                 </Link>
+                </div>
             </div>
         </>
     )

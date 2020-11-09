@@ -1,27 +1,97 @@
-import React from "react";
-import Last_of_Us_Part_2_survival
-    from "../../../assets/afbeeldingen/Last_of_Us_Part_2_survival.png";
+import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comment/Comment";
+import axios from "axios";
+import CommentButton from "../../../components/button/CommentButton";
+import InputComment from "../../../components/comments/InputComment";
 
 const TLOUP2Tips = () => {
+    const [post, setPost] = useState (null);
+    const [inputComment, setInputComment] = useState ("")
+
+    const userid = localStorage.getItem("user_id");
+
+    const changeComment = (e)=>{
+        setInputComment(e.target.value)
+    }
+
+    const handleClick = async () =>{
+        try {
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/64`,{
+                text: inputComment,
+            }).then(function (response) {
+                setInputComment("")
+                getpost();
+            })
+        } catch (error){
+            console.log(error)
+        }
+    }
+
+    const getpost = async ()=> {
+        try {
+            const result = await axios.get(`http://localhost:8080/api/post/64`)
+            setPost(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getpost();
+    }, [])
+
+
     return (
         <>
             <Navigation/>
+
             <div className="topic-page">
-                <div className="topic-image">
-                    <img src={Last_of_Us_Part_2_survival}
-                         className="game-topic-img"
-                         alt="the Last of Us Part 2 tips"/>
-                </div>
-                <div className="topic-text">
-                    <h3>Heb je nog handige tips voor The Last of Us Part 2</h3>
-                    <p>Heb je nog handige tips voor The Last of Us Part 2? Of loop je ergens vast en weet je jezelf geen raad meer?
-                        Deel hier al je tips/ vragen met onze community!
-                    </p>
-                </div>
-            <Comment/>
+                {post !== null && <div className="new-post">
+                    <h2 className="post-title"> {post.postTitle} </h2>
+                    {post.categories !== null &&<h5>{post.categories}</h5>}
+                    <div className="post-picture">
+                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                    <p className="topic-text">{post.postText}</p></div>}
+                    <InputComment/>
+                <textarea
+                    className="comment-input"
+                    value={inputComment}
+                    onChange={changeComment}
+                    placeholder="schrijf hier je reactie"/> <br/>
+                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+                <CommentButton
+                    click={handleClick}
+                    disabled ={inputComment <1} />
+
+                {post !== null &&
+                post.postComments.map((entry) => {
+                    return (
+                        <div
+                            className="comment-section"
+                            key={entry.commentid}>
+                            <div className="comment-heading">
+                                <p>{entry.username}</p>
+                                <h6
+                                    className="delete-comment">
+                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    verwijder</h6>
+                                <h6 className="adjust-comment">
+                                    pas aan</h6>
+                            </div>
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
+                            </div>
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
+
+                        </div>)
+                })}
+
             </div>
+
         </>
     )
 }

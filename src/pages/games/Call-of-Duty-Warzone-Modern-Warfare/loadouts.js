@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import {Button} from "../../../components/button/Button";
+import InputComment from "../../../components/comments/InputComment";
 
 const Loadouts = () => {
     const [post, setPost] = useState (null);
@@ -52,6 +53,7 @@ const Loadouts = () => {
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
+                    <InputComment/>
                 <textarea
                     className="comment-input"
                     value={inputComment}

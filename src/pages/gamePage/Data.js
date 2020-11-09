@@ -4,7 +4,7 @@ export const gameSection1= {
     lightTextDesc: false,
     topLine: 'Call of Duty Warzone / Modern Warfare',
     description:
-        'Ben je helemaal verdwaald in de speeltuin van Grounded? Of heb je nog handige tips voor de community?.' +
+        'Ben je op zoek naar teamgenoten? Of heb je nog handige tips voor de community?' +
         'Klik dan snel verder',
     buttonLabel: 'Warzone/ Modern Warfare',
     link:"/call-of-duty-warzone-modern-warfare",
@@ -61,8 +61,8 @@ export const gameSection5= {
     lightTextDesc: false,
     topLine: 'FIFA 21',
     description:
-        'Ben jij de FUT kampioen die graag zijn ervaringen wilt delen? Of juist op zoek naar handige tips voor Volta? Je weet wat je moet doen!' +
-        'Klik dan snel verder',
+        'Ben jij de FUT kampioen die graag zijn ervaringen wilt delen? Of juist op zoek naar handige tips voor Volta?' +
+        ' Klik dan snel verder',
     buttonLabel: 'FIFA 21',
     link:"/fifa-21",
     imgStart: 'start',

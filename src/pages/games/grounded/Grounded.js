@@ -13,13 +13,12 @@ const Grounded = () => {
     return (
         <>
             <Navigation/>
-            <div className="game-page">
+        <div className="game-page">
                 <div className="game-description">
-                <div className="games-img">
-                    <Image
+                    <img
                         alt="Grounded"
-                        link={Grounded1}/>
-                </div>
+                        src={Grounded1}
+                        className="games-img"/>
 
                     <p className="paragraaf">Grounded
                         <p>ontwikkelaar: Obsidian Entertainment</p>
@@ -27,7 +26,7 @@ const Grounded = () => {
                         <p> release: 28 juli 2020 (early access)</p>
                         <p>platforms: Xbox one</p> </p>
                 </div>
-            </div>
+
 
             <div className="tipsntrick">
                 <Link to="/grounded/samenspelen"
@@ -64,6 +63,7 @@ const Grounded = () => {
                         name="Heb jij nog meer tips voor Grounded?"/>
                 </Link>
             </div>
+        </div>
         </>
     )
 }

@@ -1,30 +1,100 @@
-import React from 'react'
-import PaperMarioOrigamiKing from '../../../assets/afbeeldingen/PaperMarioOrigamiKing.png'
+import React, {useEffect, useState} from 'react'
 import Navigation from "../../../components/navbar/Navigation";
-import Image from "../../../components/image/Image";
-import Comment from "../../../components/comment/Comment";
-
+import axios from "axios";
+import InputComment from "../../../components/comments/InputComment";
+import CommentButton from "../../../components/button/CommentButton";
 const PaperMario = () => {
+    const[post, setPost] = useState(null)
+    const [inputComment, setInputComment] = useState("")
+
+    const userid = localStorage.getItem("user_id")
+
+    const handleComment = (e) =>{
+        setInputComment(e.target.value)
+    }
+
+    const getpost = async ()=> {
+        try {
+            const result = await axios.get(`http://localhost:8080/api/post/53`)
+            setPost(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleClick = async () =>{
+        try {
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/53`,{
+                text: inputComment,
+            }).then(function (response) {
+                setInputComment("")
+                getpost();
+            })
+        } catch (error){
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getpost();
+    }, [])
     return (
         <>
-            <Navigation/>
-            <div className="game-page">
-                <div className="game-description">
-                    <div className="games-img">
-                        <Image
-                            alt="Paper Mario: The Origami King"
-                            link={PaperMarioOrigamiKing}/>
-                    </div>
-                    <p className="paragraaf">Paper Mario: The Origami King
-                        <p>ontwikkelaar: Nintendo</p>
-                        <p>uitgever: Nintendo</p>
-                        <p>release: 18 juli 2020</p>
-                        <p>platforms: Nintendo Switch</p></p>
-                </div>
-            </div>
+        <Navigation/>
+        <div className="topic-page">
+            {post !== null && <>
+                <h2 className="post-title"> {post.postTitle} </h2>
+                <div className="postpicture">
+                    <img src={post.picture} alt = "Paper Mario: The Origami King"/></div>
+            </>}
+                    <div className="paragraaf"><strong>ontwikkelaar:</strong> Nintendo
+                        <p><strong>uitgever:</strong> Nintendo</p>
+                        <p><strong>release:</strong> 18 juli 2020</p>
+                        <p><strong>platforms:</strong> Nintendo Switch</p>
 
-            <h3>Heb je vragen of tips over Paper Mario: the Origami King? Deel deze dan hier!</h3>
-            <Comment/>
+                        {post !== null && <h4 className="topic-text">{post.postText}</h4>}
+                        <InputComment/>
+                        <textarea
+                            className="comment-input"
+                            value={inputComment}
+                            onChange={handleComment}
+                            placeholder="schrijf hier je reactie"/> <br/>
+                        {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+
+                        <CommentButton
+                            click={handleClick}
+                            disabled ={inputComment <1} />
+
+                        {post !== null &&
+                        post.postComments.map((entry) => {
+                            return (
+                                <div
+                                    className="comment-section"
+                                    key={entry.commentid}>
+                                    <div className="comment-heading">
+                                        <p>{entry.username}</p>
+                                        <h6
+                                            className="delete-comment">
+                                            {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                            verwijder</h6>
+                                        <h6 className="adjust-comment">
+                                            pas aan</h6>
+                                    </div>
+                                    <div className="comment"
+                                         key={entry.text}>
+                                        {entry.text}
+                                    </div>
+                                    <div className="comment-img">
+                                        {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                                    </div>
+
+                                </div>)
+                        })}
+
+                    </div>
+
+        </div>
 </>
             )
 }

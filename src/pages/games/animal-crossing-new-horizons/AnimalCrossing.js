@@ -11,7 +11,7 @@ import Animal_Crossing_New_Horizons_knollen
 import Animal_Crossing_New_Horizons_samenspelen
     from '../../../assets/afbeeldingen/Animal_Crossing_New_Horizons_samenspelen.png';
 import Navigation from "../../../components/navbar/Navigation";
-
+import "../games.css";
 
 const AnimalCrossing = () => {
     return (
@@ -25,13 +25,13 @@ const AnimalCrossing = () => {
                     className="games-img"
                     />
 
-                    <p className="paragraaf">Animal Crossing: New Horizons
-                        <p>ontwikkelaar: Nintendo</p>
-                        <p>uitgever: Nintendo</p>
-                        <p>release: 20 maart 2020</p>
-                        <p>platforms: Nintendo Switch</p> </p>
+                    <div className="paragraaf"><strong>Animal Crossing: New Horizons</strong>
+                        <p><strong>ontwikkelaar:</strong> Nintendo</p>
+                        <p><strong>uitgever:</strong> Nintendo</p>
+                        <p><strong>release:</strong> 20 maart 2020</p>
+                        <p><strong>platforms:</strong> Nintendo Switch</p> </div>
                 </div>
-            </div>
+
 
             <div className="tipsntrick">
                 <Link to="/animal-crossing-new-horizons/samenspelen"
@@ -67,6 +67,7 @@ const AnimalCrossing = () => {
                         className="optional-img"
                         name="De makkelijkste en snelste manieren om knollen te verzamelen/"/>
                 </Link>
+            </div>
             </div>
             </>
     )

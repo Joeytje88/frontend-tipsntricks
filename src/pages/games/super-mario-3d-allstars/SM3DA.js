@@ -17,18 +17,16 @@ const SM3DA =() => {
             <Navigation/>
             <div className="game-page">
                 <div className="game-description">
-                    <div className="games-img">
-                        <Image
+                        <img
                             alt="Super Mario 3D All-Stars"
-                            link={SuperMario3D}/>
-                    </div>
-                    <p className="paragraaf">Super Mario 3D All-Stars
-                        <p>ontwikkelaar: Nintendo</p>
-                        <p>uitgever: Nintendo</p>
-                        <p> release: 18 september 2020</p>
-                        <p>platforms: Nintendo Switch</p></p>
+                            src={SuperMario3D}
+                            className="games-img"/>
+                    <div className="paragraaf"><strong>Super Mario 3D All-Stars</strong>
+                        <p><strong>ontwikkelaar:</strong> Nintendo</p>
+                        <p><strong>uitgever:</strong> Nintendo</p>
+                        <p><strong>release:</strong> 18 september 2020</p>
+                        <p><strong>platforms:</strong> Nintendo Switch</p></div>
                 </div>
-            </div>
 
             <div className="tipsntrick">
                 <Link to="/super-mario-3d-allstars/64"
@@ -47,6 +45,8 @@ const SM3DA =() => {
                         className="optional-img"
                         name="Heb je nog tips of vragen over Super Mario Sunshine?"/>
                 </Link>
+            </div>
+              <div className="extra-img">
                 <Link to="/super-mario-3d-allstars/galaxy"
                       className="link-item">
                     <Image
@@ -55,7 +55,9 @@ const SM3DA =() => {
                         className="center-img"
                         name="Heb je nog tips of vragen over Super Mario Galaxy?"/>
                 </Link>
-            </div>
+             </div>
+        </div>
+
         </>
     )
 }

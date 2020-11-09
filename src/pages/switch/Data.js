@@ -4,8 +4,8 @@ export const gameSectionOne = {
     lightTextDesc: false,
     topLine: 'Animal Crossing New Horizons',
     description:
-        'Wil je vrienden maken in Animal Crossing? Of tips delen over hoe je het beste klingels kunt scoren? Of wil je graag jouw inspiratie delen?.' +
-        'Klik dan snel verder',
+        'Wil je vrienden maken in Animal Crossing? Of tips delen over hoe je het beste klingels kunt scoren? Of wil je graag jouw inspiratie delen?' +
+        ' Klik dan snel verder',
     buttonLabel: 'Animal Crossing New Horizons',
     link:"/animal-crossing-new-horizons",
     imgStart: 'start',
@@ -20,7 +20,7 @@ export const gameSectionTwo = {
     topLine: 'Super Mario 3D AllStars',
     description:
         'Weet je niet hoe je alle sterren in Super Mario 64 moet halen? Of kom je niet verder in Super Mario Sunshine?' +
-        'Klik dan snel verder om het aan de community te vragen!',
+        ' Klik dan snel verder!',
     buttonLabel: 'Super Mario 3D All-Stars',
     link: "/super-mario-3d-allstars",
     imgStart: '',
@@ -35,7 +35,7 @@ export const gameSectionThree = {
     topLine: 'Paper Mario: the Origami King',
     description:
         "Loop je ergens vast in Paper Mario: the Origami King? Je weet wat je te doen staat.",
-    buttonLabel: 'Days Gone',
+    buttonLabel: 'Paper Mario',
     link:'/paper-mario-the-origami-king',
     imgStart: 'start',
     img: 'images/PaperMarioOrigamiKing.png',

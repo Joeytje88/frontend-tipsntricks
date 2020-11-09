@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from "react";
-import Animal_Crossing_New_Horizons_samenspelen
-from '../../../assets/afbeeldingen/Animal_Crossing_New_Horizons_samenspelen.png';
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comment/Comment";
 import axios from "axios";
-import {Button} from "../../../components/button/Button";
+import InputComment from "../../../components/comments/InputComment";
+
 
 const ACNHPlay = () => {
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
 
     const userid = localStorage.getItem("user_id");
+    const username = localStorage.getItem("username")
 
     const changeComment = (e)=>{
         setInputComment(e.target.value)
@@ -22,6 +21,7 @@ const ACNHPlay = () => {
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
+                getpost();
             })
         } catch (error){
             console.log(error)
@@ -51,47 +51,57 @@ const ACNHPlay = () => {
                     <h2 className="post-title"> {post.postTitle} </h2>
                     {post.categories !== null &&<h5>{post.categories}</h5>}
                     <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img src={post.picture} alt = "Animal Crossing New Horizons"/></div>
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
+                <InputComment/>
+
                 <textarea
                     className="comment-input"
                     value={inputComment}
                     onChange={changeComment}
                     placeholder="schrijf hier je reactie"/> <br/>
-                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
 
 
-                <Button
+
+                <button
                     onClick={handleClick}
-                    disabled={inputComment === " "}>
-                    Plaats je reactie</Button> <br/> <br/>
+                    disabled={inputComment <1}
+                    className="comment-button">
+                    Plaats je reactie</button> <br/> <br/>
 
 
-                {/*{post !== null &&*/}
-                {/*<div*/}
-                {/*    className="comment-section">*/}
-                {/*    <div className="comment-heading">*/}
-                {/*        <p*/}
-                {/*            className="username-comment">{post.postComments[0].commentid}</p>*/}
-                {/*        <h6*/}
-                {/*            className="delete-comment">*/}
-                {/*            /!*onClick={()=> deleteComment(comment.commentid)}>*!/*/}
-                {/*            verwijder</h6>*/}
-                {/*        <h6 className="adjust-comment">*/}
-                {/*            pas aan</h6>*/}
-                {/*    </div>*/}
-                {/*    <div className="comment">*/}
-                {/*        {post.postComments[0].text}*/}
-                {/*    </div>*/}
-                {/*    /!*<div className="comment-img">*!/*/}
-                {/*    /!*    {image !== null && <img src={image} alt="plaatje comment"/>}*!/*/}
-                {/*    /!*</div>*!/*/}
 
-                {/*</div>}*/}
+                    {post !== null &&
+                    post.postComments.map((entry) => {
+                        return (
+                            <div
+                                className="comment-section"
+                                key={entry.commentid}>
+                                <div className="comment-heading">
+                                    <p>{entry.username}</p>
+                                    <h6
+                                        className="delete-comment">
+                                        {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                        verwijder</h6>
+                                    <h6 className="adjust-comment">
+                                        pas aan</h6>
+                                </div>
+                                <div className="comment"
+                                     key={entry.text}>
+                                    {entry.text}
+                                </div>
+                                <div className="comment-img">
+                                    {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                                </div>
+
+                            </div>)
+                    })}
+
 
             </div>
+
 
         </>
     )

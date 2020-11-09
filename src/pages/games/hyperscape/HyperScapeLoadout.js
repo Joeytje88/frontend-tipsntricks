@@ -1,28 +1,100 @@
-import React from "react";
-import HyperScape_loadout from "../../../assets/afbeeldingen/HyperScape_loadout.png";
+import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comment/Comment";
+import axios from "axios";
+import CommentButton from "../../../components/button/CommentButton";
+import InputComment from "../../../components/comments/InputComment";
 
 
 const HyperScapeLoadout = () => {
+    const [post, setPost] = useState (null);
+    const [inputComment, setInputComment] = useState ("")
+
+    const userid = localStorage.getItem("user_id");
+
+    const changeComment = (e)=>{
+        setInputComment(e.target.value)
+    }
+
+    const handleClick = async () =>{
+        try {
+            const placecomment = await axios.post(`http://localhost:8080/api/post/34/comment/${userid}`,{
+                text: inputComment,
+            }).then(function (response) {
+                setInputComment("")
+                getpost();
+            })
+        } catch (error){
+            console.log(error)
+        }
+    }
+
+    const getpost = async ()=> {
+        try {
+            const result = await axios.get(`http://localhost:8080/api/post/34`)
+            setPost(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getpost();
+    }, [])
+
+
     return (
         <>
             <Navigation/>
-        <div className="topic-page">
-            <div className="topic-image">
-                <img src={HyperScape_loadout}
-                     alt="HyperScape loadout"
-                     className="game-topic-img"/>
+
+            <div className="topic-page">
+                {post !== null && <div className="new-post">
+                    <h2 className="post-title"> {post.postTitle} </h2>
+                    {post.categories !== null &&<h5>{post.categories}</h5>}
+                    <div className="post-picture">
+                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                    <p className="topic-text">{post.postText}</p></div>}
+                    <InputComment/>
+                <textarea
+                    className="comment-input"
+                    value={inputComment}
+                    onChange={changeComment}
+                    placeholder="schrijf hier je reactie"/> <br/>
+                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+                <CommentButton
+                    click={handleClick}
+                    disabled ={inputComment <1} />
+
+                {post !== null &&
+                post.postComments.map((entry) => {
+                    return (
+                        <div
+                            className="comment-section"
+                            key={entry.commentid}>
+                            <div className="comment-heading">
+                                <p>{entry.username}</p>
+                                <h6
+                                    className="delete-comment">
+                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    verwijder</h6>
+                                <h6 className="adjust-comment">
+                                    pas aan</h6>
+                            </div>
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
+                            </div>
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
+
+                        </div>)
+                })}
+
             </div>
-            <div className="topic-text">
-                <h3>Jouw favoriete HyperScape loadout</h3>
-                <p>Loadouts in HyperScape zijn natuurlijk niet standaard te kiezen, maar moet je die zien te vinden. Welke combinatie
-                    van wapens gebruik jij het liefst in HyperScape? En waar vind je deze over het algemeen?
-                </p>
-            </div>
-               <Comment />
-        </div>
-            </>
+
+        </>
     )
 }
+
 export default HyperScapeLoadout;

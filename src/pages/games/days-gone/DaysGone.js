@@ -15,11 +15,11 @@ const DaysGone =() => {
             <Navigation/>
             <div className="game-page">
                 <div className="game-description">
-                    <div className="games-img">
-                        <Image
+                        <img
                             alt="Days Gone"
-                            link={Days_Gone}/>
-                    </div>
+                            src={Days_Gone}
+                            className="games-img"/>
+
                     <p className="paragraaf">Days Gone
                         <p>ontwikkelaar: Sony Bend</p>
                         <p>uitgever: Sony</p>
@@ -33,14 +33,12 @@ const DaysGone =() => {
                     <Image
                         alt="Days Gone tips"
                         link={Days_Gone_tips}
-                        className="optional-img"
                         name="Heb je nog handige tips voor Days Gone?"/>
                 </Link>
                 <Link to="/days-gone/screenshots">
                     <Image
                         alt="Days Gone screenshots"
                         link={Days_Gone_screenshots}
-                        className="optional-img"
                         name="Heb je vette screenshots in Days Gone gemaakt?"/>
                 </Link>
 

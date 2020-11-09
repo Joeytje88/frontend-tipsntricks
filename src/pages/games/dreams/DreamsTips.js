@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import Dreams_tips from '../../../assets/afbeeldingen/Dreams_tips.png';
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comment/Comment";
 import axios from "axios";
 import {Button} from "../../../components/button/Button";
+import InputComment from "../../../components/comments/InputComment";
+import CommentButton from "../../../components/button/CommentButton";
 
 const DreamsTips = () => {
     const [post, setPost] = useState (null);
@@ -21,6 +21,7 @@ const DreamsTips = () => {
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
+                getpost()
             })
         } catch (error){
             console.log(error)
@@ -51,9 +52,9 @@ const DreamsTips = () => {
                     {post.categories !== null &&<h5>{post.categories}</h5>}
                     <div className="post-picture">
                         <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p>
+                    <p className="topic-text">{post.postText}</p></div>}
 
-                    <p>{post.tags}</p></div>}
+                    <InputComment/>
                 <textarea
                     className="comment-input"
                     value={inputComment}
@@ -62,33 +63,34 @@ const DreamsTips = () => {
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
 
 
-                <Button
-                    onClick={handleClick}
-                    disabled={inputComment === " "}>
-                    Plaats je reactie</Button> <br/> <br/>
+                <CommentButton
+                    click={handleClick}
+                    disabled ={inputComment <1} />
+                {post !== null &&
+                post.postComments.map((entry) => {
+                    return (
+                        <div
+                            className="comment-section"
+                            key={entry.commentid}>
+                            <div className="comment-heading">
+                                <p>{entry.username}</p>
+                                <h6
+                                    className="delete-comment">
+                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    verwijder</h6>
+                                <h6 className="adjust-comment">
+                                    pas aan</h6>
+                            </div>
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
+                            </div>
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
 
-
-                {/*{post !== null &&*/}
-                {/*<div*/}
-                {/*    className="comment-section">*/}
-                {/*    <div className="comment-heading">*/}
-                {/*        <p*/}
-                {/*            className="username-comment">{post.postComments[0].commentid}</p>*/}
-                {/*        <h6*/}
-                {/*            className="delete-comment">*/}
-                {/*            /!*onClick={()=> deleteComment(comment.commentid)}>*!/*/}
-                {/*            verwijder</h6>*/}
-                {/*        <h6 className="adjust-comment">*/}
-                {/*            pas aan</h6>*/}
-                {/*    </div>*/}
-                {/*    <div className="comment">*/}
-                {/*        {post.postComments[0].text}*/}
-                {/*    </div>*/}
-                {/*    /!*<div className="comment-img">*!/*/}
-                {/*    /!*    {image !== null && <img src={image} alt="plaatje comment"/>}*!/*/}
-                {/*    /!*</div>*!/*/}
-
-                {/*</div>}*/}
+                        </div>)
+                })}
 
             </div>
 

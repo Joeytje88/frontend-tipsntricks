@@ -39,7 +39,7 @@
     font-weight: 700;
     letter-spacing: 1.4px;
     text-transform: uppercase;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .heading {
@@ -58,7 +58,7 @@
     background-color: #1c2237;
 }
 
-.platform-section -subtitle {
+.platform-section-subtitle {
     max-width: 440px;
     margin-bottom: 35px;
     font-size: 18px;
@@ -93,14 +93,27 @@ img {
 
 @media screen and (max-width: 768px) {
     .platform-section {
-        height: 500px;
+        height: auto;
     }
-    .platform-section-text-wrapper {
-        padding-bottom: 65px;
-    }
-
+.topline{
+    margin: 0;
+}
     .col {
         max-width: 100%;
         flex-basis: 100%;
     }
+    .platform-section-subtitle {
+        max-width: 440px;
+        margin-bottom: 10px;
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .platform-section-img {
+        max-width: 95%;
+        margin-top: 0;
+        margin-right: 0;
+        margin-left: 10px;
+    }
+
 }

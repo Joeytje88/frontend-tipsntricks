@@ -16,17 +16,17 @@ const ApexLegends = () => {
             <Navigation/>
         <div className="game-page">
             <div className="game-description">
-                <div className="games-img">
-        <Image
+        <img
             alt="Apex Legends"
-            link={apexLegends}/>
-                </div>
-            <p className="paragraaf">
-                Apex Legends
-                <p>ontwikkelaar: Respawn Entertainment</p>
-            <p>uitgever: EA</p>
-            <p> release: 4 februari 2019</p>
-            platforms: pc, PlayStation 4, Xbox One</p>
+            src={apexLegends}
+            className="games-img"/>
+
+            <div className="paragraaf">
+                <strong>Apex Legends</strong>
+                <p><strong>ontwikkelaar:</strong> Respawn Entertainment</p>
+                <p><strong>uitgever:</strong> EA</p>
+                <p><strong>release:</strong> 4 februari 2019</p>
+                <strong>platforms:</strong> pc, PlayStation 4, Xbox One</div>
             </div>
         </div>
             <div className="tipsntrick">

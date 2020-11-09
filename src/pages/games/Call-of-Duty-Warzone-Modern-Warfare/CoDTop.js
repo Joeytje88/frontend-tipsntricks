@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import Call_of_Duty_Modern_Warfare_Warzone_Top
     from "../../../assets/afbeeldingen/Call_of_Duty_Modern_Warfare_Warzone_Top.png";
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comment/Comment";
+import Comment from "../../../components/comments/Comment";
 import axios from "axios";
 import {Button} from "../../../components/button/Button";
+import InputComment from "../../../components/comments/InputComment";
 
 const CoDTop = () =>{
     const [post, setPost] = useState (null);
@@ -56,6 +57,7 @@ const CoDTop = () =>{
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
+                    <InputComment/>
                 <textarea
                     className="comment-input"
                     value={inputComment}
@@ -70,27 +72,31 @@ const CoDTop = () =>{
                     Plaats je reactie</Button> <br/> <br/>
 
 
-                {/*{post.postComments !== null &&*/}
-                {/*        <div*/}
-                {/*            className="comment-section">*/}
-                {/*            <div className="comment-heading">*/}
-                {/*                <p*/}
-                {/*                    className="username-comment">{post.postComments.commentid}</p> <p>{username}</p>*/}
-                {/*                <h6*/}
-                {/*                    className="delete-comment">*/}
-                {/*                    /!*onClick={()=> deleteComment(comment.commentid)}>*!/*/}
-                {/*                    verwijder</h6>*/}
-                {/*                <h6 className="adjust-comment">*/}
-                {/*                    pas aan</h6>*/}
-                {/*            </div>*/}
-                {/*            <div className="comment">*/}
-                {/*                {post.postComments.text}*/}
-                {/*            </div>*/}
-                {/*            /!*<div className="comment-img">*!/*/}
-                {/*            /!*    {image !== null && <img src={image} alt="plaatje comment"/>}*!/*/}
-                {/*            /!*</div>*!/*/}
+                {post !== null &&
+                post.postComments.map((entry) => {
+                    return (
+                        <div
+                            className="comment-section"
+                            key={entry.commentid}>
+                            <div className="comment-heading">
+                                <p>{entry.username}</p>
+                                <h6
+                                    className="delete-comment">
+                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    verwijder</h6>
+                                <h6 className="adjust-comment">
+                                    pas aan</h6>
+                            </div>
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
+                            </div>
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
 
-                {/*        </div>}*/}
+                        </div>)
+                })}
 
             </div>
 

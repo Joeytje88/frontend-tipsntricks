@@ -2,11 +2,13 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import {Button} from "../../../components/button/Button";
+import InputComment from "../../../components/comments/InputComment";
 const CoDControls = () => {
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
 
     const userid = localStorage.getItem("user_id");
+    const username = localStorage.getItem("username");
 
     const changeComment = (e)=>{
         setInputComment(e.target.value)
@@ -18,6 +20,7 @@ const CoDControls = () => {
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
+                getpost();
             })
         } catch (error){
             console.log(error)
@@ -51,6 +54,7 @@ const CoDControls = () => {
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
+                    <InputComment/>
                 <textarea
                     className="comment-input"
                     value={inputComment}
@@ -61,31 +65,34 @@ const CoDControls = () => {
 
                 <Button
                     onClick={handleClick}
-                    disabled={inputComment === " "}>
+                    disabled={inputComment === ""}>
                     Plaats je reactie</Button> <br/> <br/>
 
 
-                {/*{post.postComments !== null &&*/}
-                {/*        <div*/}
-                {/*            className="comment-section">*/}
-                {/*            <div className="comment-heading">*/}
-                {/*                <p*/}
-                {/*                    className="username-comment">{post.postComments.commentid}</p> <p>{username}</p>*/}
-                {/*                <h6*/}
-                {/*                    className="delete-comment">*/}
-                {/*                    /!*onClick={()=> deleteComment(comment.commentid)}>*!/*/}
-                {/*                    verwijder</h6>*/}
-                {/*                <h6 className="adjust-comment">*/}
-                {/*                    pas aan</h6>*/}
-                {/*            </div>*/}
-                {/*            <div className="comment">*/}
-                {/*                {post.postComments.text}*/}
-                {/*            </div>*/}
-                {/*            /!*<div className="comment-img">*!/*/}
-                {/*            /!*    {image !== null && <img src={image} alt="plaatje comment"/>}*!/*/}
-                {/*            /!*</div>*!/*/}
+                {post !== null &&
+                    post.postComments.map((entry) => {
+                    return (
+                        <div
+                            className="comment-section">
+                            <div className="comment-heading">
+                                <p>{username}</p>
+                                <h6
+                                    className="delete-comment">
+                                     {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    verwijder</h6>
+                                <h6 className="adjust-comment">
+                                    pas aan</h6>
+                            </div>
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
+                            </div>
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
 
-                {/*        </div>}*/}
+                        </div>)
+                })}
 
             </div>
 
