@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../components/navbar/Navigation";
 import axios from "axios";
-import CommentButton from "../../components/button/CommentButton";
-import InputComment from "../../components/comments/InputComment";
+import InputComment from "../../components/comments/TopicComment";
 
 const Headset = ()=>{
     const [post, setPost] = useState (null);
@@ -37,8 +36,10 @@ const Headset = ()=>{
 
     useEffect(()=>{
         getpost();
+        if (username !== null){
+            setIsLoggedIn(true);
+        }
     }, [])
-
 
     return (
         <>
@@ -51,16 +52,28 @@ const Headset = ()=>{
                     <div className="post-picture">
                         <img src={post.picture} alt = "plaatje bericht"/></div>
                     <p className="topic-text">{post.postText}</p></div>}
-                    <InputComment />
-                <textarea
-                    className="comment-input"
-                    value={inputComment}
-                    onChange={changeComment}
-                    placeholder="schrijf hier je reactie"/> <br/>
-                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
-                <CommentButton
-                    click={handleClick}
-                    disabled ={inputComment <1} />
+                {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
+                {isLoggedIn !== false && <div className="new-comment">
+                    <InputComment/>
+                    <input
+                        type="file"
+                        name="picture"
+                        className="input-picture"
+                        onChange={(e)=> {handleFiles(e)}}/>
+                    {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
+                    <textarea
+                        className="comment-input"
+                        value={inputComment}
+                        onChange={changeComment}
+                        placeholder="schrijf hier je reactie"/>
+                    {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+                    <button
+                        onClick={handleClick}
+                        disabled={inputComment <1}
+                        className="comment-button">
+                        Plaats je reactie</button>    </div>}
+
 
                 {post !== null &&
                 post.postComments.map((entry) => {

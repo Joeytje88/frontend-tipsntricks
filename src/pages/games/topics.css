@@ -1,59 +1,41 @@
 @media screen and (max-width: 769px){
-    .topic-page {
-        width: 100%;
-        height: auto;
-        align-items: center;
-        text-align: center;
-        padding-bottom: 25px;
-    }
-    .post-title{
-        display: flex;
-        justify-content: center;
-        margin: 1% 0 1% 20%;
-    }
-    .postpicture{
-        width: 90%;
-        margin-left: 5%;
-    }
+.topic-page {
+    width: 100%;
+    height: auto;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 25px;
+}
+.new-post {
+    height: auto;
+    margin: 0;
+}
+.post-title{
+    display: flex;
+    justify-content: center;
+    margin: 1% 0 1% 20%;
+}
+.postpicture{
+    width: 90%;
+    margin-left: 5%;
+}
 
-    .topic-img{
-        width: 90%;
-        margin: 1% 5%;
-    }
+.topic-img{
+    width: 90%;
+    margin: 1% 5%;
+}
 
-    .post-picture{
-        width: 90%;
-        margin-left: 5%;
-    }
+.post-picture{
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 100px;
+}
 
-    .topic-text {
+.topic-text {
         width: 90%;
         margin: 2% 5% 0 5%;
         text-align: center;
-        margin-bottom: 5%;
-    }
-
-    .comment-input{
-        width: 90%;
-        margin: 0 5% 0 5%;
-    }
-
-    .comments{
-        margin-top: 10px;
-    }
-    .comment-button {
-        margin: 1% 30%;
-        height: 40px;
-        background-color: #1c2237;
-        color: lightseagreen;
-        border: 1px solid black;
-        border-radius: 10px;
-        width: 200px;
-    }
-    .comment-button:disabled{
-        display: none;
-    }
-
+}
 }
 @media screen and (min-width: 770px){
     .post-picture{
@@ -71,33 +53,10 @@
         text-align: center;
         margin-left: 10%;
     }
-    .comment-container{
-        width: 80%;
-        align-items: center;
-    }
-    .comment-input{
-        width: 90%;
-        margin: 0 5% 0 5%;
-    }
-
-    .comment-button {
-        margin: 1% 42%;
-        height: 40px;
-        background-color: #1c2237;
-        color: lightseagreen;
-        border: 1px solid black;
-        border-radius: 10px;
-        width: 200px;
-    }
-
-    .comment-button:disabled{
-        display: none;
-    }
-
 }
 
 @media screen and (min-width: 1200px) {
-    .topic-page {
+.topic-page {
         display: grid;
         margin: 1% 10% 1% 10%;
         border: 1px solid lightseagreen;
@@ -105,7 +64,7 @@
         justify-content: center;
         text-align: center;
         padding-bottom: 150px;
-    }
+}
 
 
 .posttitle {
@@ -121,28 +80,10 @@
 }
 
 .topic-text {
-    margin-left: 50px;
+    margin-right: 20%;
     width: 80%;
     text-align: center;
-    padding-left: 100px;
-    padding-bottom: 5%;
-}
-.comment-input {
-    width: 90%;
-    margin-left: 5%
 }
 
-.comment-button {
-        margin: 1% 42%;
-        height: 40px;
-        background-color: #1c2237;
-        color: lightseagreen;
-        border: 1px solid black;
-        border-radius: 10px;
-        width: 200px;
-    }
-.comment-button:disabled{
-    display: none;
-}
 }
 

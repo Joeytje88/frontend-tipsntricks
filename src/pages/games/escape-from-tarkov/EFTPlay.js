@@ -1,22 +1,43 @@
 import React, {useEffect, useState} from "react";
-import Escape_from_Tarkov_samenspelen from "../../../assets/afbeeldingen/Escape_from_Tarkov_samenspelen.png";
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comments/Comment";
 import axios from "axios";
-import {Button} from "../../../components/button/Button";
-import CommentButton from "../../../components/button/CommentButton";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
 
 const EFTPlay = () => {
 
-    const [post, setPost] = useState (null);
-    const [inputComment, setInputComment] = useState ("")
+    const[post, setPost] = useState(null)
+    const [inputComment, setInputComment] = useState("")
+    const [isLoggedIn, setIsLoggedIn] = useState (false)
+    const [inputPicture, setInputPicture] = useState(null)
+    const username= localStorage.getItem("username")
+    const userid = localStorage.getItem("user_id")
 
-    const userid = localStorage.getItem("user_id");
 
     const changeComment = (e)=>{
         setInputComment(e.target.value)
     }
+
+    const handleFiles = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        setInputPicture(base64)
+
+    }
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result)
+            });
+            fileReader.onerror = ((error) => {
+                reject(error)
+            })
+        })
+    }
+
 
     const handleClick = async () =>{
         try {
@@ -41,6 +62,9 @@ const EFTPlay = () => {
 
     useEffect(()=>{
         getpost();
+        if (username !== null){
+            setIsLoggedIn(true);
+        }
     }, [])
 
 
@@ -56,18 +80,29 @@ const EFTPlay = () => {
                         <img src={post.picture} alt = "plaatje bericht"/></div>
                     <p className="topic-text">{post.postText}</p></div>}
 
+                {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
+                {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
-                <textarea
-                    className="comment-input"
-                    value={inputComment}
-                    onChange={changeComment}
-                    placeholder="schrijf hier je reactie"/> <br/>
-                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+                    <input
+                        type="file"
+                        name="picture"
+                        className="input-picture"
+                        onChange={(e)=> {handleFiles(e)}}/>
+                    {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
+                    {isLoggedIn !== false &&
+                    <textarea
+                        className="comment-input"
+                        value={inputComment}
+                        onChange={changeComment}
+                        placeholder="schrijf hier je reactie"/>}
+                    {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
 
+                    <button
+                        onClick={handleClick}
+                        disabled={inputComment <1}
+                        className="comment-button">
+                        Plaats je reactie</button>    </div>}
 
-                <CommentButton
-                click={handleClick}
-                disabled ={inputComment <1} />
 
 
                 {post !== null &&

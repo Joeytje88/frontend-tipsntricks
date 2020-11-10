@@ -25,17 +25,17 @@ const Comment = () => {
    }
 
 
-    const deleteComment = async (commentid) => {
-        toggleLoading(true)
-        try {
-            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            toggleLoading(false);
-            window.location.reload()
-        } catch (error) {
-            console.log(error)
-            toggleLoading(false);
-        }
-    }
+    // const deleteComment = async (commentid) => {
+    //     toggleLoading(true)
+    //     try {
+    //         const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+    //         toggleLoading(false);
+    //         window.location.reload()
+    //     } catch (error) {
+    //         console.log(error)
+    //         toggleLoading(false);
+    //     }
+    // }
 
     const changeComment =  async (commentid) => {
         toggleLoading(true)

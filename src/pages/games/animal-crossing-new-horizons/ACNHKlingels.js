@@ -1,16 +1,40 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
 
 const ACNHKlingels = () => {
     const [post, setPost] = useState (null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [inputComment, setInputComment] = useState ("");
+    const [inputPicture, setInputPicture] = useState(null)
 
+    const username = localStorage.getItem('username');
     const userid = localStorage.getItem("user_id");
+
     const changeComment = (e)=>{
         setInputComment(e.target.value)
+    }
+
+    const handleFiles = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        setInputPicture(base64)
+
+    }
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result)
+            });
+            fileReader.onerror = ((error) => {
+                reject(error)
+            })
+        })
     }
 
     const handleClick = async () =>{
@@ -26,6 +50,15 @@ const ACNHKlingels = () => {
         }
     }
 
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const getpost = async ()=> {
         try {
             const result = await axios.get(`http://localhost:8080/api/post/155`)
@@ -37,7 +70,6 @@ const ACNHKlingels = () => {
 
     useEffect(()=>{
         getpost();
-        const username = localStorage.getItem('username');
         if (username !== null) {
             setIsLoggedIn(true);
         }
@@ -54,26 +86,26 @@ const ACNHKlingels = () => {
                     {post.categories !== null &&<h5>{post.categories}</h5>}
                     <div className="post-picture">
                         <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p>
-
-                    <p>{post.tags}</p></div>}
-                {isLoggedIn !== false && <InputComment/>}
+                    <p className="topic-text">{post.postText}</p></div>}
+                    <div className="new-comment">
+               <InputComment/>
                 {isLoggedIn !== false && <textarea
                     className="comment-input"
                     value={inputComment}
                     onChange={changeComment}
                     placeholder="schrijf hier je reactie"/>}
-
-                {isLoggedIn !== true && <p>je moet eerst <a href="/login">inloggen</a> om te kunnen reageren</p>}
+                        <input
+                            type="file"
+                            name="picture"
+                            className="input-picture"
+                            onChange={(e)=> {handleFiles(e)}}/>}
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
-
-
                 <button
                     onClick={handleClick}
                     disabled={inputComment <1}
                     className="comment-button">
                     Plaats je reactie</button> <br/> <br/>
-
+                    </div>
                 {post !== null &&
                 post.postComments.map((entry) => {
                     return (
@@ -83,8 +115,8 @@ const ACNHKlingels = () => {
                             <div className="comment-heading">
                                 <p>{entry.username}</p>
                                 <h6
-                                    className="delete-comment">
-                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    className="delete-comment"
+                                    onClick={()=> deleteComment(entry.commentid)}>
                                     verwijder</h6>
                                 <h6 className="adjust-comment">
                                     pas aan</h6>

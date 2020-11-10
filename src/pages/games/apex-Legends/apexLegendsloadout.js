@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
 
 
 const ApexLegendsLoadout = () => {
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     const userid = localStorage.getItem("user_id");
     const username = localStorage.getItem("username")
@@ -37,6 +38,8 @@ const ApexLegendsLoadout = () => {
 
     useEffect(()=>{
         getpost();
+        if(username !== null){
+        setIsLoggedIn(true)}
     }, [])
 
 
@@ -53,22 +56,21 @@ const ApexLegendsLoadout = () => {
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
-             <InputComment />
+
+                {isLoggedIn === true && <div className="new-comment">
+                <InputComment />
                 <textarea
                     className="comment-input"
                     value={inputComment}
                     onChange={changeComment}
                     placeholder="schrijf hier je reactie"/> <br/>
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
-
-
-
                 <button
                     onClick={handleClick}
                     disabled={inputComment <1}
                     className="comment-button">
                     Plaats je reactie</button> <br/> <br/>
-
+                </div>}
 
 
                 {post !== null &&

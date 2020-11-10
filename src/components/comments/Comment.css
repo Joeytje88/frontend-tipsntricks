@@ -1,104 +1,159 @@
 @media screen and (min-width: 1200px){
+.comment {
+    text-align: start;
+    margin: 1% 5% 4% 5%;
+}
+.new-comment {
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    border: 1px solid lightseagreen;
+}
+.comment-input {
+    width: 90%;
+    margin: 0 5% 2% 5%;
+}
+
+.input-picture {
+    margin: 0 40% 1% 40%;
+    border: none;
+}
+
 .comment-section {
     width: 90%;
-    border: 1px solid black;
-    margin-top: 1%;
+    margin: 1% 5% 0 5%;
+    border: 1px solid lightseagreen;
 }
+
 .comment-heading {
     background-color: lightseagreen;
     display: flex;
     justify-content: flex-start;
-    border: 1px solid black;
     height: 40px;
 }
+.username-comment{
+    margin-left: 20px;
+}
+
 .comment-text {
-    margin-top: 20px;
-    margin-left: 40px;
-    margin-bottom: 20px;
-    width: 800px;
+    display: flex;
+    justify-content: flex-start;
+    margin: 1%;
+    width: auto;
 }
 
 .error-message{
     color: black;
     text-decoration: underline;
     height: 30px;
-    width: 600px;
-    margin-left: 300px;
+    width: 50%;
+    margin: 0 25%
 }
+
 .delete-comment {
     cursor: pointer;
-    margin-left: 73%;
+    margin-left: 70%;
 }
 
 .adjust-comment {
-    margin-left: 100px;
+    margin-left: 10%;
     cursor: pointer;
 }
-.comment {
-    text-align: start;
-    margin-left: 10px;
-}
-p {
-    height: 16px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-.input-picture {
-    width: auto;
-    margin: 1% 10%;
-}
 
+.comment-button {
+    margin: 1% 42%;
+    height: 40px;
+    background-color: #1c2237;
+    color: lightseagreen;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 200px;
+}
+.comment-button:disabled{
+    display: none;
+}
+.comment-img {
+        padding-bottom: 1%;
+}
 }
 @media screen and (max-width: 1200px){
-    .comment-section {
-        margin-left: 5%;
-        width: 90%;
-        border: 1px solid black;
-        margin-bottom: 1%;
-    }
-    .comment-heading {
-        background-color: lightseagreen;
-        display: flex;
-        border: 1px solid black;
-        height: 50px;
-    }
+.comment{
+    text-align: start;
+    height: auto;
+    margin-left: 2%;
+}
 
-    .comment-text {
-        margin-top: 20px;
-        margin-left: 4px;
-        width: 80%;
-        margin-bottom: 5%;
-    }
-    .username-comment{
-        margin-left: 10px;
-    }
+.new-comment {
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    border: 1px solid lightseagreen;
+}
 
-    .warning {
-        width: auto;
-        border: 1px solid lightseagreen;
-    }
+.comment-input{
+    width: 90%;
+    margin: 0 5% 0 5%;
+}
 
-    .error-message{
-        margin-left: 10%;
-        color: black;
-        text-decoration: underline;
-        height: 20px;
-        width: 300px;
-    }
-    .delete-comment {
-        cursor: pointer;
-        margin-left: 20px;
-    }
+.comment-section {
+    width: 90%;
+    margin: 1% 5% 0;
+    border: 1px solid black;
+}
+.comment-heading {
+    width: auto;
+    background-color: lightseagreen;
+    display: flex;
+    border: 1px solid black;
+    height: 50px;
 
-    .adjust-comment {
-        cursor: pointer;
-        margin-left: 30px;
+}
 
-    }
-    .comment{
-        text-align: start;
-        height: auto;
-        margin-left: 2%;
-    }
+.comment-text {
+    text-align: start;
+    margin-left: 4px;
+    margin-bottom: 5%;
+}
+.username-comment{
+    margin-left: 20px;
+}
 
+.warning {
+    width: auto;
+    border: 1px solid lightseagreen;
+}
+
+.error-message{
+    margin-left: 10%;
+    color: black;
+    text-decoration: underline;
+    height: 20px;
+    width: 300px;
+}
+.delete-comment {
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.adjust-comment {
+    cursor: pointer;
+    margin-left: 30px;
+
+}
+
+.comment-button {
+    margin: 1% 30%;
+    height: 40px;
+    background-color: #1c2237;
+    color: lightseagreen;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 200px;
+}
+.comment-button:disabled{
+    display: none;
+}
+.comment-img {
+    padding-bottom: 1%;
+}
 }

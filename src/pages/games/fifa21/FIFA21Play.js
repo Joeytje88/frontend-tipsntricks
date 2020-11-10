@@ -1,21 +1,43 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import {Button} from "../../../components/button/Button";
-import InputComment from "../../../components/comments/InputComment";
-import CommentButton from "../../../components/button/CommentButton";
+import InputComment from "../../../components/comments/TopicComment";
 
 const FIFA21Play = () => {
-    const [post, setPost] = useState (null);
-    const [inputComment, setInputComment] = useState ("")
+    const[post, setPost] = useState(null)
+    const [inputComment, setInputComment] = useState("")
+    const [isLoggedIn, setIsLoggedIn] = useState (false)
+    const [inputPicture, setInputPicture] = useState(null)
+    const username= localStorage.getItem("username")
+    const userid = localStorage.getItem("user_id")
 
-    const userid = localStorage.getItem("user_id");
 
     const changeComment = (e)=>{
         setInputComment(e.target.value)
     }
 
-    const handleClick = async () =>{
+    const handleFiles = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        setInputPicture(base64)
+
+    }
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result)
+            });
+            fileReader.onerror = ((error) => {
+                reject(error)
+            })
+        })
+    }
+
+        const handleClick = async () =>{
         try {
             const placecomment = await axios.post(`http://localhost:8080/api/post/22/comment/${userid}`,{
                 text: inputComment,
@@ -38,6 +60,9 @@ const FIFA21Play = () => {
 
     useEffect(()=>{
         getpost();
+        if (username !== null){
+            setIsLoggedIn(true);
+        }
     }, [])
 
 
@@ -52,17 +77,28 @@ const FIFA21Play = () => {
                     <div className="post-picture">
                         <img src={post.picture} alt = "plaatje bericht"/></div>
                     <p className="topic-text">{post.postText}</p></div>}
-                    <InputComment />
-                <textarea
-                    className="comment-input"
-                    value={inputComment}
-                    onChange={changeComment}
-                    placeholder="schrijf hier je reactie"/> <br/>
-                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+                {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
+                {isLoggedIn !== false && <div className="new-comment">
+                    <InputComment/>
+                    <input
+                        type="file"
+                        name="picture"
+                        className="input-picture"
+                        onChange={(e)=> {handleFiles(e)}}/>
+                    {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
+                    {isLoggedIn !== false &&
+                    <textarea
+                        className="comment-input"
+                        value={inputComment}
+                        onChange={changeComment}
+                        placeholder="schrijf hier je reactie"/>}
+                    {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
 
-                <CommentButton
-                    click={handleClick}
-                    disabled ={inputComment <1} />
+                    <button
+                        onClick={handleClick}
+                        disabled={inputComment <1}
+                        className="comment-button">
+                        Plaats je reactie</button>    </div>}
 
                 {post !== null &&
                 post.postComments.map((entry) => {

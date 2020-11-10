@@ -1,27 +1,58 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import {Button} from "../../../components/button/Button";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
 
 const Loadouts = () => {
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
-
+    const [isLoggedIn, setIsLoggedIn] = useState (false)
+    const [inputPicture, setInputPicture] = useState(null)
     const userid = localStorage.getItem("user_id");
-
+    const username = localStorage.getItem("username");
     const changeComment = (e)=>{
         setInputComment(e.target.value)
     }
+    const handleFiles = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        setInputPicture(base64)
+
+    }
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result)
+            });
+            fileReader.onerror = ((error) => {
+                reject(error)
+            })
+        })
+    }
+
 
     const handleClick = async () =>{
         try {
             const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/5`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
             })
         } catch (error){
+            console.log(error)
+        }
+    }
+
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
             console.log(error)
         }
     }
@@ -37,6 +68,9 @@ const Loadouts = () => {
 
     useEffect(()=>{
         getpost();
+        if(username !== null) {
+            setIsLoggedIn(true);
+        }
     }, [])
 
 
@@ -53,42 +87,51 @@ const Loadouts = () => {
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
+                {isLoggedIn !== false &&<div className="new-comment">
                     <InputComment/>
+                    <input
+                        type="file"
+                        name="picture"
+                        className="input-picture"
+                        onChange={(e)=> {handleFiles(e)}}/>
                 <textarea
                     className="comment-input"
                     value={inputComment}
                     onChange={changeComment}
-                    placeholder="schrijf hier je reactie"/> <br/>
-                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+                    placeholder="schrijf hier je reactie"/>
 
-
-                <Button
+                <button
                     onClick={handleClick}
-                    disabled={inputComment === " "}>
-                    Plaats je reactie</Button> <br/> <br/>
-
+                    disabled={inputComment <1}
+                    className="comment-button">
+                    Plaats je reactie</button>
+                    {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+                    </div>}
 
                 {post !== null &&
+                post.postComments.map((entry) => {
+                    return (
                         <div
                             className="comment-section">
                             <div className="comment-heading">
-                                <p
-                                    className="username-comment">{post.postComments[0].commentid}</p>
+                                <p className="username-comment">{username}</p>
                                 <h6
-                                    className="delete-comment">
-                                    {/*onClick={()=> deleteComment(comment.commentid)}>*/}
+                                    className="delete-comment"
+                                    onClick={()=> deleteComment(entry.commentid)}>
                                     verwijder</h6>
                                 <h6 className="adjust-comment">
                                     pas aan</h6>
                             </div>
-                            <div className="comment">
-                                {post.postComments[0].text}
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
                             </div>
-                            {/*<div className="comment-img">*/}
-                            {/*    {image !== null && <img src={image} alt="plaatje comment"/>}*/}
-                            {/*</div>*/}
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
 
-                        </div>}
+                        </div>)
+                })}
 
             </div>
 

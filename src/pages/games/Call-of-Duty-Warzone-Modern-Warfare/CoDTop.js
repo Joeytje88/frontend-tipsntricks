@@ -1,26 +1,21 @@
 import React, {useEffect, useState} from "react";
-import Call_of_Duty_Modern_Warfare_Warzone_Top
-    from "../../../assets/afbeeldingen/Call_of_Duty_Modern_Warfare_Warzone_Top.png";
 import Navigation from "../../../components/navbar/Navigation";
-import Comment from "../../../components/comments/Comment";
 import axios from "axios";
-import {Button} from "../../../components/button/Button";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
 
 const CoDTop = () =>{
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
-    const [comments, setComments] = useState("")
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const userid = localStorage.getItem("user_id");
-
+    const username = localStorage.getItem("username")
     const changeComment = (e)=>{
         setInputComment(e.target.value)
     }
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/4/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/4/`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -29,6 +24,16 @@ const CoDTop = () =>{
             console.log(error)
         }
     }
+
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     const getpost = async ()=> {
         try {
@@ -40,6 +45,9 @@ const CoDTop = () =>{
     }
 
     useEffect(()=>{
+        if(username !== null){
+            setIsLoggedIn(true);
+        }
         getpost();
     }, [])
 
@@ -57,6 +65,8 @@ const CoDTop = () =>{
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
+                {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
+                {isLoggedIn === false && <div className="new-comment">
                     <InputComment/>
                 <textarea
                     className="comment-input"
@@ -66,38 +76,37 @@ const CoDTop = () =>{
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
 
 
-                <Button
+                <button
                     onClick={handleClick}
-                    disabled={inputComment === " "}>
-                    Plaats je reactie</Button> <br/> <br/>
-
-
+                    className="comment-button"
+                    disabled={inputComment <1}>
+                    Plaats je reactie</button>
+                    </div>}
                 {post !== null &&
                 post.postComments.map((entry) => {
-                    return (
-                        <div
-                            className="comment-section"
-                            key={entry.commentid}>
-                            <div className="comment-heading">
-                                <p>{entry.username}</p>
-                                <h6
-                                    className="delete-comment">
-                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
-                                    verwijder</h6>
-                                <h6 className="adjust-comment">
-                                    pas aan</h6>
-                            </div>
-                            <div className="comment"
-                                 key={entry.text}>
-                                {entry.text}
-                            </div>
-                            <div className="comment-img">
-                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
-                            </div>
+                        return (
+                            <div
+                                className="comment-section">
+                                <div className="comment-heading">
+                                    <p className="username-comment">{username}</p>
+                                    {userid === userid && <h6
+                                        className="delete-comment"
+                                        onClick={() => deleteComment(entry.commentid)}>
+                                        verwijder</h6>}
+                                    <h6 className="adjust-comment">
+                                        pas aan</h6>
+                                </div>
+                                <div>
+                                    <p  key={entry.text}
+                                        className="comment-text">
+                                        {entry.text}</p>
+                                </div>
+                                <div className="comment-img">
+                                    {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                                </div>
 
-                        </div>)
-                })}
-
+                            </div>)
+                    })}
             </div>
 
         </>

@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
 
 const DGTips = () => {
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
-
+    const [isLoggedIn, setIsLoggedIn] = useState (false)
     const userid = localStorage.getItem("user_id");
-
+    const username = localStorage.getItem("username");
     const changeComment = (e)=>{
         setInputComment(e.target.value)
     }
@@ -37,6 +37,9 @@ const DGTips = () => {
 
     useEffect(()=>{
         getpost();
+        if (username !== null){
+            setIsLoggedIn(true)
+        }
     }, [])
 
 
@@ -51,7 +54,8 @@ const DGTips = () => {
                     <div className="post-picture">
                         <img src={post.picture} alt = "plaatje bericht"/></div>
                     <p className="topic-text">{post.postText}</p> </div>}
-
+                {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
+                {isLoggedIn === true && <div className="new-comment">
                     <InputComment />
                 <textarea
                     className="comment-input"
@@ -59,14 +63,12 @@ const DGTips = () => {
                     onChange={changeComment}
                     placeholder="schrijf hier je reactie"/> <br/>
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
-
-
                 <button
                     onClick={handleClick}
                     disabled={inputComment <1}
                     className="comment-button">
                     Plaats je reactie</button>
-
+                </div> }
 
                 {post !== null &&
                 post.postComments.map((entry) => {

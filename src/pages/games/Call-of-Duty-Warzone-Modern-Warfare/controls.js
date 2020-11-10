@@ -1,17 +1,39 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import {Button} from "../../../components/button/Button";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
 const CoDControls = () => {
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
+    const [inputPicture, setInputPicture] = useState (null);
+    const [isLoggedIn, setIsLoggedIn] = useState (false);
 
     const userid = localStorage.getItem("user_id");
     const username = localStorage.getItem("username");
 
     const changeComment = (e)=>{
         setInputComment(e.target.value)
+    }
+
+    const handleFiles = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        setInputPicture(base64)
+
+    }
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result)
+            });
+            fileReader.onerror = ((error) => {
+                reject(error)
+            })
+        })
     }
 
     const handleClick = async () =>{
@@ -37,6 +59,9 @@ const CoDControls = () => {
     }
 
     useEffect(()=>{
+        if (username !== null) {
+            setIsLoggedIn(true);
+        }
         getpost();
     }, [])
 
@@ -54,20 +79,30 @@ const CoDControls = () => {
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
+                {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
+                {isLoggedIn !== false &&<div className="new-comment">
                     <InputComment/>
+
+                <input
+                    type="file"
+                    name="picture"
+                    className="input-picture"
+                    onChange={(e)=> {handleFiles(e)}}/>
+                {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
+                {isLoggedIn !== false &&
                 <textarea
                     className="comment-input"
                     value={inputComment}
                     onChange={changeComment}
-                    placeholder="schrijf hier je reactie"/> <br/>
+                    placeholder="schrijf hier je reactie"/>}
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
 
-
-                <Button
+                <button
                     onClick={handleClick}
-                    disabled={inputComment === ""}>
-                    Plaats je reactie</Button> <br/> <br/>
-
+                    disabled={inputComment <1}
+                    className="comment-button">
+                    Plaats je reactie</button>
+                </div>}
 
                 {post !== null &&
                     post.postComments.map((entry) => {
@@ -75,7 +110,7 @@ const CoDControls = () => {
                         <div
                             className="comment-section">
                             <div className="comment-heading">
-                                <p>{username}</p>
+                                <p className="username-comment">{username}</p>
                                 <h6
                                     className="delete-comment">
                                      {/*onClick={()=> deleteComment(entry.commentid)}>*/}

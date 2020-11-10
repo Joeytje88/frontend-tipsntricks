@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
 
 const ApexLegendsPlay = () => {
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const userid = localStorage.getItem("user_id");
     const username = localStorage.getItem("username");
 
@@ -38,6 +38,9 @@ const ApexLegendsPlay = () => {
 
     useEffect(()=>{
         getpost();
+        if (username !== null){
+            setIsLoggedIn(true)
+        }
     }, [])
 
 
@@ -54,6 +57,8 @@ const ApexLegendsPlay = () => {
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
+                {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
+                {isLoggedIn === true && <div className="new-comment">
                <InputComment />
                 <textarea
                     className="comment-input"
@@ -62,14 +67,12 @@ const ApexLegendsPlay = () => {
                     placeholder="schrijf hier je reactie"/> <br/>
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
 
-
                 <button
                     onClick={handleClick}
                     disabled={inputComment <1}
                     className="comment-button">
-                    Plaats je reactie</button> <br/> <br/>
-
-
+                    Plaats je reactie</button>
+                </div>}
 
                 {post !== null &&
                 post.postComments.map((entry) => {

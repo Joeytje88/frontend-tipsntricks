@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
 
 
 const ACNHKnollen = () => {
     const [post, setPost] = useState (null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [inputComment, setInputComment] = useState ("")
     const username = localStorage.getItem("username")
     const userid = localStorage.getItem("user_id");
@@ -27,6 +28,15 @@ const ACNHKnollen = () => {
         }
     }
 
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const getpost = async ()=> {
         try {
             const result = await axios.get(`http://localhost:8080/api/post/158`)
@@ -39,6 +49,9 @@ const ACNHKnollen = () => {
 
     useEffect(()=>{
         getpost();
+        if (username !== null){
+            setIsLoggedIn(true);
+        }
     }, [])
 
 
@@ -55,21 +68,21 @@ const ACNHKnollen = () => {
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
-              <InputComment/>
-                <textarea
-                    className="comment-input"
-                    value={inputComment}
-                    onChange={changeComment}
-                    placeholder="schrijf hier je reactie"/> <br/>
+                <div className="new-comment">
+                    <InputComment/>
+                    {isLoggedIn !== false && <textarea
+                        className="comment-input"
+                        value={inputComment}
+                        onChange={changeComment}
+                        placeholder="schrijf hier je reactie"/>}
+
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
-
-
                 <button
                     onClick={handleClick}
                     disabled={inputComment <1}
                     className="comment-button">
-                    Plaats je reactie</button> <br/> <br/>
-
+                    Plaats je reactie</button>
+                </div>
 
                 {post !== null &&
                 post.postComments.map((entry) => {
@@ -80,8 +93,8 @@ const ACNHKnollen = () => {
                             <div className="comment-heading">
                                 <p>{entry.username}</p>
                                 <h6
-                                    className="delete-comment">
-                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    className="delete-comment"
+                                    onClick={()=> deleteComment(entry.commentid)}>
                                     verwijder</h6>
                                 <h6 className="adjust-comment">
                                     pas aan</h6>

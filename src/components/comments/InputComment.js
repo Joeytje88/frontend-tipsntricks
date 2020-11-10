@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import './Comment.css';
 
-const InputComment = () => {
+const InputComments = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const[inputPicture, setInputPicture] = useState(null);
     const [inputComment, setInputComment] = useState ("");
@@ -32,6 +32,7 @@ const InputComment = () => {
             console.log(error)
         }
     }
+
     const handleFiles = async (e) => {
 
         const file = e.target.files[0]
@@ -54,19 +55,19 @@ const InputComment = () => {
     }
 
     return (
-        <>
-            {isLoggedIn !== false &&
-        <input
-            type="file"
-            name="picture"
-            className="input-picture"
-            onChange={(e)=> {handleFiles(e)}}/>}
-
+        <div className="comment">
+            {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
             {isLoggedIn !== false && <div
             className="comment-section">
             <div className="comment-heading">
                 <p className="username-comment">{username}</p>
             </div>
+                {isLoggedIn !== false &&
+                <input
+                    type="file"
+                    name="picture"
+                    className="input-picture"
+                    onChange={(e)=> {handleFiles(e)}}/>}
             {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
            </div>}
 
@@ -77,21 +78,14 @@ const InputComment = () => {
                 value={inputComment}
                 onChange={changeComment}
                 placeholder="schrijf hier je reactie"/>}
-
+            {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
             <button
                 onClick={handleClick}
                 disabled={inputComment <1}
                 className="comment-button">
                 Plaats je reactie</button>
-
-
-
-            {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
-
-
-            {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
-            </>
+            </div>
     )
 }
 
-export default InputComment;
+export default InputComments;

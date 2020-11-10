@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     padding-bottom: 1%;
+    height: auto;
 }
 .post-title{
     padding-right: 100px;
