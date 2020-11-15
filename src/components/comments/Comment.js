@@ -1,18 +1,19 @@
 import React, {useState, useEffect} from "react";
 import axios from 'axios';
 import "./Comment.css"
+import Navigation from "../navbar/Navigation";
+import AdminNavbar from "../navbar/AdminNavbar";
 
 
 const Comment = () => {
-    const [error, toggleError] = useState(false)
     const [loading, toggleLoading] = useState(false);
-    const [comment, setComment] = useState("");
+    const [post, setPost] = useState(null);
 
     const fetchPosts = async () => {
         toggleLoading(true);
         try {
             const result = await axios.get(`http://localhost:8080/api/posts`);
-            setComment(result.data)
+            setPost(result.data)
             toggleLoading(false);
         } catch (error) {
             console.log(error)
@@ -20,31 +21,16 @@ const Comment = () => {
         }
     }
 
-   const handleChange = (e) =>{
-       setComment(e.target.value)
-   }
 
-
-    // const deleteComment = async (commentid) => {
-    //     toggleLoading(true)
-    //     try {
-    //         const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-    //         toggleLoading(false);
-    //         window.location.reload()
-    //     } catch (error) {
-    //         console.log(error)
-    //         toggleLoading(false);
-    //     }
-    // }
-
-    const changeComment =  async (commentid) => {
+    const deleteComment = async (commentid) => {
         toggleLoading(true)
         try {
-            const changeComments = axios.put (`http://localhost:8080/api/comment/${commentid}`)
-            setComment(handleChange);
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            toggleLoading(false);
+            fetchPosts();
         } catch (error) {
-            toggleLoading(false)
-            toggleError(error)
+            console.log(error)
+            toggleLoading(false);
         }
     }
 
@@ -57,20 +43,36 @@ const Comment = () => {
     return (
         <>
 
+            <Navigation/>
+            {localStorage.roles === "ROLE_ADMIN" && <AdminNavbar/>}
 
             {loading === true && <p>Laden...</p>}
 
-            {comment !== "" && comment.map((comment)=>{
+            {post !== null &&
+            post.map((entry) => {
                 return (
-                    <div key={comment.postComments}>
-                    {/*<p key={comment.postComments}>*/}
-                    {/*    {comment.postComments.commentid}</p>*/}
-                    <p key={comment.postComments.text}>
-                        {comment.postComments.text}</p>
-                        </div>)
+                    <div
+                        className="comment-section"
+                        key={entry.postComments.commentid}>
+                        <div className="comment-heading">
+                            {/*<p>{entry.username}</p>*/}
+                            <h6
+                                className="delete-comment"
+                                onClick={()=> deleteComment(entry.postComments.commentid)}>
+                                verwijder</h6>
+                            <h6 className="adjust-comment">
+                                pas aan</h6>
+                        </div>
+                        <div className="comment"
+                             key={entry.postComments.text}>
+                            {entry.postComments.text}
+                        </div>
+                        {entry.postComments.image !== null && <div className="comment-img">
+                           <img src={entry.postComments.image} alt="plaatje comment"/>
+                        </div>}
 
-            })
-            }
+                    </div>)
+            })}
 
             </>
     );

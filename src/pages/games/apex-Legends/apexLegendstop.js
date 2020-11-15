@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Apex_Legends_top from '../../../assets/afbeeldingen/Apex_Legends_top.png';
 
 const ApexLegendsTop = () => {
     const [post, setPost] = useState (null);
@@ -52,20 +53,18 @@ const ApexLegendsTop = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
-
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p>
-
-                    <p>{post.tags}</p></div>}
+                        <img src={Apex_Legends_top}
+                             alt = "Apex Legends"
+                             className="topic-img"/>
+                    <h5 className="topic-text">{post.header}</h5>
+                    <p className="topic-text">{post.postText}</p> </div>}
                 {isLoggedIn === false && <p className="warning">Je moet <a href="/login">ingelogd</a>  zijn om te kunnen reageren</p>}
-                {isLoggedIn === true && <div className="new-comment">
+                {isLoggedIn === true && <div className="comment-section">
                     <InputComment />
                 <textarea
                     className="comment-input"
@@ -108,7 +107,7 @@ const ApexLegendsTop = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

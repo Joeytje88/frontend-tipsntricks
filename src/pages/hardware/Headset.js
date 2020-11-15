@@ -2,19 +2,46 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../components/comments/TopicComment";
+import Headsets from "../../assets/afbeeldingen/Headsets.png";
 
 const Headset = ()=>{
-    const [post, setPost] = useState (null);
-    const [inputComment, setInputComment] = useState ("")
+    const[post, setPost] = useState(null)
+    const [inputComment, setInputComment] = useState("")
+    const [isLoggedIn, setIsLoggedIn] = useState (false)
+    const [inputPicture, setInputPicture] = useState(null)
+    const username= localStorage.getItem("username")
+    const userid = localStorage.getItem("user_id")
 
-    const userid = localStorage.getItem("user_id");
+
     const changeComment = (e)=>{
         setInputComment(e.target.value)
     }
 
+    const handleFiles = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        setInputPicture(base64)
+
+    }
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result)
+            });
+            fileReader.onerror = ((error) => {
+                reject(error)
+            })
+        })
+    }
+
+
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/67/`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/58`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -27,7 +54,7 @@ const Headset = ()=>{
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/67`)
+            const result = await axios.get(`http://localhost:8080/api/post/58`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -42,18 +69,18 @@ const Headset = ()=>{
     }, [])
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
                     <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
+                        <img src={Headsets}
+                             alt = "headset"/></div>
+                    <h4 className="topic-text">{post.header}</h4></div>}
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
-                {isLoggedIn !== false && <div className="new-comment">
+                {isLoggedIn !== false && <div className="comment-section">
                     <InputComment/>
                     <input
                         type="file"
@@ -103,7 +130,7 @@ const Headset = ()=>{
 
             </div>
 
-        </>
+        </div>
     )
 }
 

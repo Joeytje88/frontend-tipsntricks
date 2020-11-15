@@ -4,11 +4,12 @@ import "./Account.css";
 import Navigation from "../../components/navbar/Navigation";
 
 const Account = () => {
-    const [image, setImage] = useState(null);
+    const [data, setData] = useState(null);
     const [game, setGame] = useState("")
-    const [games, setGames] = useState ("")
     const [platform, setPlatform] = useState("")
-    const [platforms, setPlatforms] = useState ("")
+    const [error, setError] = useState (null);
+
+    // const [isLoggedIn, setIsLoggedIn] = useState (false)
     const username = localStorage.getItem("username");
     const userid = localStorage.getItem("user_id")
 
@@ -22,15 +23,15 @@ const Account = () => {
     const handleGame = async () => {
         try {
             // eslint-disable-next-line no-unused-vars
-            const addGame = await axios.put (`http://localhost:8080/api/user/game/${userid}`, {
+            const addGame = await axios.post (`http://localhost:8080/api/user/game/${userid}`, {
                 name: game,
             }).then (function (response){
                 alert("game toegevoegd")
-                window.location.reload();
+                getInfo();
             })
 
         } catch (error){
-            alert(error)
+            setError(error)
         }
     }
 
@@ -51,10 +52,10 @@ const Account = () => {
     const getInfo = async () => {
         try {
             const result = await axios.get(`http://localhost:8080/api/user/${userid}`)
-            setImage(result.data.picture)
-            setGames(result.data.currentGames)
+            setData(result.data)
+            console.log(result.data)
         } catch (error) {
-            alert(error)
+            setError(error)
         }
     }
 
@@ -68,18 +69,19 @@ const Account = () => {
     return (
         <div className="account-page">
             <Navigation/>
-            <h2>Account info</h2>
-            <h3>{username}</h3>
+             <h2>Account info</h2>
+            {data !== null && <div>
+            <h3>{data.username}</h3>
+                {data.image &&
+                <img
+                   src={data.image}
+                   alt="profiel-img"/>}
+            </div>}
 
-            {image !== undefined &&
-             <img
-                src={image}
-                alt="profile"
-                    />}
             <h3>Games</h3>
+            <div className="game">
 
-
-            {games && games.map((game)=> {
+            {data !== null && data.currentGames && data.currentGames.map((game)=> {
                return (<p key ={game.name}>{game.name}</p>)
             })}
 
@@ -96,12 +98,15 @@ const Account = () => {
                 className="game-button">
                 Voeg game toe
             </button>
+            {error !== null && <p>Game al toegevoegd</p>}
 
+            </div>
+            <div className="platform">
                 <h3>Platforms</h3>
 
-            {platforms && platforms.map ((platform)=> {
-                return <p key={platform.platformName}>{platform.platformName}</p>
-            })}
+            {/*{data !== null && data.platforms.map ((platform)=> {*/}
+            {/*    return <p key={platform.platformName}>{platform.platformName}</p>*/}
+            {/*})}*/}
             <input
                 type="text"
                 value={platform}
@@ -113,7 +118,7 @@ const Account = () => {
                     type="submit"
                     className="game-button"
                     onClick={handlePlatform}>Voeg platform toe</button>
-
+            </div>
         </div>
     )
 

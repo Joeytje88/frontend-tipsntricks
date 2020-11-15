@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Project_Cars_3_play from '../../../assets/afbeeldingen/Project_Cars_3_play.png';
 
 const PCars3Play = () => {
     const[post, setPost] = useState(null)
@@ -40,8 +41,9 @@ const PCars3Play = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/51/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/43/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -53,7 +55,7 @@ const PCars3Play = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/51`)
+            const result = await axios.get(`http://localhost:8080/api/post/43`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -70,19 +72,20 @@ const PCars3Play = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
+                        <img
+                            src={Project_Cars_3_play}
+                            className="topic-img"
+                            alt = "Project Cars 3"/>
+                    <h4 className="topic-text">{post.postText}</h4></div>}
 
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
-                {isLoggedIn !== false && <div className="new-comment">
+                {isLoggedIn !== false && <div className="comment-section">
                     <InputComment/>
                     <input
                         type="file"
@@ -133,7 +136,7 @@ const PCars3Play = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

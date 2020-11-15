@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Gears_5_Play from "../../../assets/afbeeldingen/Gears5_Play.png";
 
 const Gears5play = () => {
     const[post, setPost] = useState(null)
@@ -40,7 +41,7 @@ const Gears5play = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/35/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/28/comment/${userid}`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +54,7 @@ const Gears5play = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/35`)
+            const result = await axios.get(`http://localhost:8080/api/post/28`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -69,17 +70,19 @@ const Gears5play = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                    <img
+                        src={Gears_5_Play}
+                        className="topic-text"
+                        alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
-                {isLoggedIn !== false && <div className="new-comment">
+                {isLoggedIn !== false && <div className="comment-section">
                     <InputComment/>
                     <input
                         type="file"
@@ -128,7 +131,7 @@ const Gears5play = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

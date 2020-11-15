@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
-
+import Days_Gone_screenshots
+    from "../../../assets/afbeeldingen/Days_Gone_screenshots.png";
 const DGscreenshots = () => {
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
@@ -16,7 +17,7 @@ const DGscreenshots = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/17`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/13`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -37,7 +38,7 @@ const DGscreenshots = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/17`)
+            const result = await axios.get(`http://localhost:8080/api/post/13`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -53,15 +54,17 @@ const DGscreenshots = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img
+                            src={Days_Gone_screenshots}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
                 {isLoggedIn === false && <p className="warning">Je moet <a href="/login">ingelogd</a>  zijn om te kunnen reageren</p>}
                 {isLoggedIn === true && <div className="new-comment">
@@ -110,7 +113,7 @@ const DGscreenshots = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

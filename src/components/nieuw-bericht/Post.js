@@ -77,14 +77,14 @@ const Post = () => {
 
     const changePost = async () => {
         try {
-            const editPost = await axios.put(`http://localhost:8080/api/post/13`,{
+            const editPost = await axios.put(`http://localhost:8080/api/post/155`,{
                 postURL: inputUrl,
                 postTitle: posttitle,
                 postText: text,
                 header: header,
                 picture: inputpicture,
                 category: inputCategory,
-                author: username
+            author: username
         }).then(function (response){
             alert("bericht gewijzigd")
         })} catch (error){
@@ -95,7 +95,7 @@ const Post = () => {
         <>
             <Navigation/>
        <div
-            className="new-post">
+            className="nieuw-bericht">
             <h2 className="post-url">De url van de post</h2>
             <input
                 name="input-url"
@@ -112,7 +112,7 @@ const Post = () => {
                name="posttitle"
                type="text"
                value={posttitle}
-               className="posttitle"
+               className="input-url"
                onChange={(e)=>{changeTitle(e)}}/>
             <h2>Inleiding bericht:</h2>
             <textarea

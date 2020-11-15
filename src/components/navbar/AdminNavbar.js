@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import "./Navigation.css";
 import {FaBars, FaTimes} from "react-icons/fa";
@@ -8,6 +8,9 @@ const AdminNavbar = () => {
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
+
+
+
 
     return(
         <nav className="navbar">

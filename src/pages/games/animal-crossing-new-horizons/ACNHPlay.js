@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
-
+import Animal_Crossing_New_Horizons_samenspelen
+    from '../../../assets/afbeeldingen/Animal_Crossing_New_Horizons_samenspelen.png';
 
 const ACNHPlay = () => {
     const [post, setPost] = useState (null);
@@ -38,7 +39,7 @@ const ACNHPlay = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/12`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/9`,{
                 text: inputComment,
                 image: inputPicture
             }).then(function (response) {
@@ -60,7 +61,7 @@ const ACNHPlay = () => {
     }
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/12`)
+            const result = await axios.get(`http://localhost:8080/api/post/9`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -76,27 +77,32 @@ const ACNHPlay = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
-                {post !== null && <div className="new-post">
-                    <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "Animal Crossing New Horizons"/></div>
-                    <p className="topic-text">{post.postText}</p>
+                {post !== null &&
 
-                    <p>{post.tags}</p></div>}
+            <div className="new-post">
+                    <h2 className="post-title"> {post.postTitle} </h2>
+                        <img
+                            src={Animal_Crossing_New_Horizons_samenspelen}
+                            alt = "Animal Crossing New Horizons"
+                            className="topic-img"
+                        />
+                    <h5 className="topic-text">{post.header}</h5>
+                    <p className="topic-text">{post.postText}</p>
+                </div>}
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
-                {isLoggedIn !== false && <div className="new-comment">
+                {isLoggedIn !== false &&
+                <div className="comment-section">
                     <InputComment/>
 
                     <input
                         type="file"
                         name="picture"
                         className="input-picture"
-                        onChange={(e)=> {handleFiles(e)}}/>}
+                        onChange={(e)=> {handleFiles(e)}}/>
                     {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
                     {isLoggedIn !== false &&
                     <textarea
@@ -123,8 +129,8 @@ const ACNHPlay = () => {
                                 <div className="comment-heading">
                                     <p>{entry.username}</p>
                                     <h6
-                                        className="delete-comment">
-                                        {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                        className="delete-comment"
+                                        onClick={()=> deleteComment(entry.commentid)}>
                                         verwijder</h6>
                                     <h6 className="adjust-comment">
                                         pas aan</h6>
@@ -144,7 +150,7 @@ const ACNHPlay = () => {
             </div>
 
 
-        </>
+        </div>
     )
 }
 

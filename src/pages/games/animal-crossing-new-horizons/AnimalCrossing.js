@@ -20,10 +20,9 @@ const AnimalCrossing = () => {
             <div className="game-page">
                 <div className="game-description">
                 <img
-                    alt="Animal Crossing New Horizons"
                     src={Animal_Crossing_New_Horizons}
-                    className="games-img"
-                    />
+                    alt="Animal Crossing New Horizons"
+                    className="games-img"/>
 
                     <div className="paragraaf"><strong>Animal Crossing: New Horizons</strong>
                         <p><strong>ontwikkelaar:</strong> Nintendo</p>

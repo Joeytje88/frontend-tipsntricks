@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
-
+import ZeldaBotWTips from '../../../assets/afbeeldingen/ZeldaBotWTips.png';
 const ZBotWTips = () => {
     const[post, setPost] = useState(null)
     const [inputComment, setInputComment] = useState("")
@@ -40,7 +40,7 @@ const ZBotWTips = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/61/`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/54`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +53,7 @@ const ZBotWTips = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/61`)
+            const result = await axios.get(`http://localhost:8080/api/post/54`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -70,15 +70,18 @@ const ZBotWTips = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
-                {post !== null && <div className="new-post">
+                {post !== null &&
+                <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img
+                            src={ZeldaBotWTips}
+                            className="topic-img"
+                            alt = "The Legend of Zelda Breath of the Wild"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
                 {isLoggedIn !== false && <div className="new-comment">
@@ -128,10 +131,13 @@ const ZBotWTips = () => {
                         </div>)
                 })}
 
-
+                <a href="https://clk.tradedoubler.com/click?p=303217&a=2878273&g=24754130">
+                    <img
+                        src="https://impnl.tradedoubler.com/imp?type(img)g(24754130)a(2878273)955393499"
+                        className="advertentie"/></a>
             </div>
 
-        </>
+        </div>
     )
 }
 

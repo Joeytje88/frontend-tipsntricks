@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Sea_of_Thieves_screenshots from '../../../assets/afbeeldingen/Sea_of_Thieves_screenshots.png';
 
 const SOTScreenshots = () => {
     const[post, setPost] = useState(null)
@@ -40,7 +41,7 @@ const SOTScreenshots = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/56/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/46/comment/${userid}`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +54,7 @@ const SOTScreenshots = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/56`)
+            const result = await axios.get(`http://localhost:8080/api/post/46`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -71,15 +72,16 @@ const SOTScreenshots = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img src={Sea_of_Thieves_screenshots}
+                             className="topic-img"
+                             alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
                 {isLoggedIn !== false && <div className="new-comment">
@@ -132,7 +134,7 @@ const SOTScreenshots = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 export default SOTScreenshots;

@@ -16,7 +16,6 @@ useEffect(()=>{
                 <div className="comment-heading">
                     <p className="username-comment">{username}</p>
             </div>}
-
         </div>
     )
 

@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Animal_Crossing_New_Horizons_klingels
+    from '../../../assets/afbeeldingen/Animal_Crossing_New_Horizons_klingels.png';
 
 const ACNHKlingels = () => {
     const [post, setPost] = useState (null);
@@ -39,8 +41,9 @@ const ACNHKlingels = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/155`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/10`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost()
@@ -61,7 +64,7 @@ const ACNHKlingels = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/155`)
+            const result = await axios.get(`http://localhost:8080/api/post/10`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -77,16 +80,22 @@ const ACNHKlingels = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
-                {post !== null && <div className="new-post">
+                {post !== null &&
+            <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
+
+                        <img
+                            src={Animal_Crossing_New_Horizons_klingels}
+                            alt = "plaatje bericht"
+                            className="topic-img"/>
+                            <h5 className="topic-text">{post.header}</h5>
+                    <p className="topic-text">{post.postText}</p>
+
+            </div>}
                     <div className="new-comment">
                <InputComment/>
                 {isLoggedIn !== false && <textarea
@@ -98,7 +107,7 @@ const ACNHKlingels = () => {
                             type="file"
                             name="picture"
                             className="input-picture"
-                            onChange={(e)=> {handleFiles(e)}}/>}
+                            onChange={(e)=> {handleFiles(e)}}/>
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
                 <button
                     onClick={handleClick}
@@ -133,7 +142,7 @@ const ACNHKlingels = () => {
                 })}
             </div>
 
-        </>
+        </div>
     )
 }
 

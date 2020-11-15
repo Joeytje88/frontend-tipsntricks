@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import InputComment from "../../../components/comments/InputComment";
-import CommentButton from "../../../components/button/CommentButton";
+import InputComment from "../../../components/comments/TopicComment";
+import Project_Cars_3_tips from '../../../assets/afbeeldingen/Project_Cars_3_tips.png';
+
 const PCars3Tips = () => {
     const[post, setPost] = useState(null)
     const [inputComment, setInputComment] = useState("")
@@ -40,7 +41,7 @@ const PCars3Tips = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/52/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/44/comment/${userid}`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +54,7 @@ const PCars3Tips = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/52`)
+            const result = await axios.get(`http://localhost:8080/api/post/44`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -62,45 +63,55 @@ const PCars3Tips = () => {
 
     useEffect(()=>{
         getpost();
+        if(username !== null){
+            setIsLoggedIn(true)
+        }
     }, [])
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
-            <div className="topic-page">
-                {post !== null && <div className="new-post">
+        <div className="topic-page">
+            {post !== null &&
+                <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
 
-                {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
-                {isLoggedIn !== false && <div className="new-comment">
-                    <InputComment/>
-                    <input
-                        type="file"
-                        name="picture"
-                        className="input-picture"
-                        onChange={(e)=> {handleFiles(e)}}/>
-                    {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
-                    <textarea
-                        className="comment-input"
-                        value={inputComment}
-                        onChange={changeComment}
-                        placeholder="schrijf hier je reactie"/>
-                    {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
-
-                    <button
-                        onClick={handleClick}
-                        disabled={inputComment <1}
-                        className="comment-button">
-                        Plaats je reactie</button>    </div>}
+                        <img
+                            src={Project_Cars_3_tips}
+                            className="topic-img"
+                            alt = "Project Cars 3"/>
+                    <h5 className="topic-text">{post.header}</h5>
+                    <p className="topic-text">{post.postText}</p>
+                </div>}
 
 
-                {post !== null &&
+            {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
+            {isLoggedIn !== false && <div className="new-comment">
+                <InputComment/>
+                <input
+                    type="file"
+                    name="picture"
+                    className="input-picture"
+                    onChange={(e)=> {handleFiles(e)}}/>
+                {inputPicture !== null && <div className="new-comment"><img src={inputPicture} alt="comment-img"/></div> }
+                <textarea
+                    className="comment-input"
+                    value={inputComment}
+                    onChange={changeComment}
+                    placeholder="schrijf hier je reactie"/>
+                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+                <button
+                    onClick={handleClick}
+                    disabled={inputComment <1}
+                    className="comment-button">
+                    Plaats je reactie</button>    </div>}
+
+
+
+            {post !== null &&
                 post.postComments.map((entry) => {
                     return (
                         <div
@@ -129,7 +140,7 @@ const PCars3Tips = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

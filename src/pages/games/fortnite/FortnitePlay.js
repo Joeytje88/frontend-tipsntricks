@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Fortnite_samenspelen
+    from "../../../assets/afbeeldingen/Fortnite_samenspelen.png";
 
 const FortnitePlay = () => {
     const[post, setPost] = useState(null)
@@ -40,7 +42,7 @@ const FortnitePlay = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/29/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/23/comment/${userid}`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +55,7 @@ const FortnitePlay = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/29`)
+            const result = await axios.get(`http://localhost:8080/api/post/23`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -69,15 +71,18 @@ const FortnitePlay = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+
+                        <img
+                            src={Fortnite_samenspelen}
+                            className="topic-img"
+                            alt = "Fortnite"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
                 {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
@@ -129,7 +134,7 @@ const FortnitePlay = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

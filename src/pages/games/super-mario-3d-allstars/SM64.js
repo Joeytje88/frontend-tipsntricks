@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
-
+import SuperMario64
+    from "../../../assets/afbeeldingen/SuperMario64.png";
 const SM64 = () => {
     const [post, setPost] = useState(null)
     const [inputComment, setInputComment] = useState("")
@@ -39,8 +40,9 @@ const SM64 = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/58/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/49/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -52,7 +54,7 @@ const SM64 = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/58`)
+            const result = await axios.get(`http://localhost:8080/api/post/49`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -67,16 +69,19 @@ const SM64 = () => {
     }, [])
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
-            <div className="topic-page">
-                {post !== null && <div className="new-post">
+        <div className="topic-page">
+                {post !== null &&
+            <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "Super Mario 64"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
+                        <img
+                            src={SuperMario64}
+                            className="topic-img"
+                            alt = "Super Mario 64"/>
+                    <h4 className="topic-text">{post.postText}</h4>
+            </div>}
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
                 {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
@@ -127,7 +132,7 @@ const SM64 = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

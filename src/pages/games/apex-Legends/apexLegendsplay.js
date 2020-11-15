@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Apex_Legends_samenspelen from '../../../assets/afbeeldingen/Apex_Legends_samenspelen.png';
 
 const ApexLegendsPlay = () => {
     const [post, setPost] = useState (null);
@@ -16,7 +17,7 @@ const ApexLegendsPlay = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/8`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/6`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -29,7 +30,7 @@ const ApexLegendsPlay = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/8`)
+            const result = await axios.get(`http://localhost:8080/api/post/6`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -45,20 +46,24 @@ const ApexLegendsPlay = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                    <img
+                        src={Apex_Legends_samenspelen}
+                        className="topic-img"
+                        alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p>
 
-                    <p>{post.tags}</p></div>}
+                    <h6
+                        className="tags">
+                        {post.tags}</h6></div>}
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
-                {isLoggedIn === true && <div className="new-comment">
+                {isLoggedIn === true && <div className="comment-section">
                <InputComment />
                 <textarea
                     className="comment-input"
@@ -102,7 +107,7 @@ const ApexLegendsPlay = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

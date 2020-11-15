@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
-
+import Animal_Crossing_New_Horizons_knollen
+    from "../../../assets/afbeeldingen/Animal_Crossing_New_Horizons_knollen.png";
 
 const ACNHKnollen = () => {
     const [post, setPost] = useState (null);
@@ -17,7 +18,7 @@ const ACNHKnollen = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/158`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/12`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -39,7 +40,7 @@ const ACNHKnollen = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/158`)
+            const result = await axios.get(`http://localhost:8080/api/post/11`)
             setPost(result.data)
             getpost();
         } catch (error) {
@@ -56,19 +57,20 @@ const ACNHKnollen = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img src={Animal_Crossing_New_Horizons_knollen}
+                             className="topic-img"
+                             alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p>
 
                     <p>{post.tags}</p></div>}
-                <div className="new-comment">
+                <div className="comment-section">
                     <InputComment/>
                     {isLoggedIn !== false && <textarea
                         className="comment-input"
@@ -111,7 +113,7 @@ const ACNHKnollen = () => {
                 })}
             </div>
 
-        </>
+        </div>
     )
 }
 export default ACNHKnollen;

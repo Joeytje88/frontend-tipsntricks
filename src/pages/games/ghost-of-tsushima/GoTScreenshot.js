@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Ghost_of_Tsushima_screenshots from '../../../assets/afbeeldingen/Ghost_of_Tsushima_screenshots.png';
 
 const GoTScreenshot = () => {
     const[post, setPost] = useState(null)
@@ -40,8 +41,9 @@ const GoTScreenshot = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/43/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/31`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost()
@@ -53,7 +55,7 @@ const GoTScreenshot = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/43`)
+            const result = await axios.get(`http://localhost:8080/api/post/31`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -77,9 +79,12 @@ const GoTScreenshot = () => {
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img src={Ghost_of_Tsushima_screenshots}
+                             className="topic-img"
+                             alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
+                {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p>}
                 {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
                     <input

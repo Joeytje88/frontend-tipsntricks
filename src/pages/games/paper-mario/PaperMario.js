@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
+import PaperMarioOrigamiKing from '../../../assets/afbeeldingen/PaperMarioOrigamiKing.png'
 const PaperMario = () => {
     const[post, setPost] = useState(null)
     const [inputComment, setInputComment] = useState("")
@@ -68,23 +69,24 @@ const PaperMario = () => {
     }, [])
 
     return (
-        <>
+        <div className="full-page">
         <Navigation/>
         <div className="topic-page">
-            {post !== null && <>
+            {post !== null && <div className="new-post">
                 <h2 className="post-title"> {post.postTitle} </h2>
-                <div className="postpicture">
-                    <img src={post.picture} alt = "Paper Mario: The Origami King"/></div>
-            </>}
+                    <img src={PaperMarioOrigamiKing}
+                         className="topic-img"
+                         alt = "Paper Mario: The Origami King"/>
+
                     <div className="paragraaf"><strong>ontwikkelaar:</strong> Nintendo
                         <p><strong>uitgever:</strong> Nintendo</p>
                         <p><strong>release:</strong> 18 juli 2020</p>
-                        <p><strong>platforms:</strong> Nintendo Switch</p>
+                        <p><strong>platforms:</strong> Nintendo Switch</p></div>
 
-                        {post !== null && <h4 className="topic-text">{post.postText}</h4>}
+                      <h4 className="topic-text">{post.postText}</h4> </div>}
 
                         {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
-                        {isLoggedIn !== false && <div className="new-comment">
+                        {isLoggedIn !== false && <div className="comment-section">
                             <InputComment/>
                             <input
                                 type="file"
@@ -133,8 +135,7 @@ const PaperMario = () => {
 
                     </div>
 
-        </div>
-</>
+</div>
             )
 }
 

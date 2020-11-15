@@ -13,15 +13,16 @@ return (
     <Navigation/>
     <div className="game-page">
         <div className="game-description">
-                <Image
+                <img
                     alt="Zelda Breath of the Wild"
-                    link={ZeldaBotW1}
+                    src={ZeldaBotW1}
                     className="games-img"/>
-            <div className="paragraaf">The Legend of Zelda: Breath of the Wild
-                <p>ontwikkelaar: Nintendo</p>
-                <p>uitgever: Nintendo</p>
-                <p>release: 3 maart 2017</p>
-                <p>platforms: Nintendo Switch</p></div>
+
+            <div className="paragraaf"><strong>The Legend of Zelda: Breath of the Wild</strong>
+                <p>  <strong>ontwikkelaar:</strong> Nintendo</p>
+                <p>  <strong>uitgever:</strong> Nintendo</p>
+                <p>  <strong>release:</strong> 3 maart 2017</p>
+                <p>  <strong>platforms:</strong> Nintendo Switch</p></div>
         </div>
         <div className="tipsntrick">
             <Link to="/breath-of-the-wild/tips">

@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Call_of_Duty_Modern_Warfare_Warzone_Top
+    from "../../../assets/afbeeldingen/Call_of_Duty_Modern_Warfare_Warzone_Top.png";
 
 const CoDTop = () =>{
     const [post, setPost] = useState (null);
@@ -15,10 +17,11 @@ const CoDTop = () =>{
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/4/`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/3`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
+                getpost()
             })
         } catch (error){
             console.log(error)
@@ -37,7 +40,7 @@ const CoDTop = () =>{
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/4`)
+            const result = await axios.get(`http://localhost:8080/api/post/3`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -53,20 +56,21 @@ const CoDTop = () =>{
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img
+                            src={Call_of_Duty_Modern_Warfare_Warzone_Top}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p>
-
-                    <p>{post.tags}</p></div>}
+                </div>}
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
-                {isLoggedIn === false && <div className="new-comment">
+                {isLoggedIn !== false && <div className="comment-section">
                     <InputComment/>
                 <textarea
                     className="comment-input"
@@ -75,13 +79,13 @@ const CoDTop = () =>{
                     placeholder="schrijf hier je reactie"/> <br/>
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
 
-
                 <button
                     onClick={handleClick}
                     className="comment-button"
                     disabled={inputComment <1}>
                     Plaats je reactie</button>
                     </div>}
+
                 {post !== null &&
                 post.postComments.map((entry) => {
                         return (
@@ -109,7 +113,7 @@ const CoDTop = () =>{
                     })}
             </div>
 
-        </>
+        </div>
     )
 }
 export default CoDTop;

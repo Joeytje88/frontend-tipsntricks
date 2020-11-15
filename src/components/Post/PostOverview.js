@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Navigation from "../navbar/Navigation";
 import "./posts.css"
+import AdminNavbar from "../navbar/AdminNavbar";
 
 const PostOverview = () => {
     const [postData, setPostData] = useState("")
@@ -11,9 +12,10 @@ const PostOverview = () => {
         fetchposts();
     },[])
 
-    const deletePost = (postId) => {
+    const deletePost = (postid) => {
         try{
-        const deleteBericht = axios.delete(`http://localhost:8080/api/post/${postId}`);
+        const deleteBericht = axios.delete(`http://localhost:8080/api/post/${postid}`);
+        fetchposts();
     } catch (error){
         console.log(error)
         }
@@ -30,9 +32,13 @@ const PostOverview = () => {
             // toggleError(error);
         }
     }
+
+
     return (
         <>
             <Navigation/>
+            <AdminNavbar/>
+
             {postData !== "" && postData.map((post)=> {
                 return(
                 <div
@@ -41,6 +47,9 @@ const PostOverview = () => {
                     <h5 key={post.postTitle}>
                         {post.postTitle}
                     </h5>
+                    <h4
+                        key={post.header}>
+                        {post.header}</h4>
                     <p
                         key={post.postId}> id:&nbsp;
                         {post.postId}
@@ -51,7 +60,7 @@ const PostOverview = () => {
                     <button
                         className="delete-post"
                         type="submit"
-                        onClick={deletePost}>
+                        onClick={()=>deletePost(post.postId)}>
                         verwijder
                     </button>
                 </div>)})

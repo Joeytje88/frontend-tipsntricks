@@ -1,13 +1,15 @@
 @media screen and (min-width: 1200px){
 .comment {
+    width: 90%;
     text-align: start;
     margin: 1% 5% 4% 5%;
 }
 .new-comment {
-    width: 90%;
-    margin-left: 5%;
+    width: 850px;
+    margin-right: 10%;
     margin-bottom: 2%;
     border: 1px solid lightseagreen;
+    background-color: white;
 }
 .comment-input {
     width: 90%;
@@ -23,6 +25,7 @@
     width: 90%;
     margin: 1% 5% 0 5%;
     border: 1px solid lightseagreen;
+    background-color: white;
 }
 
 .comment-heading {
@@ -47,7 +50,13 @@
     text-decoration: underline;
     height: 30px;
     width: 50%;
-    margin: 0 25%
+    margin: 0 40%}
+
+.warning {
+    margin-left: 50%;
+    width: 90%;
+    padding: 5px;
+    border: 1px solid lightseagreen;
 }
 
 .delete-comment {
@@ -61,7 +70,7 @@
 }
 
 .comment-button {
-    margin: 1% 42%;
+    margin: 1% 30%;
     height: 40px;
     background-color: #1c2237;
     color: lightseagreen;
@@ -78,21 +87,21 @@
 }
 @media screen and (max-width: 1200px){
 .comment{
+    width: 100%;
     text-align: start;
     height: auto;
-    margin-left: 2%;
 }
 
 .new-comment {
     width: 90%;
     margin-left: 5%;
-    margin-bottom: 2%;
+    margin-bottom: 0%;
     border: 1px solid lightseagreen;
 }
 
 .comment-input{
     width: 90%;
-    margin: 0 5% 0 5%;
+    margin-left: 5%;
 }
 
 .comment-section {
@@ -106,7 +115,6 @@
     display: flex;
     border: 1px solid black;
     height: 50px;
-
 }
 
 .comment-text {
@@ -119,7 +127,8 @@
 }
 
 .warning {
-    width: auto;
+    width: 80%;
+    margin-left: 10%;
     border: 1px solid lightseagreen;
 }
 
@@ -142,7 +151,7 @@
 }
 
 .comment-button {
-    margin: 1% 30%;
+    margin: 1% 25% 0;
     height: 40px;
     background-color: #1c2237;
     color: lightseagreen;

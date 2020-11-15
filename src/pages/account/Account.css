@@ -1,20 +1,36 @@
-.account-page{
-    display: block;
-    align-items: center;
-    text-align: center;
-    padding-bottom: 100px;
-}
-.profile-picture{
-    align-items: center;
-    padding-bottom: 100px;
-}
-.input-game{
-    margin-left: 550px;
-    margin-bottom: 10px;
-    display: flex;
-}
-.game-button{
-    margin-left: 550px;
-    margin-bottom: 10px;
-    display: flex;
+@media screen and (min-width: 1200px) {
+    .account-page {
+        display: block;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 100px;
+    }
+
+    .profile-picture {
+        align-items: center;
+        padding-bottom: 100px;
+    }
+
+    .input-game {
+        margin-left: 46%;
+        margin-bottom: 10px;
+        display: flex;
+    }
+
+    .game-button {
+        margin-left: 45%;
+        height: 32px;
+        width: 180px;
+        color: #1c2237;
+        border: 1px solid black;
+        background-color: lightseagreen;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        display: flex;
+    }
+
+    .game{
+    width: auto;
+    height: auto;
+    }
 }

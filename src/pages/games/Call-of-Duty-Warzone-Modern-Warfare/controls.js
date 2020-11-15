@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
+import Call_of_Duty_Modern_Warfare_Warzone_controls
+    from "../../../assets/afbeeldingen/Call_of_Duty_Modern_Warfare_Warzone_controls.png";
 import InputComment from "../../../components/comments/TopicComment";
 const CoDControls = () => {
     const [post, setPost] = useState (null);
@@ -38,8 +40,9 @@ const CoDControls = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/3`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/2`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -49,9 +52,18 @@ const CoDControls = () => {
         }
     }
 
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/3`)
+            const result = await axios.get(`http://localhost:8080/api/post/2`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -67,18 +79,22 @@ const CoDControls = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p>
 
-                    <p>{post.tags}</p></div>}
+                        <img
+                            src={Call_of_Duty_Modern_Warfare_Warzone_controls}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
+                    <h5
+                        className="topic-text">
+                        {post.header}
+                    </h5>
+                    <p className="topic-text">{post.postText}</p></div>}
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
                 {isLoggedIn !== false &&<div className="new-comment">
                     <InputComment/>
@@ -112,8 +128,8 @@ const CoDControls = () => {
                             <div className="comment-heading">
                                 <p className="username-comment">{username}</p>
                                 <h6
-                                    className="delete-comment">
-                                     {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    className="delete-comment"
+                                     onClick={()=> deleteComment(entry.commentid)}>
                                     verwijder</h6>
                                 <h6 className="adjust-comment">
                                     pas aan</h6>
@@ -131,7 +147,7 @@ const CoDControls = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 export default CoDControls;

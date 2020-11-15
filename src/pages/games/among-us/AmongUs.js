@@ -3,9 +3,11 @@ import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import "../topics.css"
 import InputComment from "../../../components/comments/TopicComment";
-
+import Among_Us
+    from "../../../assets/afbeeldingen/Among_Us.png";
 
 const AmongUs = () => {
+
     const[post, setPost] = useState(null)
     const [inputComment, setInputComment] = useState("")
     const [isLoggedIn, setIsLoggedIn] = useState (false)
@@ -38,7 +40,7 @@ const AmongUs = () => {
     }
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/7`)
+            const result = await axios.get(`http://localhost:8080/api/post/5`)
             setPost(result.data)
             console.log(result.data)
         } catch (error) {
@@ -48,12 +50,13 @@ const AmongUs = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/7`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/5`,{
                 text: inputComment,
                 image: inputPicture
             }).then(function (response) {
                 setInputComment("")
-                getpost()
+                setInputPicture(null)
+                getpost();
             })
         } catch (error){
             console.log(error)
@@ -78,25 +81,26 @@ const AmongUs = () => {
 
 
     return (
-        <>
-            <Navigation/>
-            <div className="topic-page">
-
-                {post !== null && <div className="new-post">
+    <div className="full-page">
+        <Navigation/>
+        <div className="topic-page">
+                {post !== null &&
+            <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
 
                         <img
-                            src={post.picture}
+                            src={Among_Us}
                             alt ="Among Us"
-                            className="topic-img"/>
-                </div>}
+                            className="post-picture"/>
+
                 <div className="paragraaf">
                 <strong>ontwikkelaar: </strong>InnerSloth
                 <p><strong>uitgever:</strong> InnerSloth</p>
                 <p><strong>release:</strong> 15 juni 2018</p>
                 <p><strong>platforms:</strong> pc</p></div>
 
-                {post !== null && <h4 className="topic-text">{post.postText}</h4>}
+                <h4 className="topic-text">{post.postText}</h4>
+            </div>}
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
                 {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
@@ -119,6 +123,7 @@ const AmongUs = () => {
                     disabled={inputComment <1}
                     className="comment-button">
                     Plaats je reactie</button>    </div>}
+
                 {post !== null && post.postComments.map((entry) => {
                     return (
                         <div
@@ -144,7 +149,7 @@ const AmongUs = () => {
                 })}
 
             </div>
-        </>
+        </div>
     )
 }
 

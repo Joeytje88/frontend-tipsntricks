@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Fortnite_loadout from  '../../../assets/afbeeldingen/Fortnite_loadout.png';
 
 const FortniteLoadout = () => {
     const[post, setPost] = useState(null)
@@ -40,8 +41,9 @@ const FortniteLoadout = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/28/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/24/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost()
@@ -53,7 +55,7 @@ const FortniteLoadout = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/28`)
+            const result = await axios.get(`http://localhost:8080/api/post/24`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -70,16 +72,19 @@ const FortniteLoadout = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img
+                            src={Fortnite_loadout}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
+                            <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
+
                 {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
                     <input
@@ -130,7 +135,7 @@ const FortniteLoadout = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

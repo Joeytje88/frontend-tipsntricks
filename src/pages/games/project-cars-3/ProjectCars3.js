@@ -12,7 +12,7 @@ const ProjectCars3 = () => {
             <Navigation/>
             <div className="game-description">
             <div className="game-page">
-                <div className="games-img">
+                <div className="game-img">
                     <Image
                         alt="Project Cars 3"
                         link={Project_Cars_3}/>

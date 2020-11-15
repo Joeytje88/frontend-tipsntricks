@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Forza_Horizon_4_Play from "../../../assets/afbeeldingen/Forza_Horizon_4_play.png";
 
 const FH4Play = () => {
 
@@ -40,7 +41,7 @@ const FH4Play = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/31`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/26`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +54,7 @@ const FH4Play = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/31`)
+            const result = await axios.get(`http://localhost:8080/api/post/26`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -69,29 +70,41 @@ const FH4Play = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img
+                            src={Forza_Horizon_4_Play}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
+
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
-                {isLoggedIn !== false && <div className="new-comment">
+
+
+
+                {isLoggedIn === true &&
+            <div className="new-comment">
                     <InputComment/>
-                    <input
+                     <input
                         type="file"
                         name="picture"
                         className="input-picture"
                         onChange={(e)=> {handleFiles(e)}}/>
-                    {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
-                    <textarea
-                        className="comment-input"
-                        value={inputComment}
-                        onChange={changeComment}
-                        placeholder="schrijf hier je reactie"/>
+                <textarea
+                    className="comment-input"
+                    value={inputComment}
+                    onChange={changeComment}
+                    placeholder="schrijf hier je reactie"/>
+                    {inputPicture !== null &&
+                    <div className="comment-img">
+                        <img src={inputPicture}
+                             alt="comment-img"/>
+                    </div>}
+
                     {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
 
                     <button
@@ -99,7 +112,6 @@ const FH4Play = () => {
                         disabled={inputComment <1}
                         className="comment-button">
                         Plaats je reactie</button>    </div>}
-
 
                 {post !== null &&
                 post.postComments.map((entry) => {
@@ -130,7 +142,7 @@ const FH4Play = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

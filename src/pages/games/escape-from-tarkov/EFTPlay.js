@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Escape_from_Tarkov_samenspelen from "../../../assets/afbeeldingen/Escape_from_Tarkov_samenspelen.png";
 
 const EFTPlay = () => {
 
@@ -41,7 +42,7 @@ const EFTPlay = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/20`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/16`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +54,7 @@ const EFTPlay = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/20`)
+            const result = await axios.get(`http://localhost:8080/api/post/16`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -69,15 +70,19 @@ const EFTPlay = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+
+                        <img
+                            src={Escape_from_Tarkov_samenspelen}
+                            alt = "plaatje bericht"
+                            className="topic-img"/>
+
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
 
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
@@ -134,7 +139,7 @@ const EFTPlay = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 export default EFTPlay;

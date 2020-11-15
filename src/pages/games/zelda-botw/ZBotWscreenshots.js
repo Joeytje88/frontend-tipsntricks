@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import ZeldaBotWscreenshot from '../../../assets/afbeeldingen/ZeldaBotWscreenshot.png';
 
 const ZBotWScreenshots = () => {
     const[post, setPost] = useState(null)
@@ -40,7 +41,7 @@ const ZBotWScreenshots = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/62/`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/55`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +54,7 @@ const ZBotWScreenshots = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/62`)
+            const result = await axios.get(`http://localhost:8080/api/post/55`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -70,18 +71,22 @@ const ZBotWScreenshots = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+
+                        <img
+                            src={ZeldaBotWscreenshot}
+                            className="topic-img"
+                            alt = "The Legend of Zelda Breath of the Wild"/>
+
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
-                {isLoggedIn !== false && <div className="new-comment">
+                {isLoggedIn !== false && <div className="comment-section">
                     <InputComment/>
                     <input
                         type="file"
@@ -131,7 +136,7 @@ const ZBotWScreenshots = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

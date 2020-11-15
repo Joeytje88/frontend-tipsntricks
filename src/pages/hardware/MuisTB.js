@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../components/comments/TopicComment";
+import PC_mouse_keyboard from '../../assets/afbeeldingen/PC_mouse_keyboard.png'
 
 
 const MuisTB = ()=>{
@@ -41,8 +42,9 @@ const MuisTB = ()=>{
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/68/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/59/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -54,7 +56,7 @@ const MuisTB = ()=>{
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/68`)
+            const result = await axios.get(`http://localhost:8080/api/post/59`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -69,19 +71,22 @@ const MuisTB = ()=>{
     }, [])
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
-                    <InputComment/>
+                        <img
+                            src={PC_mouse_keyboard}
+                            alt = "plaatje bericht"
+                            className="topic-img"
+                        />
+                    <h4 className="topic-text">{post.postText}</h4>
+                <h6>{post.tag}</h6>
+                </div>}
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
-                {isLoggedIn !== false && <div className="new-comment">
+                {isLoggedIn !== false && <div className="comment-section">
                     <InputComment/>
                     <input
                         type="file"
@@ -131,7 +136,7 @@ const MuisTB = ()=>{
 
             </div>
 
-        </>
+        </div>
     )
 }
 

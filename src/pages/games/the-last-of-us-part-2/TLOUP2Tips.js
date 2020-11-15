@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Last_of_Us_Part_2_survival
+    from "../../../assets/afbeeldingen/Last_of_Us_Part_2_survival.png";
 
 const TLOUP2Tips = () => {
     const[post, setPost] = useState(null)
@@ -40,7 +42,7 @@ const TLOUP2Tips = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/64`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/53`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +55,7 @@ const TLOUP2Tips = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/64`)
+            const result = await axios.get(`http://localhost:8080/api/post/53`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -68,18 +70,29 @@ const TLOUP2Tips = () => {
     }, [])
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
-            <div className="topic-page">
-                {post !== null && <div className="new-post">
+        <div className="topic-page">
+                {post !== null &&
+            <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
+
+                        <img
+                            src={Last_of_Us_Part_2_survival}
+                            className="topic-img"
+                            alt = "The Last of Us Part 2"/>
+                    <h5
+                        className="topic-text">
+                        {post.header}
+                    </h5>
+                    <p
+                        className="topic-text">
+                        {post.postText}
+                    </p>
+            </div>}
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
-                {isLoggedIn !== false && <div className="new-comment">
+                {isLoggedIn !== false && <div className="comment-section">
                     <InputComment/>
                     <input
                         type="file"
@@ -129,7 +142,7 @@ const TLOUP2Tips = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

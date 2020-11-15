@@ -56,7 +56,6 @@ import {
 
 import {
     ApexLegendsTop,
-    ApexLegendsControls,
     ApexLegendsLoadout,
     ApexLegendsPlay
 } from '../../pages/games/apex-Legends';
@@ -124,7 +123,6 @@ import {
     GroundedPlay,
     GroundedCreaties,
     GroundedSurvival,
-    GroundedTips
 } from '../../pages/games/grounded'
 
 
@@ -193,17 +191,17 @@ const Routers = () => {
                 <Home />
             </Route>
 
-            <Route exact path="/nieuw-bericht">
+            {localStorage.roles === "ROLE_ADMIN" && <Route exact path="/nieuw-bericht">
                 <Post/>
-            </Route>
+            </Route>}
 
-            <Route exact path="/comments">
+            {localStorage.roles !== "ROLE_USER" && <Route exact path="/comments">
                 <Comment />
-            </Route>
+            </Route>}
 
-            <Route exact path="/posts">
+            {localStorage.roles !== "ROLE_USER" && <Route exact path="/posts">
                 <PostOverview />
-            </Route>
+            </Route>}
 
 
             <Route exact path="/games">
@@ -308,9 +306,6 @@ const Routers = () => {
             </Route>
             <Route exact path="/apex-legends/loadout">
                 <ApexLegendsLoadout />
-            </Route>
-            <Route exact path="/apex-legends/controls">
-                <ApexLegendsControls />
             </Route>
 
 
@@ -445,9 +440,6 @@ const Routers = () => {
             <Route exact path="/grounded/survival">
                 <GroundedSurvival />
             </Route>
-            <Route exact path="/grounded/tips">
-                <GroundedTips />
-            </Route>
 
             <Route exact path="/hyperscape/">
                 <HyperScape />
@@ -455,7 +447,7 @@ const Routers = () => {
             <Route exact path="/hyperscape/samenspelen">
                 <HyperScapePlay />
             </Route>
-            <Route exact path="/hyperscape/loadout">
+            <Route exact path="/hyperscape/loadouts">
                 <HyperScapeLoadout />
             </Route>
 

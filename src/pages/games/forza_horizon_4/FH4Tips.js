@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Forza_Horizon_4_Tips from "../../../assets/afbeeldingen/Forza_Horizon_4_Tips.png";
 
 const FH4Tips = () => {
     const [post, setPost] = useState(null)
@@ -40,7 +41,7 @@ const FH4Tips = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/32/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/27/comment/${userid}`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +54,7 @@ const FH4Tips = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/32`)
+            const result = await axios.get(`http://localhost:8080/api/post/27`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -70,19 +71,23 @@ const FH4Tips = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
-                {isLoggedIn !== false && <div className="new-comment">
-                    <InputComment/>
-                    <input
+
+                        <img
+                            src={Forza_Horizon_4_Tips}
+                            className="topic-text"
+                            alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
+                    <p className="topic-text">{post.postText}</p>
+                </div>}
+                    {isLoggedIn !== false && <div className="comment-section">
+                        <InputComment/>
+                        <input
                         type="file"
                         name="picture"
                         className="input-picture"
@@ -131,7 +136,7 @@ const FH4Tips = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

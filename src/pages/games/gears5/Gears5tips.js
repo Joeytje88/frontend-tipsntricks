@@ -2,6 +2,7 @@ import React,{useState, useEffect} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Gears_5_tips from "../../../assets/afbeeldingen/Gears5_tips.png";
 
 const Gears5Tips = () => {
     const[post, setPost] = useState(null)
@@ -40,8 +41,9 @@ const Gears5Tips = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/36/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/27/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -53,7 +55,7 @@ const Gears5Tips = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/36`)
+            const result = await axios.get(`http://localhost:8080/api/post/27`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -69,15 +71,16 @@ const Gears5Tips = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
-                    <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                    <h2 className="posttitle"> {post.postTitle} </h2>
+                        <img src={Gears_5_tips}
+                             className="topic-text"
+                             alt = "Gears 5"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
                 {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
@@ -129,7 +132,7 @@ const Gears5Tips = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

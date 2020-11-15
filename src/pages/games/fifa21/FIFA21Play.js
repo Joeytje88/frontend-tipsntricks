@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import FIFA_21_play from '../../../assets/afbeeldingen/FIFA_21_Play.png';
 
 const FIFA21Play = () => {
     const[post, setPost] = useState(null)
@@ -39,7 +40,7 @@ const FIFA21Play = () => {
 
         const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/22/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/19/comment/${userid}`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -51,7 +52,7 @@ const FIFA21Play = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/22`)
+            const result = await axios.get(`http://localhost:8080/api/post/19`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -67,18 +68,21 @@ const FIFA21Play = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+
+                        <img
+                            src={FIFA_21_play}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
-                {isLoggedIn !== false && <div className="new-comment">
+                {isLoggedIn !== false && <div className="comment-section">
                     <InputComment/>
                     <input
                         type="file"
@@ -128,7 +132,7 @@ const FIFA21Play = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

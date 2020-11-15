@@ -2,12 +2,16 @@ import React, {useEffect, useState} from "react";
 import '../topics.css';
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
+import Animal_Crossing_New_Horizons_DIY
+    from "../../../assets/afbeeldingen/Animal_Crossing_New_Horizons_DIY.png";
 
 const ACNHDiy = (props) => {
 
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
+    const [isLoggedIn, setIsLoggedIn] = useState (false)
+    const [inputPicture, setInputPicture] = useState(null)
 
     const userid = localStorage.getItem("user_id");
     const username = localStorage.getItem("username")
@@ -15,9 +19,30 @@ const ACNHDiy = (props) => {
         setInputComment(e.target.value)
     }
 
+    const handleFiles = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        setInputPicture(base64)
+
+    }
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result)
+            });
+            fileReader.onerror = ((error) => {
+                reject(error)
+            })
+        })
+    }
+
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/15`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/11`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -28,9 +53,18 @@ const ACNHDiy = (props) => {
         }
     }
 
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/15`)
+            const result = await axios.get(`http://localhost:8080/api/post/11`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -39,36 +73,46 @@ const ACNHDiy = (props) => {
 
     useEffect(()=>{
         getpost();
+        if (username !== null){
+            setIsLoggedIn(true)
+        }
     }, [])
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
-
             <div className="topic-page">
                 {post !== null && <div className="new-post">
-                    <h2 className="posttitle"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p>
+                    <h2 className="post-title"> {post.postTitle} </h2>
+                        <img
+                            src={Animal_Crossing_New_Horizons_DIY}
+                            alt = "plaatje bericht"
+                            className="topic-img"/>
+                    <h5 className="topic-text">{post.header}</h5>
+                    <p className="topic-text">{post.postText}</p></div>}
+                {isLoggedIn !== false &&<div className="comment-section">
+                <InputComment/>
+                <input
+                    type="file"
+                    name="picture"
+                    className="input-picture"
+                    onChange={(e)=> {handleFiles(e)}}/>
+                {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
 
-                    <p>{post.tags}</p></div>}
-               <InputComment/>
                 <textarea
                     className="comment-input"
                     value={inputComment}
                     onChange={changeComment}
-                    placeholder="schrijf hier je reactie"/> <br/>
+                    placeholder="schrijf hier je reactie"/>
                 {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
-
 
                 <button
                     onClick={handleClick}
                     disabled={inputComment <1}
                     className="comment-button">
-                    Plaats je reactie</button> <br/> <br/>
+                    Plaats je reactie</button>
+            </div>}
 
 
                 {post !== null &&
@@ -80,8 +124,8 @@ const ACNHDiy = (props) => {
                                 <div className="comment-heading">
                                     <p>{entry.username}</p>
                                     <h6
-                                        className="delete-comment">
-                                        {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                        className="delete-comment"
+                                        onClick={()=> deleteComment(entry.commentid)}>
                                         verwijder</h6>
                                     <h6 className="adjust-comment">
                                         pas aan</h6>
@@ -96,10 +140,8 @@ const ACNHDiy = (props) => {
 
                             </div>)
                 })}
-
             </div>
-
-        </>
+        </div>
     )
 }
 export default ACNHDiy;

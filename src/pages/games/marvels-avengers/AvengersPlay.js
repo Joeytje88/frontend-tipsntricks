@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Marvels_Avengers_play from '../../../assets/afbeeldingen/Marvels_Avengers_play.png';
 
 
 const AvengersPlay = () => {
@@ -39,7 +40,7 @@ const AvengersPlay = () => {
     }
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/51/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/39/comment/${userid}`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +54,7 @@ const AvengersPlay = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/48`)
+            const result = await axios.get(`http://localhost:8080/api/post/39`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -68,15 +69,18 @@ const AvengersPlay = () => {
     }, [])
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
-                {post !== null && <div className="new-post">
+                {post !== null &&
+                <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img
+                            className="topic-img"
+                            src={Marvels_Avengers_play}
+                            alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
 
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
@@ -129,7 +133,7 @@ const AvengersPlay = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 export default AvengersPlay;

@@ -3,6 +3,7 @@ import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import "../topics.css"
 import InputComment from "../../../components/comments/TopicComment";
+import Insurgency_Sandstorm from "../../../assets/afbeeldingen/Insurgency_Sandstorm.jpg"
 
 const InsurgencySandStorm = () => {
     const[post, setPost] = useState(null)
@@ -41,8 +42,9 @@ const InsurgencySandStorm = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/41/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/37/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
             })
@@ -53,7 +55,7 @@ const InsurgencySandStorm = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/41`)
+            const result = await axios.get(`http://localhost:8080/api/post/37`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -69,25 +71,30 @@ const InsurgencySandStorm = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
-            <div className="topic-page">
-                {post !== null && <div className="new-post">
-                    <h2 className="post-title"> {post.postTitle} </h2>
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>}
+        <div className="topic-page">
+            {post !== null &&
+                <div className="new-post">
+                    <h2
+                        className="post-title"> {post.postTitle} </h2>
+                        <img
+                            src={Insurgency_Sandstorm}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
 
-                    <div className="paragraaf"><strong>ontwikkelaar: </strong>InnerSloth
+                    <div className="paragraaf">
+                        <strong>ontwikkelaar: </strong>InnerSloth
                         <p><strong>uitgever:</strong> InnerSloth</p>
                         <p><strong>release:</strong> 15 juni 2018</p>
                         <p><strong>platforms:</strong> pc</p></div>
 
-                    <p className="topic-text">{post.postText}</p>
+                    <h5 className="topic-text">{post.postText}</h5>
                     </div>}
 
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
-                {isLoggedIn !== false && <div className="new-comment">
+                {isLoggedIn !== false && <div className="comment-section">
                     <InputComment/>
                     <input
                         type="file"
@@ -137,7 +144,7 @@ const InsurgencySandStorm = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

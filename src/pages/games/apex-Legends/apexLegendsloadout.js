@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Apex_Legends_loadout from '../../../assets/afbeeldingen/Apex_Legends_loadout.png';
 
 
 const ApexLegendsLoadout = () => {
@@ -17,19 +18,28 @@ const ApexLegendsLoadout = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/10`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/8`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
+                getpost()
             })
         } catch (error){
+            console.log(error)
+        }
+    }
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
             console.log(error)
         }
     }
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/10`)
+            const result = await axios.get(`http://localhost:8080/api/post/8`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -44,18 +54,20 @@ const ApexLegendsLoadout = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p>
+                    <img
+                        src={Apex_Legends_loadout}
+                        className="topic-img"
+                        alt = "plaatje bericht"/>
 
-                    <p>{post.tags}</p></div>}
+                    <h5 className="topic-text">{post.header}</h5>
+                    <p className="topic-text">{post.postText}</p>
+                        </div>}
 
                 {isLoggedIn === true && <div className="new-comment">
                 <InputComment />
@@ -82,8 +94,8 @@ const ApexLegendsLoadout = () => {
                             <div className="comment-heading">
                                 <p>{entry.username}</p>
                                 <h6
-                                    className="delete-comment">
-                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    className="delete-comment"
+                                    onClick={()=> deleteComment(entry.commentid)}>
                                     verwijder</h6>
                                 <h6 className="adjust-comment">
                                     pas aan</h6>
@@ -101,7 +113,7 @@ const ApexLegendsLoadout = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

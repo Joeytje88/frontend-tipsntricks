@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import F1_2020_tips from '../../../assets/afbeeldingen/F1_2020_tips.png';
 
 const F12020Tips = () => {
     const[post, setPost] = useState(null)
@@ -40,8 +41,9 @@ const F12020Tips = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/27/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/60`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -51,9 +53,19 @@ const F12020Tips = () => {
         }
     }
 
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/27`)
+            const result = await axios.get(`http://localhost:8080/api/post/60`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -69,16 +81,19 @@ const F12020Tips = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
+                        <img
+                            src={F1_2020_tips}
+                            className="topic-img"
+                            alt = "F1 2020"/>
+                    <p className="topic-text">{post.postText}</p>
+                    <h5 className="topic-text">{post.header}</h5>
+                </div>}
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
                 {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
@@ -103,32 +118,32 @@ const F12020Tips = () => {
                         Plaats je reactie</button>    </div>}
 
 
+                {post !== null && post.postComments.map((entry) => {
+                    return (
+                        <div
+                            className="comment-section">
+                            <div className="comment-heading">
+                                <p className="username-comment">{username}</p>
+                                <h6
+                                    className="delete-comment"
+                                    onClick={() => deleteComment(entry.commentid)}>
+                                    verwijder</h6>
+                                <h6 className="adjust-comment">
+                                    pas aan</h6>
+                            </div>
+                            <div className="comment"
+                                 key={entry.text}>
+                                {entry.text}
+                            </div>
+                            <div className="comment-img">
+                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                            </div>
 
-                {/*{post.postComments !== null &&*/}
-                {/*        <div*/}
-                {/*            className="comment-section">*/}
-                {/*            <div className="comment-heading">*/}
-                {/*                <p*/}
-                {/*                    className="username-comment">{post.postComments.commentid}</p> <p>{username}</p>*/}
-                {/*                <h6*/}
-                {/*                    className="delete-comment">*/}
-                {/*                    /!*onClick={()=> deleteComment(comment.commentid)}>*!/*/}
-                {/*                    verwijder</h6>*/}
-                {/*                <h6 className="adjust-comment">*/}
-                {/*                    pas aan</h6>*/}
-                {/*            </div>*/}
-                {/*            <div className="comment">*/}
-                {/*                {post.postComments.text}*/}
-                {/*            </div>*/}
-                {/*            /!*<div className="comment-img">*!/*/}
-                {/*            /!*    {image !== null && <img src={image} alt="plaatje comment"/>}*!/*/}
-                {/*            /!*</div>*!/*/}
-
-                {/*        </div>}*/}
-
+                        </div>)
+                })}
             </div>
 
-        </>
+        </div>
     )
 }
 export default F12020Tips;

@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import SuperMarioGalaxy
+    from "../../../assets/afbeeldingen/SuperMarioGalaxy.png";
 
 const SMG = () => {
     const[post, setPost] = useState(null)
@@ -39,7 +41,7 @@ const SMG = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/60/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/51/comment/${userid}`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -52,7 +54,7 @@ const SMG = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/60`)
+            const result = await axios.get(`http://localhost:8080/api/post/51`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -67,17 +69,19 @@ const SMG = () => {
     }, [])
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
-                {post !== null && <div className="new-post">
+                {post !== null &&
+                <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p> </div>}
-                    <InputComment/>
+                        <img
+                            src={SuperMarioGalaxy}
+                            alt = "plaatje bericht"/>
+                    <h4 className="topic-text">{post.postText}</h4>
+                </div>}
+
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
                 {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
@@ -129,7 +133,7 @@ const SMG = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

@@ -1,5 +1,6 @@
 .berichten {
     height: auto;
+    margin: 1% 2% 1% 2%;
     border: 1px solid lightseagreen;
 }
 .delete-post{

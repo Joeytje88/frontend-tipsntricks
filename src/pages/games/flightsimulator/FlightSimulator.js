@@ -3,6 +3,7 @@ import Navigation from "../../../components/navbar/Navigation";
 import "../games.css";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Flight_Simulator_2020 from '../../../assets/afbeeldingen/Flight_Simulator_2020.png';
 
 const FlightSimulator = () => {
     const[post, setPost] = useState(null)
@@ -40,7 +41,7 @@ const FlightSimulator = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/30`)
+            const result = await axios.get(`http://localhost:8080/api/post/22`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -49,7 +50,7 @@ const FlightSimulator = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/30/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/22/comment/${userid}`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -68,20 +69,22 @@ const FlightSimulator = () => {
 
 
     return (
-        <>
+        <div className="full-page">
         <Navigation/>
         <div className="topic-page">
 
             {post !== null && <div className="new-post">
                 <h2 className="post-title"> {post.postTitle} </h2>
-                <div className="post-picture">
-                    <img src={post.picture} alt = "plaatje bericht"/></div>
+                    <img
+                        src={Flight_Simulator_2020}
+                        className="topic-img"
+                        alt = "plaatje bericht"/>
             </div>}
                     <div className="paragraaf">
                         <p><strong>ontwikkelaar:</strong>Asobo Studio</p>
                         <p><strong>uitgever:</strong>Xbox Game Studios</p>
                         <p><strong>release:</strong> 18 augustus 2020 </p>
-                        <p><strong>platforms: pc</strong></p></div>
+                        <p><strong>platforms:</strong> pc</p></div>
 
         {post !== null && <h5 className="topic-text">{post.postText}</h5>}
             {isLoggedIn !== false && <div className="new-comment">
@@ -133,7 +136,7 @@ const FlightSimulator = () => {
 
         </div>
 
-        </>
+        </div>
     )
 }
 

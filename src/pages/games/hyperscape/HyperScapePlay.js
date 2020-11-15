@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import HyperScape_samenspelen from "../../../assets/afbeeldingen/HyperScape_samenspelen.png";
 
 const HyperScapePlay = () => {
     const[post, setPost] = useState(null)
@@ -40,8 +41,9 @@ const HyperScapePlay = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/33/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/35/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -53,7 +55,7 @@ const HyperScapePlay = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/33`)
+            const result = await axios.get(`http://localhost:8080/api/post/35`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -70,15 +72,17 @@ const HyperScapePlay = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+
+                        <img src={HyperScape_samenspelen}
+                             className="topic-img"
+                             alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
 
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
@@ -132,7 +136,7 @@ const HyperScapePlay = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

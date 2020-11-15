@@ -3,9 +3,7 @@ import Image from "../../../components/image/Image";
 import {Link} from "react-router-dom";
 import Escape_from_Tarkov from "../../../assets/afbeeldingen/Escape_from_Tarkov.png";
 import Escape_from_Tarkov_samenspelen from "../../../assets/afbeeldingen/Escape_from_Tarkov_samenspelen.png";
-import Escape_from_Tarkov_controlls from "../../../assets/afbeeldingen/Escape_from_Tarkov_controlls.png";
 import Escape_from_Tarkov_top from "../../../assets/afbeeldingen/Escape_from_Tarkov_top.png";
-import Escape_from_Tarkov_verkooptips from "../../../assets/afbeeldingen/Escape_from_Tarkov_verkooptips.png";
 import Navigation from "../../../components/navbar/Navigation";
 
 const EscapeFromTarkov= () => {

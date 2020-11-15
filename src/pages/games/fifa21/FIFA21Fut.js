@@ -1,8 +1,8 @@
 import React,{useState, useEffect} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import InputComment from "../../../components/comments/InputComment";
-import CommentButton from "../../../components/button/CommentButton";
+import InputComment from "../../../components/comments/TopicComment";
+import FIFA_21_FUT from '../../../assets/afbeeldingen/FIFA_21_FUT.png';
 
 const FIFA21Fut = () => {
     const[post, setPost] = useState(null)
@@ -40,8 +40,9 @@ const FIFA21Fut = () => {
 
         const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/23/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/20/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
             })
@@ -52,7 +53,7 @@ const FIFA21Fut = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/23`)
+            const result = await axios.get(`http://localhost:8080/api/post/20`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -68,16 +69,18 @@ const FIFA21Fut = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
+                        <img
+                            src={FIFA_21_FUT}
+                            className="topic-img"
+                            alt = "FIFA 21 FUT"/>
+                    <h5 className="topic-text">{post.header}</h5>
+                </div>}
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
                 {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
@@ -129,7 +132,7 @@ const FIFA21Fut = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

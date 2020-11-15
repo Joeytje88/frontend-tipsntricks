@@ -2,6 +2,7 @@ import React,{useState, useEffect} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import FIFA_21_Volta from '../../../assets/afbeeldingen/FIFA_21_Volta.png';
 
 const FIFA21Volta = () => {
     const[post, setPost] = useState(null)
@@ -39,8 +40,9 @@ const FIFA21Volta = () => {
 
         const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/24/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/21/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -52,7 +54,7 @@ const FIFA21Volta = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/24`)
+            const result = await axios.get(`http://localhost:8080/api/post/21`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -69,16 +71,17 @@ const FIFA21Volta = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p>
+                        <img
+                            src={FIFA_21_Volta}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                 </div>}
 
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
@@ -133,7 +136,7 @@ const FIFA21Volta = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 export default FIFA21Volta;

@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
-
+import Last_of_Us_Part_2_collect
+    from "../../../assets/afbeeldingen/Last_of_Us_Part_2_collect.png";
 const TLOUP2Collect = () => {
     const[post, setPost] = useState(null)
     const [inputComment, setInputComment] = useState("")
@@ -40,7 +41,7 @@ const TLOUP2Collect = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/63/`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/52`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +54,7 @@ const TLOUP2Collect = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/63`)
+            const result = await axios.get(`http://localhost:8080/api/post/52`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -68,18 +69,31 @@ const TLOUP2Collect = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
-            <div className="topic-page">
-                {post !== null && <div className="new-post">
-                    <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
+        <div className="topic-page">
+            {post !== null &&
+                <div className="new-post">
+                    <h2
+                        className="post-title">
+                        {post.postTitle}
+                    </h2>
+                        <img
+                            src={Last_of_Us_Part_2_collect}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
+                    <h5
+                        className="topic-text">
+                        {post.header}
+                    </h5>
+                    <p
+                        className="topic-text">
+                        {post.postText}
+                    </p>
+                </div>}
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
-                {isLoggedIn !== false && <div className="new-comment">
+                {isLoggedIn !== false && <div className="comment-section">
                     <InputComment/>
                     <input
                         type="file"
@@ -128,7 +142,7 @@ const TLOUP2Collect = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

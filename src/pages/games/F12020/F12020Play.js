@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Navigation from "../../../components/navbar/Navigation";
-import CommentButton from "../../../components/button/CommentButton";
-import InputComment from "../../../components/comments/InputComment";
+import InputComment from "../../../components/comments/TopicComment";
+import F1_2020_samenspelen from '../../../assets/afbeeldingen/F1_2020_samenspelen.jpg';
 
 const F12020play = () => {
     const[post, setPost] = useState(null)
@@ -41,8 +41,9 @@ const F12020play = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/27/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/18`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -52,9 +53,10 @@ const F12020play = () => {
         }
     }
 
+
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/27`)
+            const result = await axios.get(`http://localhost:8080/api/post/18`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -69,15 +71,17 @@ const F12020play = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+                        <img
+                            src={F1_2020_samenspelen}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
                 {isLoggedIn !== false && <div className="new-comment">
@@ -130,7 +134,7 @@ const F12020play = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 export default F12020play;

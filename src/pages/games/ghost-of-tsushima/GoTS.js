@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
 import InputComment from "../../../components/comments/TopicComment";
+import Ghost_of_tsushima_Top from '../../../assets/afbeeldingen/Ghost_of_Tsushima_Top.png';
 
 const GoTS = () => {
     const[post, setPost] = useState(null)
@@ -40,7 +41,7 @@ const GoTS = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/44/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/30`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -53,7 +54,7 @@ const GoTS = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/44`)
+            const result = await axios.get(`http://localhost:8080/api/post/30`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -77,9 +78,11 @@ const GoTS = () => {
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
+
+                        <img src={Ghost_of_tsushima_Top}
+                             className="topic-img"
+                             alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
                     <p className="topic-text">{post.postText}</p></div>}
 
                 {isLoggedIn !== false && <div className="new-comment">

@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import Navigation from "../../../components/navbar/Navigation";
 import axios from "axios";
-import {Button} from "../../../components/button/Button";
 import InputComment from "../../../components/comments/TopicComment";
+import Sea_of_Thieves_Tips from '../../../assets/afbeeldingen/Sea_of_Thieves_Tips.png';
+
 const SOTTips = () => {
     const[post, setPost] = useState(null)
     const [inputComment, setInputComment] = useState("")
@@ -40,8 +41,9 @@ const SOTTips = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/55/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/post/47/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -53,7 +55,7 @@ const SOTTips = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/55`)
+            const result = await axios.get(`http://localhost:8080/api/post/47`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -71,16 +73,19 @@ const SOTTips = () => {
 
 
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
 
             <div className="topic-page">
-                {post !== null && <div className="new-post">
+                {post !== null &&
+                <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    {post.categories !== null &&<h5>{post.categories}</h5>}
-                    <div className="post-picture">
-                        <img src={post.picture} alt = "plaatje bericht"/></div>
-                    <p className="topic-text">{post.postText}</p></div>}
+                        <img
+                            src={Sea_of_Thieves_Tips}
+                            className="topic-img"
+                            alt = "plaatje bericht"/>
+                    <h5 className="topic-text">{post.header}</h5>
+                </div>}
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
                 {isLoggedIn !== false && <div className="new-comment">
                     <InputComment/>
@@ -131,7 +136,7 @@ const SOTTips = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 export default SOTTips;
