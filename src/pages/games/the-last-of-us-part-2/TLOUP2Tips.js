@@ -42,6 +42,7 @@ const TLOUP2Tips = () => {
         try {
             const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/53`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -62,8 +63,11 @@ const TLOUP2Tips = () => {
 
     const adjustComment = async (commentid) => {
         try {
-            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }

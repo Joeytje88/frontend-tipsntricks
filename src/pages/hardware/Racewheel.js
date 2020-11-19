@@ -45,7 +45,9 @@ const Racewheel = ()=>{
                 image: inputPicture
             }).then(function (response) {
                 setInputComment("")
-            })
+                setInputPicture(null)
+                getpost();
+          })
         } catch (error){
             console.log(error)
         }
@@ -55,6 +57,27 @@ const Racewheel = ()=>{
         try {
             const result = await axios.get(`http://localhost:8080/api/post/57`)
             setPost(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -111,13 +134,17 @@ const Racewheel = ()=>{
                             className="comment-section"
                             key={entry.commentid}>
                             <div className="comment-heading">
-                                <p>{entry.username}</p>
+                                <p className="username-comment">{entry.user.username}</p>
+                                {entry.user.username === username &&
                                 <h6
-                                    className="delete-comment">
-                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
-                                    verwijder</h6>
-                                <h6 className="adjust-comment">
-                                    pas aan</h6>
+                                    className="delete-comment"
+                                    onClick={() => deleteComment(entry.commentid)}>
+                                    verwijder</h6>}
+                                {entry.user.username === localStorage.username &&
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={()=> (adjustComment(entry.commentid))}>
+                                    pas aan</h6>}
                             </div>
                             <div className="comment"
                                  key={entry.text}>

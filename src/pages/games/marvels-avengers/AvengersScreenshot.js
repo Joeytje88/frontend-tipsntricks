@@ -43,6 +43,7 @@ const AvengersScreenshot = () => {
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
                 getpost();
             })
         } catch (error){
@@ -53,7 +54,7 @@ const AvengersScreenshot = () => {
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -61,8 +62,11 @@ const AvengersScreenshot = () => {
 
     const adjustComment = async (commentid) => {
         try {
-            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }

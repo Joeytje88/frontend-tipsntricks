@@ -5,15 +5,20 @@
     margin: 1% 5% 4% 5%;
 }
 .new-comment {
-    width: 850px;
-    margin-right: 10%;
-    margin-bottom: 2%;
+    width: 90%;
+    margin: 2% 5%;
+
     border: 1px solid lightseagreen;
     background-color: white;
 }
 .comment-input {
     width: 90%;
     margin: 0 5% 2% 5%;
+}
+
+.change-comment{
+    width: 90%;
+    margin: 1% 5%;
 }
 
 .input-picture {
@@ -104,6 +109,11 @@
 .comment-input{
     width: 90%;
     margin-left: 5%;
+}
+
+.change-comment{
+    width: 90%;
+    margin: 5%;
 }
 
 .comment-section {

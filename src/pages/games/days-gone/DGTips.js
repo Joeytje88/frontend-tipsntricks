@@ -41,6 +41,7 @@ const DGTips = () => {
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
                 getpost();
             })
         } catch (error){
@@ -72,11 +73,12 @@ const DGTips = () => {
                 text: inputComment,
                 image: inputPicture
             });
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
     }
+
 
     useEffect(()=>{
         getpost();

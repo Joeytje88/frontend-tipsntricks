@@ -38,10 +38,12 @@ const CoDTop = () =>{
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/3`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/103`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
                 getpost()
             })
         } catch (error){
@@ -64,7 +66,7 @@ const CoDTop = () =>{
                 text: inputComment,
                 image: inputPicture
             });
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -72,7 +74,7 @@ const CoDTop = () =>{
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/3`)
+            const result = await axios.get(`http://localhost:8080/api/post/103`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -137,7 +139,7 @@ const CoDTop = () =>{
                                         className="delete-comment"
                                         onClick={() => deleteComment(entry.commentid)}>
                                         verwijder</h6>}
-                                    {entry.user.username === localStorage.username &&
+                                    {entry.user.username === username &&
                                     <h6
                                         className="adjust-comment"
                                         onClick={()=> (adjustComment(entry.commentid))}>

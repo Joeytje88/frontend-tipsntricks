@@ -38,11 +38,13 @@ const Loadouts = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/4`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/104`,{
                 text: inputComment,
                 image: inputPicture
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
+                getpost();
             })
         } catch (error){
             console.log(error)
@@ -52,7 +54,7 @@ const Loadouts = () => {
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -60,16 +62,20 @@ const Loadouts = () => {
 
     const adjustComment = async (commentid) => {
         try {
-            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
     }
 
+
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/4`)
+            const result = await axios.get(`http://localhost:8080/api/post/104`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -130,7 +136,7 @@ const Loadouts = () => {
                                     className="delete-comment"
                                     onClick={() => deleteComment(entry.commentid)}>
                                     verwijder</h6>}
-                                {entry.user.username === localStorage.username &&
+                                {entry.user.username === username &&
                                 <h6
                                     className="adjust-comment"
                                     onClick={()=> (adjustComment(entry.commentid))}>

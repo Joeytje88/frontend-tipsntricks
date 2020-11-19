@@ -63,8 +63,11 @@ const EFTPlay = () => {
         try {
             const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/16`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
+                getpost()
             })
         } catch (error){
             console.log(error)

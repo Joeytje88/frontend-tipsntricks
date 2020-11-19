@@ -39,10 +39,11 @@ const AvengersSingleplayer = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/40/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/40`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
                 getpost();
             })
         } catch (error){
@@ -53,7 +54,7 @@ const AvengersSingleplayer = () => {
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -65,7 +66,7 @@ const AvengersSingleplayer = () => {
                 text: inputComment,
                 image: inputPicture
             });
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }

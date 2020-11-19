@@ -41,6 +41,7 @@ const ZBotWScreenshots = () => {
         try {
             const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/55`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -53,7 +54,7 @@ const ZBotWScreenshots = () => {
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -65,7 +66,7 @@ const ZBotWScreenshots = () => {
                 text: inputComment,
                 image: inputPicture
             });
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }

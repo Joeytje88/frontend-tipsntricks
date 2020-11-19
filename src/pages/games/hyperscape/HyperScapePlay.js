@@ -41,11 +41,12 @@ const HyperScapePlay = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/35/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/35`,{
                 text: inputComment,
                 image: inputPicture
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
                 getpost();
             })
         } catch (error){
@@ -68,7 +69,7 @@ const HyperScapePlay = () => {
                 text: inputComment,
                 image: inputPicture
             });
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }

@@ -1,0 +1,59 @@
+@media screen and (min-width: 850px) {
+
+
+.account-overzicht {
+    background-color: #1c2237;
+    color: lightseagreen;
+}
+.accounts{
+    display: flex;
+    justify-content: space-between;
+    background-color: lightblue;
+    height: auto;
+    margin: 1% 2% 0 2%;
+    padding: 5%;
+    border: 1px solid lightseagreen;
+}
+.account-picture{
+
+    max-width: 300px;
+    max-height: 200px;
+}
+
+.username{
+    margin-left: 5%;
+}
+.text {
+    color: blue;
+}
+}
+@media screen and (max-width: 850px) {
+    .account-overzicht {
+        text-align: center;
+        background-color: #1c2237;
+        color: lightseagreen;
+    }
+    .accounts{
+        display: block;
+        background-color: lightblue;
+        height: auto;
+        margin: 1% 2% 0 2%;
+        padding: 5%;
+        border: 1px solid lightseagreen;
+    }
+    .account-picture{
+        margin-left: 5%;
+        max-width: 300px;
+        max-height: 200px;
+    }
+    .text {
+        color: blue;
+    }
+
+    .username {
+        margin: 0;
+    }
+    .adjust{
+        margin-left: 40%;
+    }
+}

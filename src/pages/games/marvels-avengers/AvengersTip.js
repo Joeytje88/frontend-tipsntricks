@@ -48,8 +48,11 @@ const AvengersTip = () => {
 
     const adjustComment = async (commentid) => {
         try {
-            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -57,7 +60,7 @@ const AvengersTip = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/41/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/41`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")

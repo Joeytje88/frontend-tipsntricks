@@ -41,8 +41,9 @@ const SMG = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/post/51/comment/${userid}`,{
+            const placecomment = await axios.post(`http://localhost:8080/api//comment/${userid}/post`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
                 getpost();
@@ -55,7 +56,7 @@ const SMG = () => {
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -63,8 +64,11 @@ const SMG = () => {
 
     const adjustComment = async (commentid) => {
         try {
-            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }

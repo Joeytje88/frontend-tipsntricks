@@ -190,7 +190,7 @@ const Routers = () => {
     const fetchposts = async () => {
         try {
             const result = await axios.get(`http://localhost:8080/api/posts`);
-            setPostData(result.data)
+            console.log(result.data)
         } catch (error) {
             console.log(error)
         }

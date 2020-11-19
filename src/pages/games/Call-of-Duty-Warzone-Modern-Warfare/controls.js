@@ -45,6 +45,7 @@ const CoDControls = () => {
                 image: inputPicture
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
                 getpost();
             })
         } catch (error){
@@ -55,7 +56,7 @@ const CoDControls = () => {
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -63,16 +64,20 @@ const CoDControls = () => {
 
     const adjustComment = async (commentid) => {
         try {
-            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
     }
 
+
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/2`)
+            const result = await axios.get(`http://localhost:8080/api/post/102`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -105,7 +110,7 @@ const CoDControls = () => {
                     </h5>
                     <p className="topic-text">{post.postText}</p></div>}
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
-                {isLoggedIn !== false &&<div className="new-comment">
+                {isLoggedIn !== false &&<div className="comment-section">
                     <InputComment/>
                 <input
                     type="file"
@@ -128,19 +133,17 @@ const CoDControls = () => {
                     Plaats je reactie</button>
                 </div>}
 
-                {post !== null &&
-                    post.postComments.map((entry) => {
+                {post !== null && post.postComments.map((entry) => {
                     return (
                         <div
                             className="comment-section">
                             <div className="comment-heading">
                                 <p className="username-comment">{entry.user.username}</p>
-                                {entry.user.username === username &&
-                                <h6
+                                {entry.user.username === username &&<h6
                                     className="delete-comment"
-                                    onClick={() => deleteComment(entry.commentid)}>
+                                    onClick={()=> deleteComment(entry.commentid)}>
                                     verwijder</h6>}
-                                {entry.user.username === localStorage.username &&
+                                {entry.user.username === username &&
                                 <h6
                                     className="adjust-comment"
                                     onClick={()=> (adjustComment(entry.commentid))}>

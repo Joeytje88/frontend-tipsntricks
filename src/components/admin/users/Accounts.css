@@ -1,0 +1,10 @@
+.accounts{
+    height: auto;
+    margin: 1% 2% 1% 2%;
+    border: 1px solid lightseagreen;
+}
+
+.account-picture{
+    max-width: 300px;
+    max-height: 200px;
+}

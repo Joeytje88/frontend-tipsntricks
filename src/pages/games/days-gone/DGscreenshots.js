@@ -5,10 +5,10 @@ import InputComment from "../../../components/comments/TopicComment";
 import Days_Gone_screenshots
     from "../../../assets/afbeeldingen/Days_Gone_screenshots.png";
 const DGscreenshots = () => {
-    const [post, setPost] = useState (null);
+    const [post, setPost] = useState (null)
     const [inputComment, setInputComment] = useState ("")
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-
+    const [inputPicture, setInputPicture] = useState(null)
     const userid = localStorage.getItem("user_id");
     const username = localStorage.getItem("username")
 
@@ -22,6 +22,8 @@ const handleClick = async () =>{
             text: inputComment,
         }).then(function (response) {
             setInputComment("")
+            setInputPicture(null)
+            getpost();
         })
     } catch (error){
         console.log(error)
@@ -37,14 +39,37 @@ const deleteComment = async (commentid) => {
     }
 }
 
-const adjustComment = async (commentid) => {
-    try {
-        const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-        getpost();
-    } catch (error) {
-        console.log(error)
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
+        } catch (error) {
+            console.log(error)
+        }
     }
-}
+
+    const handleFiles = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        setInputPicture(base64)
+
+    }
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result)
+            });
+            fileReader.onerror = ((error) => {
+                reject(error)
+            })
+        })
+    }
 
 const getpost = async ()=> {
         try {
@@ -79,18 +104,25 @@ useEffect(()=>{
                 {isLoggedIn === false && <p className="warning">Je moet <a href="/login">ingelogd</a>  zijn om te kunnen reageren</p>}
                 {isLoggedIn === true && <div className="new-comment">
                     <InputComment/>
-                <textarea
-                    className="comment-input"
-                    value={inputComment}
-                    onChange={changeComment}
-                    placeholder="schrijf hier je reactie"/> <br/>
-                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+                    <input
+                        type="file"
+                        name="picture"
+                        className="input-picture"
+                        onChange={(e)=> {handleFiles(e)}}/>
+                    {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
 
-                <button
-                    onClick={handleClick}
-                    disabled={inputComment <1}
-                    className="comment-button">
-                    Plaats je reactie</button>
+                    <textarea
+                        className="comment-input"
+                        value={inputComment}
+                        onChange={changeComment}
+                        placeholder="schrijf hier je reactie"/>
+                    {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+                    <button
+                        onClick={handleClick}
+                        disabled={inputComment <1}
+                        className="comment-button">
+                        Plaats je reactie</button>
                 </div>}
 
                 {post !== null &&

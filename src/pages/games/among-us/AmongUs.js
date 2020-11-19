@@ -83,7 +83,7 @@ const AmongUs = () => {
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -141,32 +141,35 @@ const AmongUs = () => {
                     className="comment-button">
                     Plaats je reactie</button>    </div>}
 
-                {post !== null && post.postComments.map((entry) => {
-                    return (
-                        <div
-                            className="comment-section">
-                            <div className="comment-heading">
-                                <p className="username-comment">{username}</p>
-                                {entry.user.username === localStorage.username &&<h6
-                                    className="delete-comment"
-                                    onClick={()=> deleteComment(entry.commentid)}>
-                                    verwijder</h6>}
-                                {entry.user.username === localStorage.username &&
-                                <h6
-                                    className="adjust-comment"
-                                    onClick={()=> (adjustComment(entry.commentid))}>
-                                    pas aan</h6>}
-                            </div>
-                            <div className="comment"
-                                 key={entry.text}>
-                                <p>{entry.text}</p>
-                            </div>
-                            <div className="comment-img">
-                                {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
-                            </div>
+            {post !== null &&
+            post.postComments.map((entry) => {
+                return (
+                    <div
+                        className="comment-section">
+                        <div className="comment-heading">
+                            <p className="username-comment">{entry.user.username}</p>
+                            {entry.user.username === username &&
+                            <h6
+                                className="delete-comment"
+                                onClick={() => deleteComment(entry.commentid)}>
+                                verwijder</h6>}
+                            {entry.user.username === username &&
+                            <h6
+                                className="adjust-comment"
+                                onClick={()=> (adjustComment(entry.commentid))}>
+                                pas aan</h6>}
+                        </div>
+                        <div>
+                            <p  key={entry.text}
+                                className="comment-text">
+                                {entry.text}</p>
+                        </div>
+                        <div className="comment-img">
+                            {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
+                        </div>
 
-                        </div>)
-                })}
+                    </div>)
+            })}
             <a href="https://clk.tradedoubler.com/click?p=303217&a=2878273&g=24754130">
                 <img
                     src="https://impnl.tradedoubler.com/imp?type(img)g(24754130)a(2878273)955393499"

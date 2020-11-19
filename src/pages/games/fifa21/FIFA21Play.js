@@ -42,8 +42,11 @@ const FIFA21Play = () => {
         try {
             const placecomment = await axios.post(`http://localhost:8080/api/post/19/comment/${userid}`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
+                getpost()
             })
         } catch (error){
             console.log(error)
@@ -53,7 +56,7 @@ const FIFA21Play = () => {
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -61,12 +64,16 @@ const FIFA21Play = () => {
 
     const adjustComment = async (commentid) => {
         try {
-            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
     }
+
 
     const getpost = async ()=> {
         try {

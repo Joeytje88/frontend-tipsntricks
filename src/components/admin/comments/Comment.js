@@ -27,7 +27,7 @@ const Comment = () => {
     const adjustComment = async (commentid) => {
         try {
             const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
-                text: inputComment,
+                text: inputComment
             });
             window.location.reload();
         } catch (error) {
@@ -60,16 +60,15 @@ const Comment = () => {
             {localStorage.roles === "ROLE_ADMIN" && <AdminNavbar/>}
             <div className="accounts-container">
             {loading === true && <p>Laden...</p>}
-            {comments === null && <p>Er zijn nog geen reacties!</p>}
-               <div className="comment-section">
-                <textarea
-                    className="comment-input"
+            <div className="new-comment">
+            <h4 className="topic-text">Pas hier de ongepaste reacties aan</h4>
+            <textarea
+                    className="change-comment"
                     value={inputComment}
                     onChange={changeComment}
                     placeholder="schrijf hier je reactie"/>
-                  </div>
-
-
+            </div>
+                {comments !== null && <p>Er zijn nog geen reacties!</p>}
             {comments !== null && comments.map((comment) => {
                 return (
 
@@ -77,7 +76,7 @@ const Comment = () => {
                         className="comment-section"
                         key={comment.commentid}>
                         <div className="comment-heading">
-                            <p>{comment.username}</p>
+                            <p className="username-comment">{comment.user.username}</p>
                            <h6
                                 className="delete-comment"
                                 onClick={()=> deleteComment(comment.commentid)}>

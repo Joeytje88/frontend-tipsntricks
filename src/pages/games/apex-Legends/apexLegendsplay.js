@@ -40,10 +40,11 @@ const ApexLegendsPlay = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/6`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/106`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
                 getpost();
             })
         } catch (error){
@@ -62,12 +63,16 @@ const ApexLegendsPlay = () => {
 
     const adjustComment = async (commentid) => {
         try {
-            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
     }
+
 
     const getpost = async ()=> {
         try {

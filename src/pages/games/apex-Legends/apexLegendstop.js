@@ -38,10 +38,13 @@ const ApexLegendsTop = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/9`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/109`,{
                 text: inputComment,
+                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
+                getpost()
             })
         } catch (error){
             console.log(error)
@@ -59,7 +62,7 @@ const ApexLegendsTop = () => {
 
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/9`)
+            const result = await axios.get(`http://localhost:8080/api/post/109`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
@@ -72,11 +75,12 @@ const ApexLegendsTop = () => {
                 text: inputComment,
                 image: inputPicture
             });
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
     }
+
 
     useEffect(()=>{
         getpost();

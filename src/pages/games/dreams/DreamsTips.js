@@ -44,6 +44,7 @@ const handleClick = async () =>{
             text: inputComment,
         }).then(function (response) {
             setInputComment("")
+            setInputPicture(null)
             getpost()
         })
     } catch (error){
@@ -60,14 +61,18 @@ const deleteComment = async (commentid) => {
     }
 }
 
-const adjustComment = async (commentid) => {
+    const adjustComment = async (commentid) => {
         try {
-            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
     }
+
 
 const getpost = async ()=> {
     try {

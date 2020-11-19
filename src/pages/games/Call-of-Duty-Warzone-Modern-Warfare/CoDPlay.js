@@ -16,7 +16,6 @@ const CoDPlay = () => {
            try {
                const result = await axios.get(`http://localhost:8080/api/post/61`)
                setPost(result.data)
-               console.log(result.data)
            } catch (error) {
                console.log(error)
            }
@@ -25,7 +24,7 @@ const CoDPlay = () => {
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
@@ -67,22 +66,22 @@ const CoDPlay = () => {
                 </div>}
                     <InputComments/>
 
-                    {post !== null && post.postComments.map((entry) => {
-                        return (
-                            <div
-                                className="comment-section">
-                                <div className="comment-heading">
-                                    <p className="username-comment">{entry.user.username}</p>
-                                    {entry.user.username === username &&
-                                    <h6
-                                        className="delete-comment"
-                                        onClick={() => deleteComment(entry.commentid)}>
-                                        verwijder</h6>}
-                                    {entry.user.username === localStorage.username &&
-                                    <h6
-                                        className="adjust-comment"
-                                        onClick={()=> (adjustComment(entry.commentid))}>
-                                        pas aan</h6>}
+                {post !== null && post.postComments.map((entry ) => {
+                    return (
+                        <div
+                            className="comment-section">
+                            <div className="comment-heading">
+                                <p className="username-comment"
+                                   key={entry.user}>{entry.user.username}</p>
+                                {entry.user.username === username &&<h6
+                                    className="delete-comment"
+                                    onClick={()=> deleteComment(entry.commentid)}>
+                                    verwijder</h6>}
+                                {entry.user.username === username &&
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={()=> (adjustComment(entry.commentid))}>
+                                    pas aan</h6>}
                                 </div>
                                 <div>
                                     <p  key={entry.text}

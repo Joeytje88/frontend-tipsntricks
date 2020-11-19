@@ -40,11 +40,12 @@ const ACNHKlingels = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/10`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/110`,{
                 text: inputComment,
                 image: inputPicture
             }).then(function (response) {
                 setInputComment("")
+                setInputPicture(null)
                 getpost()
             })
         } catch (error){
@@ -63,17 +64,21 @@ const ACNHKlingels = () => {
 
     const adjustComment = async (commentid) => {
         try {
-            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            window.location.reload();
         } catch (error) {
             console.log(error)
         }
     }
 
 
+
     const getpost = async ()=> {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/10`)
+            const result = await axios.get(`http://localhost:8080/api/post/110`)
             setPost(result.data)
         } catch (error) {
             console.log(error)
