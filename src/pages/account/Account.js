@@ -8,8 +8,9 @@ const Account = () => {
     const [game, setGame] = useState("")
     const [platform, setPlatform] = useState("")
     const [error, setError] = useState (null);
-
-    // const [isLoggedIn, setIsLoggedIn] = useState (false)
+    const [image, setImage] =useState(undefined);
+    const [gamertag, setGamertag] = useState ("")
+    const [isLoggedIn, setIsLoggedIn] = useState (false)
     const username = localStorage.getItem("username");
     const userid = localStorage.getItem("user_id")
 
@@ -20,18 +21,58 @@ const Account = () => {
     const handlePlatformChange = (e) =>{
         setPlatform(e.target.value)
     }
+
+    const handleGamertagChange = (e) =>{
+        setGamertag(e.target.value)
+    }
+
+    const handleFiles = async (e) => {
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        setImage(base64)
+    }
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result)
+            });
+            fileReader.onerror = ((error) => {
+                reject(error)
+            })
+        })
+    }
+
     const handleGame = async () => {
         try {
             // eslint-disable-next-line no-unused-vars
-            const addGame = await axios.post (`http://localhost:8080/api/user/game/${userid}`, {
+            const addGamertag = await axios.put (`http://localhost:8080/api/user/game/${userid}`, {
                 name: game,
             }).then (function (response){
-                alert("game toegevoegd")
-                getInfo();
+                window.location.reload();
             })
 
         } catch (error){
-            setError(error)
+            console.log(error)
+        }
+    }
+
+    const handleAccount = async () =>{
+        try {
+            // eslint-disable-next-line no-unused-vars
+            const result = await axios.put(`http://localhost:8080/api/user/${userid}`, {
+                username: username,
+                picture: image,
+                gamertag: gamertag
+            }).then(function (response) {
+                setImage(null)
+                getInfo();
+                window.location.reload();
+            })
+        } catch (error){
+            console.log(error)
         }
     }
 
@@ -41,8 +82,7 @@ const Account = () => {
             const addPlatform = await axios.post(`http://localhost:8080/api/user/platform/${userid}`,{
                 platformName: platform
             }).then(function (response) {
-                alert("platform toegevoegd")
-                window.location.reload();
+                getInfo()
             })
         } catch (error){
             console.log(error)
@@ -53,7 +93,6 @@ const Account = () => {
         try {
             const result = await axios.get(`http://localhost:8080/api/user/${userid}`)
             setData(result.data)
-            console.log(result.data)
         } catch (error) {
             setError(error)
         }
@@ -62,27 +101,68 @@ const Account = () => {
 
     useEffect(()=> {
     getInfo();
+    if (username !== null){
+        setIsLoggedIn(true)
+    }
     },[])
 
 
 
     return (
-        <div className="account-page">
+       <div className="account-page">
             <Navigation/>
-             <h2>Account info</h2>
-            {data !== null && <div>
-            <h3>{data.username}</h3>
-                {data.image &&
+           {isLoggedIn === false && <p>Je moet eerst een account registreren</p>}
+           {isLoggedIn === true &&
+           <div
+               className="user-account">
+           <h2 className="account">Account info</h2>
+            {data !== null && <div className="user-img">
+                <h4>{data.username}</h4>
+                {<h4>{data.gamertag}</h4>}
+
+                {data.picture &&
                 <img
-                   src={data.image}
-                   alt="profiel-img"/>}
-            </div>}
+                    src={data.picture}
+                    alt="profiel-img"/>}
+                {gamertag === null && <h4>Voeg hier je gamertag/ Steam/ PSN account/ Nintendo Switch friendcode in</h4>}
+                {gamertag === null &&<input
+                    type="text"
+                    value={gamertag}
+                    className="input-gamertag"
+                    onChange={(e)=>{
+                        handleGamertagChange(e)
+                    }}/>}
+                <div className="user-img"> <h4>Voeg hier een afbeelding toe</h4>
+                    <input
+                        type="file"
+                        name="picture"
+                        className="file-input"
+                        onChange={(e)=>{
+                            handleFiles(e)
+                        }}/>
 
-            <h3>Games</h3>
-            <div className="game">
+                        {image !== undefined &&
+                        <img
+                            src={image}
+                            alt="plaatje"
+                            className="profile-img"/>}
 
-            {data !== null && data.currentGames && data.currentGames.map((game)=> {
-               return (<p key ={game.name}>{game.name}</p>)
+
+                    <button
+                        className="comment-button"
+                        onClick={handleAccount}>
+                        Sla gegevens op! </button> <br/>
+
+            </div>
+            <div className="game-platform">
+                <div className="game">
+            <h3 className="subtitel">Games</h3>
+
+            {data.currentGames && data.currentGames.map((game)=> {
+               return (<p
+                   className="subtitel"
+                   key ={game.name}>
+                   {game.name}</p>)
             })}
 
             <input
@@ -102,11 +182,15 @@ const Account = () => {
 
             </div>
             <div className="platform">
-                <h3>Platforms</h3>
+                <h3  className="subtitel">Platforms</h3>
 
-            {/*{data !== null && data.platforms.map ((platform)=> {*/}
-            {/*    return <p key={platform.platformName}>{platform.platformName}</p>*/}
-            {/*})}*/}
+            {data.platforms.map((platform) => {
+                return <p
+                    key={platform.platformName}
+                    className="subtitel">
+                    {platform.platformName}
+                </p>
+            })}
             <input
                 type="text"
                 value={platform}
@@ -119,8 +203,12 @@ const Account = () => {
                     className="game-button"
                     onClick={handlePlatform}>Voeg platform toe</button>
             </div>
-        </div>
-    )
+            </div>
 
-}
+           </div>}
+        </div>}
+       </div>
+               )
+           }
+
 export default Account;

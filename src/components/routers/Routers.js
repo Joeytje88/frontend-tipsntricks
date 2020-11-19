@@ -1,15 +1,15 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Route, Switch} from "react-router-dom";
 import Home from "../../pages/home/Home";
 import Hardware from "../../pages/hardware/Hardware";
 import Contact from "../../pages/contact/Contact";
 import About from "../../pages/about/About";
 import Login from "../../pages/login/Login";
-import Registreer from "../../pages/registreer/Registreer";
-import Profile from "../../pages/profiel/Profile";
+import Registreer from "../../pages/registreer/Registreer"
 import Post from "../nieuw-bericht/Post";
 import Account from "../../pages/account/Account";
 import Vacature from "../../pages/vacature/Vacature"
+import axios from 'axios'
 
 import {
     Headset,
@@ -17,7 +17,6 @@ import {
     CustomPC,
     MuisTB
 } from '../../pages/hardware';
-
 
 import {
     AnimalCrossing,
@@ -177,30 +176,64 @@ import NintendoSwitch from "../../pages/switch/NintendoSwitch";
 import PC from "../../pages/pc/PC";
 import XboxSeriesXS from "../../pages/xboxseriesx/XboxSeriesXS";
 import NewPost from "../../pages/newPost/NewPost";
-import Comment from "../comments/Comment";
-import PostOverview from "../../components/Post/PostOverview"
+import Comment from "../admin/comments/Comment";
+import PostOverview from "../admin/post/PostOverview"
 import Privacybeleid from "../../pages/privacy/Privacybeleid";
+import Accounts from "../admin/users/Accounts";
+import AllAccounts from "../../pages/account/allAccounts";
 
 
 
 const Routers = () => {
+    const[postdata, setPostData] = useState(null);
+
+    const fetchposts = async () => {
+        try {
+            const result = await axios.get(`http://localhost:8080/api/posts`);
+            setPostData(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <Switch>
+
+            {postdata !== null && postdata.map (()=>{
+            return (
+                <Route exact path={postdata.postURL}>
+                    <NewPost id={postdata.postId}/>
+                </Route> )
+            })
+            })
+
+
+            <Route exact path="/accounts">
+               <AllAccounts/>
+            </Route>
+
+            <Route exact path="/account">
+                <Account/>
+            </Route>
+
             <Route exact path="/">
                 <Home />
             </Route>
 
-            {localStorage.roles === "ROLE_ADMIN" && <Route exact path="/nieuw-bericht">
+            {localStorage.roles === "ROLE_ADMIN" && <Route exact path="/admin/nieuw-bericht">
                 <Post/>
             </Route>}
 
-            {localStorage.roles !== "ROLE_USER" && <Route exact path="/comments">
+            {localStorage.roles === "ROLE_ADMIN"&& <Route exact path="/admin/comments">
                 <Comment />
             </Route>}
 
-            {localStorage.roles !== "ROLE_USER" && <Route exact path="/posts">
+            {localStorage.roles === "ROLE_ADMIN" && <Route exact path="/admin/posts">
                 <PostOverview />
+            </Route>}
+
+            {localStorage.roles === "ROLE_ADMIN" && <Route exact path="/admin/accounts">
+                <Accounts />
             </Route>}
 
 
@@ -261,10 +294,7 @@ const Routers = () => {
             <Route exact path="/login">
                 <Login />
             </Route>
-            <Route exact path="/profiel">
-                <Profile />
-            </Route>
-            <Route exact path="/account">
+            <Route exact path="/account/:id">
                 <Account/>
             </Route>
             <Route exact path ="/bericht">

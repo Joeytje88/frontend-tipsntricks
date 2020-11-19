@@ -40,7 +40,7 @@ const CoDControls = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/2`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/102`,{
                 text: inputComment,
                 image: inputPicture
             }).then(function (response) {
@@ -55,6 +55,15 @@ const CoDControls = () => {
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
             getpost();
         } catch (error) {
             console.log(error)
@@ -98,7 +107,6 @@ const CoDControls = () => {
                 {isLoggedIn === false && <p className="warning">je moet ingelogd zijn om te kunnen reageren</p>}
                 {isLoggedIn !== false &&<div className="new-comment">
                     <InputComment/>
-
                 <input
                     type="file"
                     name="picture"
@@ -126,13 +134,17 @@ const CoDControls = () => {
                         <div
                             className="comment-section">
                             <div className="comment-heading">
-                                <p className="username-comment">{username}</p>
+                                <p className="username-comment">{entry.user.username}</p>
+                                {entry.user.username === username &&
                                 <h6
                                     className="delete-comment"
-                                     onClick={()=> deleteComment(entry.commentid)}>
-                                    verwijder</h6>
-                                <h6 className="adjust-comment">
-                                    pas aan</h6>
+                                    onClick={() => deleteComment(entry.commentid)}>
+                                    verwijder</h6>}
+                                {entry.user.username === localStorage.username &&
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={()=> (adjustComment(entry.commentid))}>
+                                    pas aan</h6>}
                             </div>
                             <div className="comment"
                                  key={entry.text}>

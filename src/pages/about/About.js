@@ -7,7 +7,7 @@ import Navigation from "../../components/navbar/Navigation";
 
 function About () {
     return (
-        <>
+        <div className="full-page">
             <Navigation/>
         <div className="about-container">
               <div className="about">
@@ -21,11 +21,20 @@ function About () {
                 ,zoals Facebook of Discord, maar wij willen juist voorkomen dat je tig verschillende pagina's hoeft te volgen.
 
                 <h3>Heb je nog vragen ideeën of opmerkingen?</h3>
-                <p>Check dan vooral <Link to="/contact">onze contact</Link> en/ of <Link to="/vacature">vacature</Link> pagina's!</p>
+                <p>Check dan vooral <Link
+                                        to="/contact"
+                                        className="links">
+                                        onze contact
+                                    </Link> en/ of
+                                    <Link
+                                        to="/vacature"
+                                        className="link">
+                                         &nbsp; vacature
+                                    </Link> pagina's!</p>
                   </div>
               </div>
         </div>
-            </>
+            </div>
     );
 }
 

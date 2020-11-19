@@ -27,7 +27,7 @@ function Footer() {
                                 className='footer-input'
                                 name='email'
                                 type='email'
-                                placeholder='Jouw email'
+                                placeholder='Werkt helaas niet'
                             />
                             <Button buttonStyle='btn--outline'>Schrijf je in!</Button>
                         </form>

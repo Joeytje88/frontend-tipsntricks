@@ -41,7 +41,7 @@ const Headset = ()=>{
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/58`,{
+            const placecomment = await axios.put(`http://localhost:8080/api/comment/${userid}/post/58`,{
                 text: inputComment,
             }).then(function (response) {
                 setInputComment("")
@@ -61,6 +61,24 @@ const Headset = ()=>{
         }
     }
 
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(()=>{
         getpost();
         if (username !== null){
@@ -75,9 +93,9 @@ const Headset = ()=>{
             <div className="topic-page">
                 {post !== null && <div className="new-post">
                     <h2 className="post-title"> {post.postTitle} </h2>
-                    <div className="post-picture">
                         <img src={Headsets}
-                             alt = "headset"/></div>
+                             alt = "headset"
+                             className="topic-img"/>
                     <h4 className="topic-text">{post.header}</h4></div>}
                 {isLoggedIn === false && <p className="warning">Je moet ingelogd zijn om te kunnen reageren</p> }
                 {isLoggedIn !== false && <div className="comment-section">
@@ -109,13 +127,17 @@ const Headset = ()=>{
                             className="comment-section"
                             key={entry.commentid}>
                             <div className="comment-heading">
-                                <p>{entry.username}</p>
+                                <p className="username-comment">{entry.user.username}</p>
+                                {entry.user.username === username &&
                                 <h6
-                                    className="delete-comment">
-                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
-                                    verwijder</h6>
-                                <h6 className="adjust-comment">
-                                    pas aan</h6>
+                                    className="delete-comment"
+                                    onClick={() => deleteComment(entry.commentid)}>
+                                    verwijder</h6>}
+                                {entry.user.username === localStorage.username &&
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={()=> (adjustComment(entry.commentid))}>
+                                    pas aan</h6>}
                             </div>
                             <div className="comment"
                                  key={entry.text}>

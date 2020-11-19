@@ -1,10 +1,13 @@
 h2 {
     text-align: center;
     margin-left: 130px;
+    color: lightseagreen;
 }
 .registreer-pagina {
     width: 100%;
     height: auto;
+    background-image: url("https://wallpaperaccess.com/full/13453.jpg");
+    padding-bottom: 100px;
 }
 
 .input {
@@ -38,15 +41,32 @@ h2 {
     padding: 25px;
 }
 
+.registreer-button {
+    margin: 5% 0;
+    height: 40px;
+    background-color: #1c2237;
+    color: lightseagreen;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 200px;
+}
+
+.registreer-button:disabled{
+    display: none;
+}
+
 @media screen and (max-width: 769px){
     h2 {
         text-align: center;
+        margin-right: 15%;
+        color: lightseagreen;
     }
 
 
     .registreer-pagina {
-        width: 80%;
         height: auto;
+        background-image: url("https://wallpaperaccess.com/full/13453.jpg");
+        padding-bottom: 50px;
     }
 
     .input {
@@ -72,8 +92,8 @@ h2 {
         width: 80%;
         justify-content: center;
         text-align: center;
-        margin-top: 100px;
-        margin-left: 70px;
+        margin-top: 70px;
+        margin-left: 10%;
         border: 1px solid;
         border-radius: 25px;
         padding: 25px;

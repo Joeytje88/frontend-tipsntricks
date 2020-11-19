@@ -3,7 +3,7 @@ import './Privacybeleid.css'
 import Navigation from "../../components/navbar/Navigation";
 const Privacybeleid = () =>{
     return(
-        <>
+        <div className="full-page">
             <Navigation/>
         <div className="privacy">
             <h3>Privacybeleid</h3>
@@ -58,7 +58,7 @@ const Privacybeleid = () =>{
     <p><strong>info@tipsntricks.games</strong></p>
  </div>
         </div>
-            </>
+            </div>
     )
 }
 

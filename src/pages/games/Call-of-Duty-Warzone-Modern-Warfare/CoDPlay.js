@@ -8,8 +8,19 @@ import Call_of_Duty_Modern_Warfare_Warzone_samenspelen
 
 const CoDPlay = () => {
    const [post, setPost] = useState (null);
-    const userid = localStorage.getItem("user_id")
-    const username= localStorage.getItem("username");
+   const username= localStorage.getItem("username");
+   const [inputComment, setInputComment] = useState ("")
+   const [inputPicture, setInputPicture] = useState(null)
+
+   const getpost = async ()=> {
+           try {
+               const result = await axios.get(`http://localhost:8080/api/post/61`)
+               setPost(result.data)
+               console.log(result.data)
+           } catch (error) {
+               console.log(error)
+           }
+       }
 
     const deleteComment = async (commentid) => {
         try {
@@ -20,16 +31,18 @@ const CoDPlay = () => {
         }
     }
 
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-   const getpost = async ()=> {
-           try {
-               const result = await axios.get(`http://localhost:8080/api/post/1`)
-               setPost(result.data)
-               // console.log(result.data)
-           } catch (error) {
-               console.log(error)
-           }
-       }
 
    useEffect(()=>{
    getpost();
@@ -59,22 +72,26 @@ const CoDPlay = () => {
                             <div
                                 className="comment-section">
                                 <div className="comment-heading">
-                                    <p className="username-comment">{username}</p>
-                                    {userid === userid && <h6
+                                    <p className="username-comment">{entry.user.username}</p>
+                                    {entry.user.username === username &&
+                                    <h6
                                         className="delete-comment"
                                         onClick={() => deleteComment(entry.commentid)}>
                                         verwijder</h6>}
-                                    <h6 className="adjust-comment">
-                                        pas aan</h6>
+                                    {entry.user.username === localStorage.username &&
+                                    <h6
+                                        className="adjust-comment"
+                                        onClick={()=> (adjustComment(entry.commentid))}>
+                                        pas aan</h6>}
                                 </div>
                                 <div>
                                     <p  key={entry.text}
                                         className="comment-text">
                                         {entry.text}</p>
                                 </div>
-                                <div className="comment-img">
-                                    {entry.image !== null && <img src={entry.image} alt="plaatje comment"/>}
-                                </div>
+                                {entry.image !== null && <div className="comment-img">
+                                   <img src={entry.image} alt="plaatje comment"/>
+                                </div>}
 
                             </div>)
                     })}

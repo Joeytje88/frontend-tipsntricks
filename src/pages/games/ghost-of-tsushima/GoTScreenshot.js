@@ -38,6 +38,23 @@ const GoTScreenshot = () => {
         })
     }
 
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const handleClick = async () =>{
         try {
@@ -62,15 +79,12 @@ const GoTScreenshot = () => {
         }
     }
 
-
     useEffect(()=>{
         getpost();
         if (username !== null){
             setIsLoggedIn(true);
         }
     }, [])
-
-
 
     return (
         <>
@@ -113,13 +127,17 @@ const GoTScreenshot = () => {
                             className="comment-section"
                             key={entry.commentid}>
                             <div className="comment-heading">
-                                <p>{entry.username}</p>
+                                <p className="username-comment">{entry.user.username}</p>
+                                {entry.user.username === username &&
                                 <h6
-                                    className="delete-comment">
-                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
-                                    verwijder</h6>
-                                <h6 className="adjust-comment">
-                                    pas aan</h6>
+                                    className="delete-comment"
+                                    onClick={() => deleteComment(entry.commentid)}>
+                                    verwijder</h6>}
+                                {entry.user.username === localStorage.username &&
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={()=> (adjustComment(entry.commentid))}>
+                                    pas aan</h6>}
                             </div>
                             <div className="comment"
                                  key={entry.text}>

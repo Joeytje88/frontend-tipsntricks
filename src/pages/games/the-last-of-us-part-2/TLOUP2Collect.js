@@ -38,7 +38,6 @@ const TLOUP2Collect = () => {
         })
     }
 
-
     const handleClick = async () =>{
         try {
             const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/52`,{
@@ -52,6 +51,24 @@ const TLOUP2Collect = () => {
         }
     }
 
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const getpost = async ()=> {
         try {
             const result = await axios.get(`http://localhost:8080/api/post/52`)
@@ -60,13 +77,13 @@ const TLOUP2Collect = () => {
             console.log(error)
         }
     }
+
     useEffect(()=>{
         getpost();
         if (username !== null){
             setIsLoggedIn(true);
         }
     }, [])
-
 
     return (
         <div className="full-page">
@@ -82,7 +99,7 @@ const TLOUP2Collect = () => {
                         <img
                             src={Last_of_Us_Part_2_collect}
                             className="topic-img"
-                            alt = "plaatje bericht"/>
+                            alt = "The Last of Us Part 2"/>
                     <h5
                         className="topic-text">
                         {post.header}
@@ -122,12 +139,17 @@ const TLOUP2Collect = () => {
                             key={entry.commentid}>
                             <div className="comment-heading">
                                 <p>{entry.username}</p>
+                                <p className="username-comment">{entry.user.username}</p>
+                                {entry.user.username === username &&
                                 <h6
-                                    className="delete-comment">
-                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
-                                    verwijder</h6>
-                                <h6 className="adjust-comment">
-                                    pas aan</h6>
+                                    className="delete-comment"
+                                    onClick={() => deleteComment(entry.commentid)}>
+                                    verwijder</h6>}
+                                {entry.user.username === localStorage.username &&
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={()=> (adjustComment(entry.commentid))}>
+                                    pas aan</h6>}
                             </div>
                             <div className="comment"
                                  key={entry.text}>

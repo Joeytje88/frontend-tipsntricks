@@ -1,36 +1,165 @@
 @media screen and (min-width: 1200px) {
-    .account-page {
-        display: block;
-        align-items: center;
-        text-align: center;
-        padding-bottom: 100px;
-    }
-
-    .profile-picture {
-        align-items: center;
-        padding-bottom: 100px;
-    }
-
-    .input-game {
-        margin-left: 46%;
-        margin-bottom: 10px;
-        display: flex;
-    }
-
-    .game-button {
-        margin-left: 45%;
-        height: 32px;
-        width: 180px;
-        color: #1c2237;
-        border: 1px solid black;
-        background-color: lightseagreen;
-        border-radius: 4px;
-        margin-bottom: 10px;
-        display: flex;
-    }
-
-    .game{
-    width: auto;
+.account-page {
+    width: 100%;
     height: auto;
-    }
+    text-align: center;
+    background-color: #1c2237;
+    color: lightseagreen;
+}
+
+.user-account{
+    width: 80%;
+    margin-left: 10%;
+
+}
+.account{
+    margin-right: 6%;
+}
+
+.profile-picture {
+    display: block;
+    align-items: center;
+    padding-bottom: 100px;
+}
+
+.input-game {
+    margin-left: 40%;
+    margin-bottom: 10px;
+    display: flex;
+}
+.input-gamertag {
+       margin-left: 45%;
+       margin-bottom: 10px;
+       display: flex;
+   }
+
+.game-platform {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 100%;
+    padding-top: 20px;
+    margin-top: 1%;
+}
+
+.game-button {
+    margin-left: 38%;
+    height: 32px;
+    width: 180px;
+    color: #1c2237;
+    border: 1px solid black;
+    background-color: lightseagreen;
+    border-radius: 4px;
+    display: flex;
+}
+
+.file-input {
+    display: block;
+    background-color: lightseagreen;
+    width: 300px;
+    height: 32px;
+    border: 1px solid black;
+    border-radius: 12px;
+    margin-left: 40%;
+    margin-bottom: 10px;
+}
+
+.game{
+ display: block;
+ align-items: start;
+}
+
+.platform{
+    display: block;
+}
+
+.user-img {
+    display: block;
+    align-items: flex-start;
+}
+
+}
+@media screen and (max-width: 1200px) {
+.account-page {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    background-color: #1c2237;
+    color: lightseagreen;
+}
+
+.user-account{
+    width: 80%;
+    margin-left: 10%;
+}
+
+.account{
+    margin-right: 6%;
+}
+.profile-picture {
+    align-items: center;
+    padding-bottom: 100px;
+}
+
+.input-game {
+    margin-left: 30%;
+    margin-bottom: 10px;
+    display: flex;
+    width: 100px;
+}
+.input-gamertag {
+    margin-left: 30%;
+    width: 200px;
+    margin-bottom: 10px;
+    display: flex;
+
+}
+
+.game-platform {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 100%;
+    padding-top: 20px;
+    margin-top: 1%;
+}
+
+.game-button {
+    margin-left: 30%;
+    height: 32px;
+    width: 100px;
+    color: #1c2237;
+    border: 1px solid black;
+    background-color: lightseagreen;
+    border-radius: 4px;
+    display: flex;
+}
+
+.file-input {
+    background-color: lightseagreen;
+    width: 300px;
+    height: 32px;
+    border: 1px solid black;
+    border-radius: 12px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.game{
+    display: block;
+    align-items: start;
+}
+
+.platform{
+    display: block;
+}
+
+.user-img {
+    display: block;
+    align-items: flex-start;
+    padding-bottom: 25px;
+}
+
+.subtitel {
+    margin-left: 10%;
+}
+
 }

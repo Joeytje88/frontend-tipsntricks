@@ -26,10 +26,11 @@ const Login = () => {
                 localStorage.setItem("token", response.data.accessToken)
                 localStorage.setItem("user_id", response.data.id)
                 alert ("Je bent ingelogd");
-                history.push("/");
+                history.push("/account");
             })
         } catch (error) {
-            alert(error);
+            console.log(error)
+            alert("wachtwoord en/of gebruikersnaam kloppen niet");
         }
     }
 
@@ -37,9 +38,9 @@ const Login = () => {
     const userid = localStorage.getItem("user_id")
 
 return (
-    <>
-    <Navigation />
     <div className="login-page">
+    <Navigation />
+
 
         <div className="login-container">
             <h1>Login</h1>
@@ -49,17 +50,17 @@ return (
                 name="username"
                 type="text"
                 className="input"
-                placeholder="gebruikersnaam"
+                placeholder="Iron Man"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}/><br/>
-
+                {username === "" && <p>Je hebt geen gebruikersnaam ingevoerd!</p>}
 
             <label htmlFor="password">wachtwoord:</label><br/>
             <input
                 name="password"
                 type="password"
                 className="input"
-                placeholder="wachtwoord"
+                placeholder="******"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}/>
                 <br/>
@@ -71,10 +72,9 @@ return (
                 onClick={handleSubmit}>login</button>
         </form>
 
-            {username === undefined && <p>Je hebt geen gebruikersnaam ingevoerd!</p>}
+
         </div>
-    </div>
-</>
+</div>
 );
 }
 

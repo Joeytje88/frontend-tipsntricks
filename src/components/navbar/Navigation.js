@@ -26,6 +26,7 @@ const Navigation = () => {
     const logout = (e)=> {
         localStorage.clear();
         history.push("/");
+        window.location.reload();
 
     }
     useEffect((e) => {
@@ -61,6 +62,15 @@ const Navigation = () => {
                                 >
                                     Over ons
                                 </Link>
+                            </li>
+                                <li className='nav-item'>
+                                    <Link
+                                        to='/accounts'
+                                        className='nav-links'
+                                        onClick={closeMobileMenu}
+                                    >
+                                        Accounts
+                                    </Link>
                             </li>
                             <li className='nav-item'>
                                 <Link

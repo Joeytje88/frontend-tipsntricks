@@ -38,7 +38,7 @@ const FIFA21Play = () => {
         })
     }
 
-        const handleClick = async () =>{
+    const handleClick = async () =>{
         try {
             const placecomment = await axios.post(`http://localhost:8080/api/post/19/comment/${userid}`,{
                 text: inputComment,
@@ -46,6 +46,24 @@ const FIFA21Play = () => {
                 setInputComment("")
             })
         } catch (error){
+            console.log(error)
+        }
+    }
+
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
             console.log(error)
         }
     }
@@ -114,9 +132,11 @@ const FIFA21Play = () => {
                                 <p>{entry.username}</p>
                                 <h6
                                     className="delete-comment">
-                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
+                                    onClick={()=> deleteComment(entry.commentid)}>
                                     verwijder</h6>
-                                <h6 className="adjust-comment">
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={adjustComment(entry.commentid)}>
                                     pas aan</h6>
                             </div>
                             <div className="comment"

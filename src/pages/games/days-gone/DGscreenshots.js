@@ -11,32 +11,42 @@ const DGscreenshots = () => {
 
     const userid = localStorage.getItem("user_id");
     const username = localStorage.getItem("username")
-    const changeComment = (e)=>{
-        setInputComment(e.target.value)
-    }
 
-    const handleClick = async () =>{
-        try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/13`,{
-                text: inputComment,
-            }).then(function (response) {
-                setInputComment("")
-            })
-        } catch (error){
-            console.log(error)
-        }
-    }
+const changeComment = (e)=>{
+    setInputComment(e.target.value)
+}
 
-    const deleteComment = async (commentid) => {
-        try {
-            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
-            getpost();
-        } catch (error) {
-            console.log(error)
-        }
+const handleClick = async () =>{
+    try {
+        const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/13`,{
+            text: inputComment,
+        }).then(function (response) {
+            setInputComment("")
+        })
+    } catch (error){
+        console.log(error)
     }
+}
 
-    const getpost = async ()=> {
+const deleteComment = async (commentid) => {
+    try {
+        const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+        getpost();
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const adjustComment = async (commentid) => {
+    try {
+        const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
+        getpost();
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getpost = async ()=> {
         try {
             const result = await axios.get(`http://localhost:8080/api/post/13`)
             setPost(result.data)
@@ -45,7 +55,7 @@ const DGscreenshots = () => {
         }
     }
 
-    useEffect(()=>{
+useEffect(()=>{
         getpost();
         if(username !== null){
             setIsLoggedIn(true)
@@ -83,7 +93,6 @@ const DGscreenshots = () => {
                     Plaats je reactie</button>
                 </div>}
 
-
                 {post !== null &&
                 post.postComments.map((entry) => {
                     return (
@@ -91,13 +100,17 @@ const DGscreenshots = () => {
                             className="comment-section"
                             key={entry.commentid}>
                             <div className="comment-heading">
-                                <p>{entry.username}</p>
+                                <p className="username-comment">{entry.user.username}</p>
+                                {entry.user.username === username &&
                                 <h6
-                                    className="delete-comment">
-                                    onClick={()=> deleteComment(entry.commentid)}>
-                                    verwijder</h6>
-                                <h6 className="adjust-comment">
-                                    pas aan</h6>
+                                    className="delete-comment"
+                                    onClick={() => deleteComment(entry.commentid)}>
+                                    verwijder</h6>}
+                                {entry.user.username === localStorage.username &&
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={()=> (adjustComment(entry.commentid))}>
+                                    pas aan</h6>}
                             </div>
                             <div className="comment"
                                  key={entry.text}>

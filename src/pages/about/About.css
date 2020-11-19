@@ -1,9 +1,13 @@
 @media screen and (min-width: 770px){
+    .full-page{
+        background-color: #1c2237;
+    }
     .about-container {
         width: 90%;
         height: auto;
         border: 1px solid lightseagreen;
-        margin: 2% 3% 2% 5%;
+        margin: 3% 3% 0 5%;
+        background-color: white;
     }
     .about {
         width: 80%;
@@ -31,12 +35,14 @@
         width: 100%;
         height: auto;
         margin-bottom: 100px;
+
     }
     .about {
         width: 80%;
         height: auto;
         text-align: center;
         margin: 2% 10%;
+
     }
     .about-text {
         text-align: center;
@@ -48,5 +54,14 @@
     }
     .p {
         display: grid;
+    }
+    .links{
+        margin-left: 37%;
+        color: lightseagreen;
+    }
+
+    .link {
+        margin-left: 40%;
+        color: lightseagreen;
     }
 }

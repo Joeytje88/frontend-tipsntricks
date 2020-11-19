@@ -8,10 +8,32 @@ const ApexLegendsTop = () => {
     const [post, setPost] = useState (null);
     const [inputComment, setInputComment] = useState ("")
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [inputPicture, setInputPicture] = useState(null)
     const userid = localStorage.getItem("user_id");
     const username = localStorage.getItem("username")
+
     const changeComment = (e)=>{
         setInputComment(e.target.value)
+    }
+
+    const handleFiles = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        setInputPicture(base64)
+
+    }
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (() => {
+                resolve(fileReader.result)
+            });
+            fileReader.onerror = ((error) => {
+                reject(error)
+            })
+        })
     }
 
     const handleClick = async () =>{
@@ -44,13 +66,24 @@ const ApexLegendsTop = () => {
         }
     }
 
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(()=>{
         getpost();
         if(username !== null){
             setIsLoggedIn(true)
         }
     }, [])
-
 
     return (
         <div className="full-page">
@@ -66,18 +99,25 @@ const ApexLegendsTop = () => {
                 {isLoggedIn === false && <p className="warning">Je moet <a href="/login">ingelogd</a>  zijn om te kunnen reageren</p>}
                 {isLoggedIn === true && <div className="comment-section">
                     <InputComment />
-                <textarea
-                    className="comment-input"
-                    value={inputComment}
-                    onChange={changeComment}
-                    placeholder="schrijf hier je reactie"/> <br/>
-                {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+                    <input
+                        type="file"
+                        name="picture"
+                        className="input-picture"
+                        onChange={(e)=> {handleFiles(e)}}/>
+                    {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
 
-                <button
-                    onClick={handleClick}
-                    disabled={inputComment <1}
-                    className="comment-button">
-                    Plaats je reactie</button> <br/> <br/>
+                    <textarea
+                        className="comment-input"
+                        value={inputComment}
+                        onChange={changeComment}
+                        placeholder="schrijf hier je reactie"/>
+                    {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+
+                    <button
+                        onClick={handleClick}
+                        disabled={inputComment <1}
+                        className="comment-button">
+                        Plaats je reactie</button>
                 </div> }
                 {post !== null &&
                 post.postComments.map((entry) => {
@@ -86,13 +126,16 @@ const ApexLegendsTop = () => {
                             className="comment-section"
                             key={entry.commentid}>
                             <div className="comment-heading">
-                                <p>{entry.username}</p>
-                                <h6
+                                <p className="username-comment">{entry.user.username}</p>
+                                {entry.user.username === localStorage.username &&<h6
                                     className="delete-comment"
                                     onClick={()=> deleteComment(entry.commentid)}>
-                                    verwijder</h6>
-                                <h6 className="adjust-comment">
-                                    pas aan</h6>
+                                    verwijder</h6>}
+                                {entry.user.username === localStorage.username &&
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={()=> (adjustComment(entry.commentid))}>
+                                    pas aan</h6>}}
                             </div>
                             <div className="comment"
                                  key={entry.text}>

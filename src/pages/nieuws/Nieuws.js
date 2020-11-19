@@ -8,8 +8,7 @@ const Bericht = () => {
     return (
         <>
             <Navigation/>
-            <NewPost/>
-            <NewPost/>
+
             </>
     )
 }

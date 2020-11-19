@@ -39,6 +39,7 @@
 }
 
 .comment-text {
+    background-color: white;
     display: flex;
     justify-content: flex-start;
     margin: 1%;
@@ -53,7 +54,8 @@
     margin: 0 40%}
 
 .warning {
-    margin-left: 50%;
+    text-align: center;
+    margin-left: 5%;
     width: 90%;
     padding: 5px;
     border: 1px solid lightseagreen;
@@ -70,7 +72,7 @@
 }
 
 .comment-button {
-    margin: 1% 30%;
+    margin: 1% 40%;
     height: 40px;
     background-color: #1c2237;
     color: lightseagreen;
@@ -88,6 +90,7 @@
 @media screen and (max-width: 1200px){
 .comment{
     width: 100%;
+    padding-left: 5px;
     text-align: start;
     height: auto;
 }
@@ -95,7 +98,6 @@
 .new-comment {
     width: 90%;
     margin-left: 5%;
-    margin-bottom: 0%;
     border: 1px solid lightseagreen;
 }
 
@@ -121,7 +123,9 @@
     text-align: start;
     margin-left: 4px;
     margin-bottom: 5%;
+    background-color: white;
 }
+
 .username-comment{
     margin-left: 20px;
 }
@@ -147,7 +151,6 @@
 .adjust-comment {
     cursor: pointer;
     margin-left: 30px;
-
 }
 
 .comment-button {
@@ -163,6 +166,6 @@
     display: none;
 }
 .comment-img {
-    padding-bottom: 1%;
+    background-color: white;
 }
 }

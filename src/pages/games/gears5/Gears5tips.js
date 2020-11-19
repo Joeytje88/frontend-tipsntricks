@@ -38,7 +38,6 @@ const Gears5Tips = () => {
         })
     }
 
-
     const handleClick = async () =>{
         try {
             const placecomment = await axios.post(`http://localhost:8080/api/post/27/comment/${userid}`,{
@@ -49,6 +48,24 @@ const Gears5Tips = () => {
                 getpost();
             })
         } catch (error){
+            console.log(error)
+        }
+    }
+
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
             console.log(error)
         }
     }

@@ -21,17 +21,17 @@ const AdminNavbar = () => {
             <ul className={click ? 'nav-menu active': 'nav-menu'}>
                 <li className='nav-item'
                     onClick={closeMobileMenu}>
-                    <Link to="/comments"
+                    <Link to="/admin/comments"
                           className='nav-links'>
                         Reacties
                     </Link>
                 </li>
                 <li className='nav-item'
                     onClick={closeMobileMenu}>
-                    <Link to="/posts"
+                    <Link to="/admin/posts"
                           className='nav-links'>
                     Berichten</Link></li>
-                <li><Link to="/accounts">Accounts</Link></li>
+                <li><Link to="/admin/accounts">Accounts</Link></li>
             </ul>
             </div>
         </nav>

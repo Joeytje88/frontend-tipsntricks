@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import Navigation from "../navbar/Navigation";
+import Navigation from "../../navbar/Navigation";
 import "./posts.css"
-import AdminNavbar from "../navbar/AdminNavbar";
+import AdminNavbar from "../../navbar/AdminNavbar";
 
 const PostOverview = () => {
     const [postData, setPostData] = useState("")
@@ -25,6 +25,7 @@ const PostOverview = () => {
         toggleLoading(true);
         try {
             const result = await axios.get(`http://localhost:8080/api/posts`);
+            console.log(result.data)
             setPostData(result.data)
             toggleLoading(false);
         } catch (error) {
@@ -33,12 +34,11 @@ const PostOverview = () => {
         }
     }
 
-
     return (
         <>
             <Navigation/>
             <AdminNavbar/>
-
+            {loading === true && <p>Laden...</p>}
             {postData !== "" && postData.map((post)=> {
                 return(
                 <div

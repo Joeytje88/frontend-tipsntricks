@@ -12,7 +12,6 @@ const AvengersSingleplayer = () => {
     const username= localStorage.getItem("username")
     const userid = localStorage.getItem("user_id")
 
-
     const changeComment = (e)=>{
         setInputComment(e.target.value)
     }
@@ -38,7 +37,6 @@ const AvengersSingleplayer = () => {
         })
     }
 
-
     const handleClick = async () =>{
         try {
             const placecomment = await axios.post(`http://localhost:8080/api/post/40/comment/${userid}`,{
@@ -48,6 +46,27 @@ const AvengersSingleplayer = () => {
                 getpost();
             })
         } catch (error){
+            console.log(error)
+        }
+    }
+
+    const deleteComment = async (commentid) => {
+        try {
+            const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const adjustComment = async (commentid) => {
+        try {
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`,{
+                text: inputComment,
+                image: inputPicture
+            });
+            getpost();
+        } catch (error) {
             console.log(error)
         }
     }
@@ -67,8 +86,6 @@ const AvengersSingleplayer = () => {
             setIsLoggedIn(true);
         }
     }, [])
-
-
 
     return (
         <div
@@ -106,7 +123,6 @@ const AvengersSingleplayer = () => {
                         className="comment-button">
                         Plaats je reactie</button>    </div>}
 
-
                 {post !== null &&
                 post.postComments.map((entry) => {
                     return (
@@ -114,13 +130,17 @@ const AvengersSingleplayer = () => {
                             className="comment-section"
                             key={entry.commentid}>
                             <div className="comment-heading">
-                                <p>{entry.username}</p>
+                                <p className="username-comment">{entry.user.username}</p>
+                                {entry.user.username === username &&
                                 <h6
-                                    className="delete-comment">
-                                    {/*onClick={()=> deleteComment(entry.commentid)}>*/}
-                                    verwijder</h6>
-                                <h6 className="adjust-comment">
-                                    pas aan</h6>
+                                    className="delete-comment"
+                                    onClick={() => deleteComment(entry.commentid)}>
+                                    verwijder</h6>}
+                                {entry.user.username === localStorage.username &&
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={()=> (adjustComment(entry.commentid))}>
+                                    pas aan</h6>}
                             </div>
                             <div className="comment"
                                  key={entry.text}>
@@ -132,7 +152,10 @@ const AvengersSingleplayer = () => {
 
                         </div>)
                 })}
-
+                <a href="https://clk.tradedoubler.com/click?p=303217&a=2878273&g=24754130">
+                    <img
+                        src="https://impnl.tradedoubler.com/imp?type(img)g(24754130)a(2878273)955393499"
+                        className="advertentie"/></a>
             </div>
 
         </div>

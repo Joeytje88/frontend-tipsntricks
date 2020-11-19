@@ -12,7 +12,6 @@ const F12020Tips = () => {
     const username= localStorage.getItem("username")
     const userid = localStorage.getItem("user_id")
 
-
     const changeComment = (e)=>{
         setInputComment(e.target.value)
     }
@@ -24,7 +23,6 @@ const F12020Tips = () => {
         setInputPicture(base64)
 
     }
-
     const convertBase64 = (file) => {
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();
@@ -38,21 +36,18 @@ const F12020Tips = () => {
         })
     }
 
-
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/60`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/8`,{
                 text: inputComment,
-                image: inputPicture
             }).then(function (response) {
                 setInputComment("")
-                getpost();
+                getpost()
             })
         } catch (error){
             console.log(error)
         }
     }
-
     const deleteComment = async (commentid) => {
         try {
             const deleteMessage = axios.delete(`http://localhost:8080/api/comment/${commentid}`);
@@ -61,21 +56,27 @@ const F12020Tips = () => {
             console.log(error)
         }
     }
-
-
-    const getpost = async ()=> {
+    const adjustComment = async (commentid) => {
         try {
-            const result = await axios.get(`http://localhost:8080/api/post/60`)
-            setPost(result.data)
+            const changeText = axios.put(`http://localhost:8080/api/comment/${commentid}`);
+            getpost();
         } catch (error) {
             console.log(error)
         }
     }
 
+    const getpost = async ()=> {
+        try {
+            const result = await axios.get(`http://localhost:8080/api/post/8`)
+            setPost(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     useEffect(()=>{
         getpost();
         if (username !== null){
-            setIsLoggedIn(true);
+            setIsLoggedIn(true)
         }
     }, [])
 
@@ -124,12 +125,17 @@ const F12020Tips = () => {
                             className="comment-section">
                             <div className="comment-heading">
                                 <p className="username-comment">{username}</p>
+                                <p className="username-comment">{entry.user.username}</p>
+                                {entry.user.username === username &&
                                 <h6
                                     className="delete-comment"
                                     onClick={() => deleteComment(entry.commentid)}>
-                                    verwijder</h6>
-                                <h6 className="adjust-comment">
-                                    pas aan</h6>
+                                    verwijder</h6>}
+                                {entry.user.username === localStorage.username &&
+                                <h6
+                                    className="adjust-comment"
+                                    onClick={()=> (adjustComment(entry.commentid))}>
+                                    pas aan</h6>}
                             </div>
                             <div className="comment"
                                  key={entry.text}>

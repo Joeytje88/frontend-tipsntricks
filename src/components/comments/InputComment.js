@@ -21,7 +21,7 @@ const InputComments = () => {
 
     const handleClick = async () =>{
         try {
-            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/1`,{
+            const placecomment = await axios.post(`http://localhost:8080/api/comment/${userid}/post/61`,{
                 text: inputComment,
                 image: inputPicture,
             }).then(function (response) {
@@ -68,7 +68,7 @@ const InputComments = () => {
                     name="picture"
                     className="input-picture"
                     onChange={(e)=> {handleFiles(e)}}/>}
-            {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img"/></div> }
+            {inputPicture !== null && <div className="comment-img"><img src={inputPicture} alt="comment-img" className="upload-img"/></div> }
            </div>}
 
 
@@ -78,7 +78,7 @@ const InputComments = () => {
                 value={inputComment}
                 onChange={changeComment}
                 placeholder="schrijf hier je reactie"/>}
-            {inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
+            {isLoggedIn !== false && inputComment === "" && <p  className="error-message">Je moet eerst een reactie schrijven</p>}
             <button
                 onClick={handleClick}
                 disabled={inputComment <1}

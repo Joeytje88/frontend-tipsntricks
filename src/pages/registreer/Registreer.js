@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {useHistory} from "react-router-dom"
-import {Button} from "../../components/button/Button";
 import axios from 'axios';
 import Navigation from "../../components/navbar/Navigation";
 import './Registreer.css';
@@ -33,9 +32,9 @@ function Registreer () {
     }
 
     return (
-        <>
+        <div className="registreer-pagina">
             <Navigation/>
-            <div className="registreer-pagina">
+
                 <h2>Registreer</h2>
 
 
@@ -50,6 +49,7 @@ function Registreer () {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="gebruikersnaam"/><br/>
+                        {username === "" && <p>Voer een gebruikersnaam in</p> }
                         <label
                             htmlFor="emailadres"
                             className="registreer-label"
@@ -62,6 +62,7 @@ function Registreer () {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="emailadres"/><br/>
+                        {email === "" && <p>Voer een geldig emailadres in</p>}
                         <label
                             htmlFor="password"
                             className="registreer-label">
@@ -76,6 +77,7 @@ function Registreer () {
                         <label
                             htmlFor="password"
                             className="registreer-label">herhaal wachtwoord:</label><br/>
+                        {password === "" && <p>Voer een wachtwoord in</p>}
                         <input
                             type="password"
                             name="repeatPassword"
@@ -84,31 +86,24 @@ function Registreer () {
                             onChange={(e)=> setRepeatPassword(e.target.value)}
                             placeholder="wachtwoord"/>
                             <br/>
-                            <br/>
-                        <Button className="button"
+                        {repeatPassword === "" && <p>Voer hetzelfde wachtwoord in</p>}
+                        {repeatPassword !== password &&<p>Wachtwoorden komen niet overeen</p>}
+                        <button className="registreer-button"
                                 type="submit"
                                 disabled={password !== repeatPassword ||
-                                password === undefined ||
-                                repeatPassword === undefined ||
-                                password >= 20 ||
-                                username === undefined}
+                                password === "" ||
+                                repeatPassword === "" ||
+                                password <=6 ||
+                                username === ""}
                                 onClick={handleSubmit}
                                 >registreer
-                        </Button>
+                        </button>
                     </form>
-                    <br/>
-                    {repeatPassword !== password &&
-                    <label>wachtwoorden komen niet overeen</label>}
-                    <br/>
-                    {repeatPassword == null &&
-                    <label>Voer beide wachtwoorden in</label>}
                     <br/>
                     {password >= 20 &&
                     <label className=" color-red">wachtwoord mag niet meer dan 20 karakters zijn</label>}
                 </div>
-
-            </div>
-        </>
+        </div>
     )
 }
 export default Registreer;
